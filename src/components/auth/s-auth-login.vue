@@ -1,12 +1,16 @@
 <template>
-  <div class="auth-login">
-    <h2>Вхід</h2>
-  </div>
+  <s-auth>
+    <div class="auth-login">213</div>
+  </s-auth>
 </template>
 
+
 <script>
+import sAuth from "./s-auth";
 export default {
-  components: {},
+  components: {
+    sAuth,
+  },
   name: "s-auth-login",
   props: {},
   data() {
