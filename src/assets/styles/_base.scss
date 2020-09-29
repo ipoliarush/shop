@@ -1,0 +1,29 @@
+body {
+	font-family: 'Rubik', sans-serif;
+	font-size: 14px;
+	color: $blue;
+}
+
+.container {
+	width: 100%;
+	max-width: 1470px;
+	padding: 0 15px;
+	margin: 0 auto;
+}
+
+.container__fluid {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+h1 {}
+
+h2 {
+	font-weight: 500;
+	font-size: 35px;
+}
+
+h3 {
+	font-size: 25px;
+	font-weight: normal;
+}
