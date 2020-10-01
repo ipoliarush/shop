@@ -1,21 +1,26 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import sAuthLogin from '@/components/auth/s-auth-login'
-import sAuthLogout from '@/components/auth/s-auth-logout'
 
 Vue.use(VueRouter)
 
 let router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
   routes: [
     {
       path: '/login',
       name: 'login',
-      component: sAuthLogin,
+      component: () => import('@/components/auth/AuthLogin'),
     },
     {
-      path: '/logout',
-      name: 'logout',
-      component: sAuthLogout,
+      path: '/register',
+      name: 'register',
+      component: () => import('@/components/auth/AuthRegister'),
+    },
+    {
+      path: '/recovery',
+      name: 'recovery',
+      component: () => import('@/components/auth/AuthRecovery'),
     }]
 })
 

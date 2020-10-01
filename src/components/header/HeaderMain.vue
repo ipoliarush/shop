@@ -1,6 +1,6 @@
 <template>
   <div class="header-main">
-    <a href="#" class="logo">LOGO</a>
+    <router-link to="/" class="logo">LOGO</router-link>
     <form class="search" action="#">
       <input
         type="search"
@@ -19,7 +19,7 @@
         <font-awesome-icon :icon="['fas', 'search']" class="search__icon" />
       </button>
     </form>
-    <s-header-main-authorization />
+    <header-main-auth />
     <a href="#" class="wishlist">
       <img src="@/assets/image/icons/heart.svg" alt="" class="wishlist__icon" />
     </a>
@@ -30,13 +30,13 @@
 </template>
 
 <script>
-import sHeaderMainAuthorization from "@/components/header/s-header-main-authorization";
+import HeaderMainAuth from "@/components/header/HeaderMainAuth";
 
 export default {
   components: {
-    sHeaderMainAuthorization,
+    HeaderMainAuth,
   },
-  name: "s-header-main",
+  name: "HeaderMain",
   props: {},
   data() {
     return {};

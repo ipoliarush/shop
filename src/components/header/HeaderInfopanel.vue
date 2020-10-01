@@ -34,7 +34,7 @@
 
 <script>
 export default {
-  name: "s-header-infopanel",
+  name: "HeaderInfopanel",
   props: {},
   data() {
     return {};

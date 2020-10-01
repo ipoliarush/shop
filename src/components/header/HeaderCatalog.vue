@@ -36,7 +36,7 @@
 
 <script>
 export default {
-  name: "s-header-catalog",
+  name: "HeaderCatalog",
   props: {},
   data() {
     return {

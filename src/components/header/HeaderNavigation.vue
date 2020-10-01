@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "s-header-navigation",
+  name: "HeaderNavigation",
   props: {},
   data() {
     return {

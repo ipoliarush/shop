@@ -1,12 +1,14 @@
 <template>
-  <div class="s-main">
-    <router-view></router-view>
+  <div class="main">
+    <div class="container">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "s-main",
+  name: "Main",
   components: {},
   props: {},
   data() {
@@ -17,9 +19,11 @@ export default {
 </script>
 
 <style lang="scss">
-.s-main {
+.main {
   background: #f5f5f5;
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  padding-top: 30px;
+  padding-bottom: 50px;
 }
 </style>

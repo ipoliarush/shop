@@ -35,3 +35,57 @@ h4 {
 	font-weight: normal;
 	font-size: 25px;
 }
+
+%input-auth {
+	border: 1px solid rgba($blue, 0.2);
+	border-radius: 4px;
+	padding: 14px 15px 13px 15px;
+	font-size: 18px;
+	width: 100%;
+}
+
+%label-auth {
+	position: absolute;
+	top: 0;
+	transform: translateY(14px);
+	left: 14px;
+	font-size: 18px;
+	background: #fff;
+	color: rgba($blue, 0.5);
+	padding-left: 5px;
+	padding-right: 5px;
+	transition: all ease .5s;
+	cursor: text;
+}
+
+%button-auth {
+	width: 100%;
+	max-width: 216px;
+	border: none;
+	border-radius: 4px;
+	background: $orange;
+	font-size: 18px;
+	color: #fff;
+	cursor: pointer;
+	padding: 15px 0;
+	transition: box-shadow ease .8s;
+
+	&:hover {
+		box-shadow: 0 0 15px $orange;
+	}
+}
+
+%link-auth {
+	font-weight: 300;
+	color: rgba($blue, 0.8);
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+	line-height: 1em;
+	font-size: 16px;
+	transition: ease 0.5s;
+
+	&:hover {
+		border-bottom-color: $orange;
+		color: $orange;
+	}
+}

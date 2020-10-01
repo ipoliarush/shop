@@ -2,15 +2,15 @@
   <header class="s-header">
     <div class="s-header__wrap s-header__wrap--infopanel">
       <div class="container">
-        <s-header-infopanel />
+        <header-infopanel />
       </div>
     </div>
     <div class="s-header__wrap s-header__wrap--main">
       <div class="container">
-        <s-header-main />
+        <header-main />
         <div class="s-header__navigation">
-          <s-header-catalog />
-          <s-header-navigation />
+          <header-catalog />
+          <header-navigation />
         </div>
       </div>
     </div>
@@ -18,17 +18,17 @@
 </template>
 
 <script>
-import sHeaderInfopanel from "@/components/header/s-header-infopanel";
-import sHeaderMain from "@/components/header/s-header-main";
-import sHeaderCatalog from "@/components/header/s-header-catalog";
-import sHeaderNavigation from "@/components/header/s-header-navigation";
+import HeaderInfopanel from "@/components/header/HeaderInfopanel";
+import HeaderMain from "@/components/header/HeaderMain";
+import HeaderCatalog from "@/components/header/HeaderCatalog";
+import HeaderNavigation from "@/components/header/HeaderNavigation";
 
 export default {
   components: {
-    sHeaderInfopanel,
-    sHeaderMain,
-    sHeaderCatalog,
-    sHeaderNavigation,
+    HeaderInfopanel,
+    HeaderMain,
+    HeaderCatalog,
+    HeaderNavigation,
   },
   name: "s-header",
   props: {},

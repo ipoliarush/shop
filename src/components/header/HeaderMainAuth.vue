@@ -1,17 +1,12 @@
 <template>
-  <div class="authorization">
-    <div class="authorization__user">
-      <font-awesome-icon
-        :icon="['far', 'user']"
-        class="authorization__user--user"
-      />
+  <div class="auth">
+    <div class="auth__user">
+      <font-awesome-icon :icon="['far', 'user']" class="auth__user--user" />
     </div>
-    <div class="authorization__inner">
-      <router-link to="/login" class="authorization__login">Вхід</router-link>
-      <div class="authorization__wline"></div>
-      <router-link to="/logout" class="authorization__logout"
-        >Реєстрація</router-link
-      >
+    <div class="auth__inner">
+      <router-link to="/login" class="auth__login">Вхід</router-link>
+      <div class="auth__wline"></div>
+      <router-link to="/register" class="auth__logout">Реєстрація</router-link>
     </div>
   </div>
 </template>
@@ -19,7 +14,7 @@
 <script>
 export default {
   components: {},
-  name: "s-header-main-authorization",
+  name: "HeaderMainAuth",
   props: {},
   data() {
     return {};
@@ -29,7 +24,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.authorization {
+.auth {
   display: flex;
   align-items: center;
 
