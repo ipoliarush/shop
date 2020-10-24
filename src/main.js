@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router/router'
-// import './assets/styles/main.scss'
+import './assets/styles/_reset.scss'
+
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faFacebookF, faInstagram } from '@fortawesome/free-brands-svg-icons'

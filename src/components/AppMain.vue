@@ -1,8 +1,8 @@
 <template>
   <div class="main">
-    <div class="container">
+    <transition name="fade" mode="out-in">
       <router-view></router-view>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -22,8 +22,7 @@ export default {
 .main {
   background: #f5f5f5;
   width: 100%;
-  height: 100%;
   padding-top: 30px;
-  padding-bottom: 50px;
+  padding-bottom: 30px;
 }
 </style>

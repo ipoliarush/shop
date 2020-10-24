@@ -35,9 +35,7 @@ export default {
   },
   name: "AuthRecovery",
   props: {},
-  data() {
-    return {};
-  },
+  data: () => ({}),
   computed: {},
 };
 </script>

@@ -6,6 +6,15 @@ Vue.use(VueRouter)
 let router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
+  scrollBehavior(to) {
+    if (to.hash) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({ selector: to.hash })
+        }, 500)
+      })
+    }
+  },
   routes: [
     {
       path: '/login',

@@ -4,16 +4,15 @@ body {
 	color: $blue;
 }
 
-.container {
-	width: 100%;
-	max-width: 1470px;
-	padding: 0 15px;
-	margin: 0 auto;
-}
+@media (min-width: 1200px) {
 
-.container__fluid {
-	padding-left: 0;
-	padding-right: 0;
+	.container,
+	.container-sm,
+	.container-md,
+	.container-lg,
+	.container-xl {
+		max-width: 1500px;
+	}
 }
 
 h1 {
@@ -88,4 +87,46 @@ h4 {
 		border-bottom-color: $orange;
 		color: $orange;
 	}
+}
+
+%soc-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	margin-right: 17px;
+	border-radius: 4px;
+}
+
+%link-menu {
+	text-decoration: none;
+	color: $blue;
+	font-size: 18px;
+	font-weight: 300;
+
+	&:hover {
+		color: $orange;
+	}
+}
+
+//Стили анимации path
+%path-hover {
+	.path {
+		transition: fill ease 0.5s;
+	}
+
+	&:hover .path {
+		fill: $orange;
+	}
+}
+
+//Стили для круга
+%circle {
+	background: #f5f5f5;
+	width: 40px;
+	height: 40px;
+	border-radius: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }

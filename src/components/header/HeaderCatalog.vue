@@ -38,22 +38,20 @@
 export default {
   name: "HeaderCatalog",
   props: {},
-  data() {
-    return {
-      items: [
-        { name: "Домашня техніка" },
-        { name: "Смартфони, Тв та електроніка" },
-        { name: "Інструменти та автотовари" },
-        { name: "Одяг, взутя та прикраси" },
-        { name: "Продукти харчування" },
-        { name: "Дитячі товари" },
-        { name: "Хоббі, відпочинок та розваги" },
-        { name: "Сад та огород" },
-        { name: "Товари для дому" },
-      ],
-      isShowCatalog: false,
-    };
-  },
+  data: () => ({
+    items: [
+      { name: "Домашня техніка" },
+      { name: "Смартфони, Тв та електроніка" },
+      { name: "Інструменти та автотовари" },
+      { name: "Одяг, взутя та прикраси" },
+      { name: "Продукти харчування" },
+      { name: "Дитячі товари" },
+      { name: "Хоббі, відпочинок та розваги" },
+      { name: "Сад та огород" },
+      { name: "Товари для дому" },
+    ],
+    isShowCatalog: false,
+  }),
   computed: {},
 };
 </script>
@@ -61,11 +59,7 @@ export default {
 <style lang="scss" scoped>
 .catalog {
   position: relative;
-  max-width: 346px;
-  width: 100%;
   &__wrap {
-    max-width: 346px;
-    width: 100%;
     background: $blue;
     color: #fff;
     font-size: 18px;

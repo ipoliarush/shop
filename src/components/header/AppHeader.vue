@@ -1,16 +1,16 @@
 <template>
-  <header class="s-header">
-    <div class="s-header__wrap s-header__wrap--infopanel">
+  <header class="app-header">
+    <div class="infopanel">
       <div class="container">
         <header-infopanel />
       </div>
     </div>
-    <div class="s-header__wrap s-header__wrap--main">
+    <div class="main">
       <div class="container">
         <header-main />
-        <div class="s-header__navigation">
-          <header-catalog />
-          <header-navigation />
+        <div class="row">
+          <header-catalog class="col-3" />
+          <header-nav class="col-9" />
         </div>
       </div>
     </div>
@@ -21,16 +21,16 @@
 import HeaderInfopanel from "@/components/header/HeaderInfopanel";
 import HeaderMain from "@/components/header/HeaderMain";
 import HeaderCatalog from "@/components/header/HeaderCatalog";
-import HeaderNavigation from "@/components/header/HeaderNavigation";
+import HeaderNav from "@/components/header/HeaderNav";
 
 export default {
   components: {
     HeaderInfopanel,
     HeaderMain,
     HeaderCatalog,
-    HeaderNavigation,
+    HeaderNav,
   },
-  name: "s-header",
+  name: "AppHeader",
   props: {},
   data() {
     return {};
@@ -40,18 +40,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.s-header {
-  &__wrap {
-    &--infopanel {
-      background: $blue;
-    }
-    &--main {
-      background: #fff;
-    }
+.app-header {
+  .infopanel {
+    background: $blue;
   }
-  &__navigation {
-    display: flex;
-    justify-content: start;
+  .main {
+    background: #fff;
   }
 }
 </style>
