@@ -1,5 +1,5 @@
 <template>
-  <div class="header-infopanel">
+  <div class="header-top">
     <div class="call">
       <font-awesome-icon :icon="['fas', 'phone-alt']" class="call__phone-alt" />
       <a class="call__link" href="tel:+380677693269">+38 (067) 760-32-69</a>
@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  name: "HeaderInfopanel",
+  name: "HeaderTop",
   props: {},
   data() {
     return {};
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.header-infopanel {
+.header-top {
   display: flex;
   justify-content: space-between;
   align-items: center;

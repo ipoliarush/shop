@@ -1,11 +1,12 @@
 <template>
   <header class="app-header">
-    <div class="infopanel">
-      <div class="container">
-        <header-infopanel />
-      </div>
+    <div class="layout">
+      <header-top />
+      <header-bottom />
     </div>
-    <div class="main">
+    
+
+    <!-- <div class="main">
       <div class="container">
         <header-main />
         <div class="row">
@@ -13,22 +14,24 @@
           <header-nav class="col-9" />
         </div>
       </div>
-    </div>
+    </div> -->
   </header>
 </template>
 
 <script>
-import HeaderInfopanel from "@/components/header/HeaderInfopanel";
-import HeaderMain from "@/components/header/HeaderMain";
-import HeaderCatalog from "@/components/header/HeaderCatalog";
-import HeaderNav from "@/components/header/HeaderNav";
+import HeaderTop from "@/components/header/HeaderTop";
+import HeaderBottom from "@/components/header/HeaderBottom";
+// import HeaderMain from "@/components/header/HeaderMain";
+// import HeaderCatalog from "@/components/header/HeaderCatalog";
+// import HeaderNav from "@/components/header/HeaderNav";
 
 export default {
   components: {
-    HeaderInfopanel,
-    HeaderMain,
-    HeaderCatalog,
-    HeaderNav,
+    HeaderTop,
+    HeaderBottom,
+    // HeaderMain,
+    // HeaderCatalog,
+    // HeaderNav,
   },
   name: "AppHeader",
   props: {},
@@ -41,9 +44,8 @@ export default {
 
 <style lang="scss" scoped>
 .app-header {
-  .infopanel {
-    background: $blue;
-  }
+  background: $blue;
+
   .main {
     background: #fff;
   }

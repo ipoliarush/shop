@@ -1,5 +1,5 @@
 <template>
-  <div class="header-infopanel">
+  <div class="header-bottom">
     <div class="mobile-open" @click.prevent="openMenu">
       <icon-base :icon-color="white" width="27" height="20">
         <icon-burger />
@@ -7,7 +7,7 @@
     </div>
     <form class="search" action="#">
       <input
-        type="search"
+        type="text"
         name="search"
         class="search__input"
         placeholder="Пошук"
@@ -202,7 +202,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.header-infopanel {
+.header-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -213,6 +213,8 @@ export default {
   .mobile-open {
     display: flex;
     cursor: pointer;
+
+    
   }
 
   .search {

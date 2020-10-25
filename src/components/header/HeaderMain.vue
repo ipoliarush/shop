@@ -3,7 +3,7 @@
     <router-link to="/" class="logo">LOGO</router-link>
     <form class="search" action="#">
       <input
-        type="search"
+        type="text"
         name="search"
         class="search__input"
         placeholder="Пошук"
