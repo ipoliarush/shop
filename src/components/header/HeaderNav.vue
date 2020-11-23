@@ -1,7 +1,7 @@
 <template>
   <ul class="header-nav">
     <li v-for="nav in navs" :key="nav.link" class="item">
-      <a :href="nav.link" class="link">{{ nav.name }}</a>
+      <a :href="nav.link" class="item__link">{{ nav.name }}</a>
     </li>
   </ul>
 </template>
@@ -13,12 +13,12 @@ export default {
   data() {
     return {
       navs: [
-        { name: "Доставка та оплата", link: "/a" },
+        { name: "Доставка", link: "/a" },
         { name: "Знижки", link: "/b" },
         { name: "Про нас", link: "/c" },
         { name: "Контакти", link: "/d" },
         { name: "Допомога", link: "/f" },
-        { name: "Повернення товару", link: "/g" },
+        { name: "Повернення", link: "/g" },
       ],
     };
   },
@@ -31,15 +31,13 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 18px;
-  .item {
-    .link {
-      text-decoration: none;
-      color: rgba($blue, 0.6);
-      transition: $ease05;
-      &:hover {
-        color: $blue;
-      }
+  font-size: 16px;
+  .item__link {
+    text-decoration: none;
+    color: rgba($blue, 0.6);
+    transition: $ease05;
+    &:hover {
+      color: $blue;
     }
   }
 }

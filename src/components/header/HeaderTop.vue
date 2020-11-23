@@ -1,34 +1,52 @@
 <template>
   <div class="header-top">
     <div class="call">
-      <font-awesome-icon :icon="['fas', 'phone-alt']" class="call__phone-alt" />
+      <icon-base height="11" width="11">
+        <icon-call />
+      </icon-base>
       <a class="call__link" href="tel:+380677693269">+38 (067) 760-32-69</a>
-      <font-awesome-icon
-        :icon="['fas', 'angle-down']"
-        class="call__angle-down"
-      />
+      <icon-base class="call__arrow" height="6" width="10">
+        <icon-arrow />
+      </icon-base>
     </div>
     <p class="delivery">Безкоштовна доставка від 500грн</p>
     <div class="lang">
       <p class="lang__active">Укр</p>
-      <font-awesome-icon
-        :icon="['fas', 'angle-down']"
-        class="lang__angle-down"
-      />
+      <icon-base class="lang__arrow" height="6" width="10">
+        <icon-arrow />
+      </icon-base>
     </div>
     <div class="social">
       <a href="#" class="social__link">
-        <font-awesome-icon :icon="['fab', 'facebook-f']" />
+        <icon-base height="14" width="7">
+          <icon-facebook-mini />
+        </icon-base>
       </a>
       <a href="#" class="social__link">
-        <font-awesome-icon :icon="['fab', 'instagram']" />
+        <icon-base height="12" width="12">
+          <icon-instagram-mini />
+        </icon-base>
       </a>
     </div>
   </div>
 </template>
 
 <script>
+
+import IconBase from "@/components/icons/IconBase";
+import IconCall from "@/components/icons/IconCall";
+import IconArrow from "@/components/icons/IconArrow";
+import IconFacebookMini from "@/components/icons/IconFacebookMini";
+import IconInstagramMini from "@/components/icons/IconInstagramMini";
+
 export default {
+  components: {
+    IconBase,
+    IconCall,
+    IconArrow,
+    IconFacebookMini,
+    IconInstagramMini
+  },
   name: "HeaderTop",
   props: {},
   data() {
@@ -40,23 +58,26 @@ export default {
 
 <style lang="scss" scoped>
 .header-top {
-  display: flex;
+  display: none;
   justify-content: space-between;
   align-items: center;
   color: #fff;
   height: 38px;
 
+  @include respond-to('medium') {
+    display: flex;
+  }
   .call {
-    &__link {
-      color: #fff;
-      text-decoration: none;
-      margin-left: 10px;
-    }
-    &__angle-down {
-      margin-left: 10px;
-      font-size: 16px;
-      margin-top: 5px;
-    }
+    display: flex;
+    align-items: center;
+  }
+  .call__link {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 10px;
+  }
+  .call__arrow {
+    margin-left: 10px;
   }
   .delivery {
     margin-left: auto;
@@ -66,17 +87,26 @@ export default {
     display: flex;
     align-items: center;
     margin-right: 30px;
-    &__angle-down {
-      margin-left: 10px;
-      font-size: 14px;
-    }
+  }
+  .lang__arrow {
+    margin-left: 10px;
   }
   .social {
     display: flex;
-    &__link {
-      @extend %soc-icon;
-      width: 20px;
-      height: 20px;
+    align-items: center;
+  }
+  .social__link {
+    @extend %soc-icon;
+    width: 20px;
+    height: 20px;
+    margin-right: 17px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:hover .svg {
+      fill: $orange;
     }
   }
 }

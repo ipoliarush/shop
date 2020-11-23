@@ -16,25 +16,39 @@
         />
       </div>
       <button class="search__button" type="submit">
-        <font-awesome-icon :icon="['fas', 'search']" class="search__icon" />
+        <icon-base width="20" height="20">
+          <icon-search />
+        </icon-base>
       </button>
     </form>
     <header-main-auth />
     <a href="#" class="wishlist">
-      <img src="@/assets/image/icons/heart.svg" alt="" class="wishlist__icon" />
+      <icon-base view-box="0 0 32 32" width="32" height="29" icon-color="#2a2c30">
+        <icon-wish />
+      </icon-base>
     </a>
     <a href="#" class="cart">
-      <img src="@/assets/image/icons/cart.svg" alt="" class="cart__icon" />
+      <icon-base width="26" height="35" icon-color="#2a2c30">
+        <icon-cart />
+      </icon-base>
     </a>
   </div>
 </template>
 
 <script>
 import HeaderMainAuth from "@/components/header/HeaderMainAuth";
+import IconBase from "@/components/icons/IconBase";
+import IconSearch from "@/components/icons/IconSearch";
+import IconCart from "@/components/icons/IconCart";
+import IconWish from '@/components/icons/IconWish';
 
 export default {
   components: {
     HeaderMainAuth,
+    IconBase,
+    IconSearch,
+    IconCart,
+    IconWish,
   },
   name: "HeaderMain",
   props: {},
@@ -95,7 +109,8 @@ export default {
   }
   .wishlist {
     margin-left: 20px;
-    flex-shrink: 0;
+    display: flex;
+
     &__icon {
       width: 32px;
       height: 29px;
@@ -104,11 +119,7 @@ export default {
   .cart {
     margin-left: 20px;
     margin-right: 15px;
-    flex-shrink: 0;
-    &__icon {
-      width: 26px;
-      height: 35px;
-    }
+    display: flex;
   }
 }
 </style>

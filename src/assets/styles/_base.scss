@@ -7,6 +7,10 @@ body {
 .layout {
 	padding-left: 15px;
 	padding-right: 15px;
+	width: 100%;
+	max-width: 1472px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 @media (min-width: 768px) {
@@ -95,7 +99,6 @@ h4 {
 	align-items: center;
 	justify-content: center;
 	color: #fff;
-	margin-right: 17px;
 	border-radius: 4px;
 }
 

@@ -1,37 +1,38 @@
 <template>
   <header class="app-header">
-    <div class="layout">
-      <header-top />
-      <header-bottom />
+    <div class="header-one">
+      <div class="layout">
+        <header-top />
+        <header-bottom />
+      </div>
     </div>
     
-
-    <!-- <div class="main">
-      <div class="container">
+    <div class="header-two">
+      <div class="layout">
         <header-main />
-        <div class="row">
-          <header-catalog class="col-3" />
-          <header-nav class="col-9" />
+        <div class="wrap">
+          <header-catalog class="header-catalog" />
+          <header-nav class="header-nav" />
         </div>
-      </div>
-    </div> -->
+      </div> 
+    </div>
   </header>
 </template>
 
 <script>
 import HeaderTop from "@/components/header/HeaderTop";
 import HeaderBottom from "@/components/header/HeaderBottom";
-// import HeaderMain from "@/components/header/HeaderMain";
-// import HeaderCatalog from "@/components/header/HeaderCatalog";
-// import HeaderNav from "@/components/header/HeaderNav";
+import HeaderMain from "@/components/header/HeaderMain";
+import HeaderCatalog from "@/components/header/HeaderCatalog";
+import HeaderNav from "@/components/header/HeaderNav";
 
 export default {
   components: {
     HeaderTop,
     HeaderBottom,
-    // HeaderMain,
-    // HeaderCatalog,
-    // HeaderNav,
+    HeaderMain,
+    HeaderCatalog,
+    HeaderNav,
   },
   name: "AppHeader",
   props: {},
@@ -44,10 +45,29 @@ export default {
 
 <style lang="scss" scoped>
 .app-header {
-  background: $blue;
-
-  .main {
+  .header-one {
+    background: $blue;
+  }
+  .header-two {
     background: #fff;
+    display: none;
+
+    @include respond-to('medium') {
+      display: block;
+    }
+
+    .wrap {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .header-catalog {
+      width: 27%;
+    }
+
+    .header-nav {
+      width: 68%
+    }
   }
 }
 </style>
