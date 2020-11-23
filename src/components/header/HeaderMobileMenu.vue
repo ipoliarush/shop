@@ -30,25 +30,25 @@
           </div>
           <div class="wline"></div>
           <div class="tech">
-            <header-tech counter="1" link="/mycabinet">
+            <header-tech text="Особистий кабінет" :counter="1" link="/mycabinet">
               <icon-base width="17" height="17" icon-color="#2A2C30">
                 <icon-user />
               </icon-base>
             </header-tech>
 
-            <header-tech counter="2" link="/cart">
-              <icon-base width="17" height="21" icon-color="#2A2C30">
+            <header-tech text="Кошик" :counter="2" link="/cart">
+              <icon-base view-box="0 0 26 35" width="17" height="21" icon-color="#2A2C30">
                 <icon-cart />
               </icon-base>
             </header-tech>
 
-            <header-tech counter="25" link="/wish">
-              <icon-base width="22" height="20" icon-color="#2A2C30">
+            <header-tech text="Бажане" :counter="25" link="/wish">
+              <icon-base view-box="0 0 32 30" width="22" height="20" icon-color="#2A2C30">
                 <icon-wish />
               </icon-base>
             </header-tech>
 
-            <header-tech link="/message">
+            <header-tech text="Зворотній зв'язок" link="/message">
               <icon-base width="23" height="21" icon-color="#2A2C30">
                 <icon-message />
               </icon-base>

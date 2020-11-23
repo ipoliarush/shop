@@ -1,7 +1,9 @@
 <template>
   <div class="auth">
     <div class="auth__user">
-      <font-awesome-icon :icon="['far', 'user']" class="auth__user--user" />
+      <icon-base width="17" height="17" icon-color="#2A2C30">
+        <icon-user />
+      </icon-base>
     </div>
     <div class="auth__inner">
       <router-link to="/login" class="auth__login">Вхід</router-link>
@@ -12,8 +14,14 @@
 </template>
 
 <script>
+import IconBase from "@/components/icons/IconBase";
+import IconUser from "@/components/icons/IconUser";
+
 export default {
-  components: {},
+  components: {
+    IconBase,
+    IconUser,
+  },
   name: "HeaderMainAuth",
   props: {},
   data() {

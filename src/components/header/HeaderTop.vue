@@ -18,13 +18,13 @@
     </div>
     <div class="social">
       <a href="#" class="social__link">
-        <icon-base height="14" width="7">
-          <icon-facebook-mini />
+        <icon-base view-box="0 0 13 22" height="14" width="7">
+          <icon-facebook />
         </icon-base>
       </a>
       <a href="#" class="social__link">
-        <icon-base height="12" width="12">
-          <icon-instagram-mini />
+        <icon-base view-box="0 0 19 19" height="12" width="12">
+          <icon-instagram />
         </icon-base>
       </a>
     </div>
@@ -36,16 +36,16 @@
 import IconBase from "@/components/icons/IconBase";
 import IconCall from "@/components/icons/IconCall";
 import IconArrow from "@/components/icons/IconArrow";
-import IconFacebookMini from "@/components/icons/IconFacebookMini";
-import IconInstagramMini from "@/components/icons/IconInstagramMini";
+import IconFacebook from "@/components/icons/IconFacebook";
+import IconInstagram from "@/components/icons/IconInstagram";
 
 export default {
   components: {
     IconBase,
     IconCall,
     IconArrow,
-    IconFacebookMini,
-    IconInstagramMini
+    IconFacebook,
+    IconInstagram
   },
   name: "HeaderTop",
   props: {},

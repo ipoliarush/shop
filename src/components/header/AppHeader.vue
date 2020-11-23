@@ -55,19 +55,21 @@ export default {
     @include respond-to('medium') {
       display: block;
     }
+  }
+  
+  .wrap {
+    display: flex;
+    justify-content: start;
+  }
 
-    .wrap {
-      display: flex;
-      justify-content: space-between;
-    }
+  .header-catalog {
+    width: 326px;
+    flex-shrink: 0;
+    margin-right: 30px;
+  }
 
-    .header-catalog {
-      width: 27%;
-    }
-
-    .header-nav {
-      width: 68%
-    }
+  .header-nav {
+    width: 100%
   }
 }
 </style>

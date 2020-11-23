@@ -57,13 +57,12 @@ export default {
     border-radius: 50px;
     padding-left: 5px;
     padding-right: 5px;
-
-    .number {
-      margin-bottom: -2px;
-      line-height: 14px;
-      color: #fff;
-      font-size: 14px;
-    }
+  }
+  .number {
+    margin-bottom: -2px;
+    line-height: 14px;
+    color: #fff;
+    font-size: 14px;
   }
 }
 </style>
