@@ -37,9 +37,17 @@ export default {
   name: "AppHeader",
   props: {},
   data() {
-    return {};
+    return {
+    };
   },
-  computed: {},
+  computed: {
+  },
+  mounted() {
+  },
+  created() {
+  },
+  updated() {
+  },
 };
 </script>
 

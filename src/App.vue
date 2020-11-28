@@ -2,7 +2,6 @@
   <div id="app">
     <app-header />
     <app-main />
-    <banner-big />
 
     <!-- <app-footer /> -->
   </div>
@@ -11,7 +10,6 @@
 <script>
 import AppHeader from "./components/header/AppHeader";
 import AppMain from "./components/AppMain";
-import BannerBig from "./components/banner/BannerBig";
 // import AppFooter from "./components/footer/AppFooter";
 
 export default {
@@ -19,7 +17,6 @@ export default {
   components: {
     AppMain,
     AppHeader,
-    BannerBig,
     // AppFooter,
   },
 };

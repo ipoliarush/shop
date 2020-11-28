@@ -17,6 +17,11 @@ let router = new VueRouter({
   },
   routes: [
     {
+      path: '/',
+      name: 'home',
+      component: () => import('@/components/home/Home'),
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('@/components/auth/AuthLogin'),

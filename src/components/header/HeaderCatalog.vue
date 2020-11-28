@@ -1,9 +1,9 @@
 <template>
   <div class="catalog">
-    <div @click="isOpen = !isOpen" class="wrap">
+    <div @click="reverse" class="wrap">
       Каталог товарів
       <div class="burger">
-        <icon-base v-if="!isOpen" view-box="0 0 27 20" width="27" height="20">
+        <icon-base v-if="!open" view-box="0 0 27 20" width="27" height="20">
           <icon-burger />
         </icon-base>
         <icon-base v-else view-box="0 0 23 20" width="23" height="20">
@@ -12,7 +12,7 @@
       </div>
     </div>
     <transition name="fade-in">
-      <div v-if="isOpen" class="list">
+      <div v-if="open" class="list">
         <a
           v-for="(item, index) in items"
           class="list__item"
@@ -43,7 +43,6 @@ export default {
     IconClose,
     IconRight,
   },
-  props: {},
   data: () => ({
     items: [
       { name: "Домашня техніка" },
@@ -56,9 +55,17 @@ export default {
       { name: "Сад та огород" },
       { name: "Товари для дому" },
     ],
-    isOpen: false,
   }),
-  computed: {},
+  computed: {
+    open() {
+      return this.$store.state.isOpen
+    }
+  },
+  methods: {
+    reverse(){
+      this.$store.commit('reverse')
+    }
+  }
 };
 </script>
 
@@ -82,7 +89,7 @@ export default {
   }
 
   .list {
-    z-index: 9;
+    z-index: 11;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -91,7 +98,7 @@ export default {
     border-radius: 10px;
     width: 100%;
     left: 0;
-    top: 72px;
+    top: 70px;
     padding-top: 10px;
     padding-bottom: 10px;
   }
@@ -114,7 +121,7 @@ export default {
     transition: 0.5s ease;
   }
   .fade-in-leave-active {
-    transition: 0.55s 0.5s;
+    transition: 0.55s 0.05s;
   }
   .fade-in-enter,
   .fade-in-leave-to {
