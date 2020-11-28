@@ -19,6 +19,9 @@
       </button>
     </form>
     <a href="#" class="cart">
+      <div class="counter">
+        <p class="counter__number">{{ counter }}</p>
+      </div>
       <icon-base view-box="0 0 26 35" width="26" height="35">
         <icon-cart />
       </icon-base>
@@ -47,6 +50,7 @@ export default {
   data: () => ({
     isMenu: false,
     white: "#fff",
+    counter: 12
   }),
   computed: {},
   methods: {
@@ -116,12 +120,32 @@ export default {
     align-items: center;
     cursor: pointer;
   }
-  
   .cart {
     display: flex;
     align-items: center;
     color: #fff;
+    position: relative;
   }
-
+  .counter {
+    background: $orange;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    padding-left: 5px;
+    padding-right: 5px;
+    position: absolute;
+    top: 0;
+    right: -8px;
+    box-shadow: 0px 4px 4px rgba(#000, 0.25);
+  }
+  .counter__number {
+    margin-bottom: -2px;
+    line-height: 10px;
+    color: #fff;
+    font-size: 10px;
+  }
 }
 </style>

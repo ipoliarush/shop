@@ -23,15 +23,20 @@
     <header-main-auth />
     <a href="#" class="wishlist">
       <div class="counter">
-        <p class="number">1</p>
+        <p class="counter__number">1</p>
       </div>
       <icon-base view-box="0 0 32 30" width="32" height="29" icon-color="#2a2c30">
         <icon-wish />
       </icon-base>
     </a>
-    <a href="#" class="cart">
+    <a @mouseenter="isPrice = true" @mouseleave="isPrice = false" href="#" class="cart">
+      <transition name="fade">
+        <div v-if="isPrice" class="price">
+          <p class="price__number">{{ price }} грн</p>
+        </div>
+      </transition>
       <div class="counter">
-        <p class="number">12</p>
+        <p class="counter__number">{{ counter }}</p>
       </div>
       <icon-base width="26" height="35" icon-color="#2a2c30">
         <icon-cart />
@@ -62,7 +67,11 @@ export default {
     
   },
   data() {
-    return {};
+    return {
+      counter: 12,
+      price: 152,
+      isPrice: false
+    };
   },
   computed: {},
 };
@@ -131,7 +140,20 @@ export default {
   .cart {
     margin-right: 15px;
   }
-
+  .price {
+    position: absolute;
+    font-weight: 100;
+    background: $blue;
+    color: #fff;
+    transform: translateX(-50%);
+    left: 50%;
+    top: 45px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 4px rgba(#000, 0.25);
+    white-space: nowrap;
+    padding: 5px;
+    display: block;
+  }
   .counter {
     background: $orange;
     min-width: 25px;
@@ -147,7 +169,7 @@ export default {
     right: -13px;
     box-shadow: 0px 4px 4px rgba(#000, 0.25);
   }
-  .number {
+  .counter__number {
     margin-bottom: -2px;
     line-height: 14px;
     color: #fff;
