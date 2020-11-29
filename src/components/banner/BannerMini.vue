@@ -1,5 +1,5 @@
 <template>
-  <div class="banner-mini">
+  <a href="#" class="banner-mini">
     <div class="bg"></div>
     <h2 class="title">
       Знижки
@@ -10,7 +10,7 @@
     <p class="text">
       На усю літню коллекцію
     </p>
-  </div>
+  </a>
 </template>
 
 <script>
@@ -39,6 +39,7 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 10px;
+  text-decoration: none;
 
   .bg {
     position: absolute;
@@ -56,23 +57,43 @@ export default {
     color: #fff;
     font-weight: 400;
     z-index: 10;
+
+    @include respond-to('small') {
+      font-size: 30px;
+    }
+
+    @include respond-to('medium') {
+      font-size: 25px;
+    }
   }
   .subtitle {
     font-size: 25px;
     color: $orange;
     font-weight: 400;
     z-index: 10;
+
+    @include respond-to('small') {
+      font-size: 20px;
+    }
   }
   .subtitle__big {
-    font-size: 55px;
+    font-size: 25px;
     font-weight: 700;
     z-index: 10;
+
+    @include respond-to('medium') {
+      font-size: 55px;
+    }
   }
   .text {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
     color: #fff;
     z-index: 10;
+
+    @include respond-to('small') {
+      font-size: 16px;
+    }
   }
 }
 </style>

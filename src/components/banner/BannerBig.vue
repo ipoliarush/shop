@@ -59,34 +59,80 @@ filter: drop-shadow(0px 4px 25px rgba(0, 0, 0, 0.1));
 
   }
   .title {
-    font-size: 50px;
+    font-size: 32px;
     color: #000;
     font-weight: 700;
     z-index: 10;
+    line-height: 30px;
+
+    @include respond-to('small') {
+      font-size: 40px;
+    }
+
+    @include respond-to('medium') {
+      font-size: 50px;
+    }
   }
   .subtitle {
-    font-size: 35px;
+    font-size: 24px;
     color: $blue;
     font-weight: 400;
     z-index: 10;
+
+    @include respond-to('medium') {
+      font-size: 35px;
+    }
   }
   .subtitle__big {
-    font-size: 41px;
+    font-size: 35px;
     color: $orange;
     font-weight: 700;
     z-index: 10;
+
+    @include respond-to('small') {
+      font-size: 32px;
+    }
+
+    @include respond-to('medium') {
+      font-size: 41px;
+    }
   }
   .text {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     color: $blue;
     z-index: 10;
+    width: 100%;
+    max-width: 160px;
+
+    @include respond-to('small') {
+      font-size: 18px;
+      max-width: 250px;
+    }
+
+    @include respond-to('medium') {
+      max-width: 100%;
+    }
   }
   .minitext {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 300;
     color: $blue;
     z-index: 10;
+    width: 100%;
+    max-width: 116px;
+    padding-top: 10px;
+
+    @include respond-to('small') {
+      font-size: 16px;
+      max-width: 180px;
+      padding-bottom: 10px;
+    }
+
+    @include respond-to('medium') {
+      max-width: 100%;
+
+    }
   }
   .button {
     color: #fff;
@@ -95,9 +141,15 @@ filter: drop-shadow(0px 4px 25px rgba(0, 0, 0, 0.1));
     text-decoration: none;
     background: $orange;
     border-radius: 4px;
-    padding: 12px 55px;
-    display: block;
+    padding: 10px 50px;
     z-index: 10;
+    overflow: hidden;
+    display: none;
+
+    @include respond-to('small') {
+      overflow: visible;
+      display: block;
+    }
   }
 }
 </style>

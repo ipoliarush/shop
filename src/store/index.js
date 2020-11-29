@@ -11,6 +11,9 @@ export default new Vuex.Store({
   mutations: {
     reverse (state) {
       state.isOpen = !state.isOpen;
+    },
+    resize (state) {
+      state.isOpen = document.documentElement.clientWidth < 992 ? false : state.isOpen;
     }
   },
   getters: {},

@@ -46,6 +46,11 @@ export default {
 
   .wrap {
     display: flex;
+    flex-direction: column;
+
+    @include respond-to('small') {
+      flex-direction: row;
+    }
   }
   .no-model {
     width: 0;
@@ -60,21 +65,45 @@ export default {
     width: 100%;
     transition: all ease .3s;
     height: auto;
+    display: flex;
   }
 
   .banner-big {
     height: auto;
+    width: 100%;
   }
 
   .mini {
-    width: 220px;
-    margin-left: 30px;
+    width: 100%;
+    margin-top: 30px;
     flex-shrink: 0;
+    display: flex;
+    height: auto;
+
+    @include respond-to('small') {
+      margin-left: 30px;
+      margin-top: 0;
+      flex-direction: column;
+      width: 152px;
+    }
+
+    @include respond-to('medium') {
+      width: 220px;
+    }
   }
 
   .banner-mini {
+    width: 100%;
+    height: auto;
+    flex-grow: 1;
+
     &:first-child {
-      margin-bottom: 30px;
+      margin-right: 30px;
+
+      @include respond-to('small') {
+        margin-bottom: 30px;
+        margin-right: 0;
+      }
     }
   }
   

@@ -64,8 +64,18 @@ export default {
   methods: {
     reverse(){
       this.$store.commit('reverse')
+    },
+    resize() {
+      this.$store.commit('resize')
     }
-  }
+  },
+  created() {
+    window.addEventListener("resize", this.resize);
+    this.resize();
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.resize);
+  },
 };
 </script>
 
