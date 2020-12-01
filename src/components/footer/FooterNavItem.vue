@@ -23,19 +23,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.list {
-  &__link {
-    color: rgba(#fff, 0.5);
-    font-weight: 300;
-    font-size: 14px;
-    text-decoration: none;
+.list__link {
+  color: rgba(#fff, 0.5);
+  font-weight: 300;
+  font-size: 14px;
+  text-decoration: none;
+  margin-bottom: 5px;
+  display: block;
+  width: max-content;
+  transition: $ease05;
+  &:hover {
+    color: $orange;
+  }
+
+  @include respond-to('medium') {
     margin-bottom: 15px;
-    display: block;
-    width: max-content;
-    transition: $ease05;
-    &:hover {
-      color: $orange;
-    }
   }
 }
 </style>

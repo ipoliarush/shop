@@ -1,6 +1,6 @@
 <template>
   <footer id="app-footer" class="footer">
-    <div class="container">
+    <div class="layout">
       <div class="body">
         <footer-info class="body__item" />
         <div class="nav">
@@ -28,11 +28,9 @@
           />
         </div>
         <router-link to="#header" class="scroll-up">
-          <img
-            class="scroll-up__image"
-            src="@/assets/image/icons/arrow-up.svg"
-            alt=""
-          />
+          <icon-base class="svg" viewBox="0 0 7 4" width="21" height="12">
+            <icon-arrow />
+          </icon-base>
         </router-link>
       </div>
     </div>
@@ -44,11 +42,17 @@
 import FooterInfo from "@/components/footer/FooterInfo";
 import FooterNavItem from "@/components/footer/FooterNavItem";
 import FooterCopy from "@/components/footer/FooterCopy";
+import IconBase from "@/components/icons/IconBase";
+import IconArrow from "@/components/icons/IconArrow";
+
 export default {
   components: {
     FooterCopy,
     FooterNavItem,
     FooterInfo,
+    IconBase,
+    IconArrow,
+
   },
   name: "AppFooter",
   props: {},
@@ -158,39 +162,41 @@ export default {
     display: flex;
     padding: 90px 0;
     position: relative;
-    &__item {
-      width: 25%;
-    }
-    .scroll-up {
-      display: flex;
-      width: 44px;
-      height: 44px;
-      border-radius: 4px;
-      background: $orange;
-      justify-content: center;
-      align-items: center;
-      bottom: -22px;
-      right: 0;
-      position: absolute;
-
-      &__image {
-        width: 22px;
-      }
-    }
   }
-  .nav {
+    
+  .scroll-up {
     display: flex;
+    width: 44px;
+    height: 44px;
+    border-radius: 4px;
+    background: $orange;
+    justify-content: center;
+    align-items: center;
+    bottom: -22px;
+    right: 0;
+    position: absolute;
+  }
+  .scroll-up svg {
+    transform: rotate(180deg);
+  }
+  
+  .nav {
+    display: none;
     flex-direction: column;
     width: 25%;
-    &__name {
-      color: #fff;
-      font-size: 18px;
-      margin-bottom: 15px;
-    }
-    &__list {
+
+    @include respond-to('medium') {
       display: flex;
-      flex-direction: column;
     }
+  }
+  .nav__name {
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  .nav__list {
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>
