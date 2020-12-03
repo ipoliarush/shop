@@ -18,12 +18,12 @@
     </div>
     <div class="social">
       <a href="#" class="social__link">
-        <icon-base view-box="0 0 13 22" height="14" width="7">
+        <icon-base viewBox="0 0 12 22" width="8" height="15">
           <icon-facebook />
         </icon-base>
       </a>
       <a href="#" class="social__link">
-        <icon-base view-box="0 0 19 19" height="12" width="12">
+        <icon-base viewBox="0 0 19 19" width="14" height="14">
           <icon-instagram />
         </icon-base>
       </a>

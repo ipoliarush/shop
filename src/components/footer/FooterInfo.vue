@@ -6,17 +6,21 @@
         <p class="soc__title">Наші соцмережі</p>
         <div class="soc__wrap">
           <a href="#" class="soc__icon">
-            <font-awesome-icon :icon="['fab', 'facebook-f']" />
+            <icon-base viewBox="0 0 12 22" width="12" height="22">
+              <icon-facebook />
+            </icon-base>
           </a>
           <a href="#" class="soc__icon">
-            <font-awesome-icon :icon="['fab', 'instagram']" />
+            <icon-base viewBox="0 0 19 19" width="19" height="19">
+              <icon-instagram />
+            </icon-base>
           </a>
         </div>
       </div>
     </div>
     <div class="wrap wrap-sec">
       <div class="nav">
-        <span class="nav__name">{{ menu.title }}</span>
+        <p class="nav__name">{{ menu.title }}</p>
         <footer-nav-item
           :title="menu.title"
           :navs="menu.navs"
@@ -35,20 +39,20 @@
       <div class="payway">
         <p class="payway__title">Ми приймаємо</p>
         <div class="payway__wrap">
-          <a href="#" class="payway__icon">
+          <div class="payway__icon">
             <img
               class="payway__image"
               src="@/assets/image/payway/visa.png"
               alt="visa"
             />
-          </a>
-          <a href="#" class="payway__icon">
+          </div>
+          <div class="payway__icon">
             <img
               class="payway__image"
               src="@/assets/image/payway/mc.png"
               alt="mastercard"
             />
-          </a>
+          </div>
         </div>
       </div>
     </div>
@@ -57,10 +61,16 @@
 
 <script>
 import FooterNavItem from "@/components/footer/FooterNavItem";
+import IconBase from "@/components/icons/IconBase";
+import IconFacebook from "@/components/icons/IconFacebook";
+import IconInstagram from "@/components/icons/IconInstagram";
 
 export default {
   components: {
     FooterNavItem,
+    IconBase,
+    IconFacebook,
+    IconInstagram
   },
   name: "FooterInfo",
   props: {},
@@ -185,6 +195,14 @@ export default {
     width: 36px;
     height: 36px;
     font-size: 20px;
+
+    &:first-child {
+      margin-right: 10px;
+    }
+
+    &:hover .svg {
+      fill: $orange;
+    }
   }
 
   .phone__wrap {
@@ -193,10 +211,14 @@ export default {
   .phone__link {
     color: #fff;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 14px;
     text-decoration: none;
     margin-bottom: 5px;
     width: max-content;
+
+    @include respond-to('small') {
+      font-size: 16px;
+    }
   }
   
   .payway__image {
