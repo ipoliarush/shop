@@ -42,7 +42,7 @@ export default {
 
 <style lang="scss" scoped>
 .banner-main {
-  padding-top: 12px;
+  padding-top: 30px;
 
   .wrap {
     display: flex;

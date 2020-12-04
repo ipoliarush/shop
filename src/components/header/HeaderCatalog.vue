@@ -82,6 +82,7 @@ export default {
 <style lang="scss" scoped>
 .catalog {
   position: relative;
+
   .wrap {
     background: $blue;
     color: #fff;
@@ -108,7 +109,7 @@ export default {
     border-radius: 10px;
     width: 100%;
     left: 0;
-    top: 70px;
+    top: 88px;
     padding-top: 10px;
     padding-bottom: 10px;
   }

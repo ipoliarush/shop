@@ -215,6 +215,11 @@ export default {
     text-decoration: none;
     margin-bottom: 5px;
     width: max-content;
+    transition: color .5s ease;
+
+    &:hover {
+      color: $orange;
+    }
 
     @include respond-to('small') {
       font-size: 16px;
