@@ -49,21 +49,19 @@
         </div>
         <div class="form__submit">
           <button type="submit" class="form__button">Зареєструватися</button>
-          <span class="form__or">або</span>
-          <a href="#" class="form__link">
-            <img
-              src="@/assets/image/icons/google.svg"
-              alt=""
-              class="form__elem"
-            />
-          </a>
-          <a href="#" class="form__link">
-            <img
-              src="@/assets/image/icons/facebook.svg"
-              alt=""
-              class="form__elem"
-            />
-          </a>
+          <div class="form__wrap">
+            <span class="form__or">або</span>
+            <a href="#" class="form__link">
+              <icon-base viewBox="0 0 30 30" width="33" height="33">
+                <icon-google-auth />
+              </icon-base>
+            </a>
+            <a href="#" class="form__link">
+              <icon-base viewBox="0 0 33 33" width="33" height="33">
+                <icon-facebook-auth />
+              </icon-base>
+            </a>
+          </div>
         </div>
       </div>
       <div class="form__footer">
@@ -76,9 +74,16 @@
 
 <script>
 import Auth from "./Auth";
+import IconBase from "@/components/icons/IconBase";
+import IconFacebookAuth from "@/components/icons/IconFacebookAuth";
+import IconGoogleAuth from "@/components/icons/IconGoogleAuth";
+
 export default {
   components: {
     Auth,
+    IconBase,
+    IconFacebookAuth,
+    IconGoogleAuth,
   },
   name: "AuthRegister",
   props: {},
@@ -92,71 +97,134 @@ export default {
 <style lang="scss" scoped>
 .form {
   width: 100%;
-  max-width: 550px;
   display: flex;
   flex-direction: column;
-  &__body {
-    padding: 25px 45px;
-    background: #fff;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+
+  @include respond-to('small') {
+    width: 50%;
   }
-  &__title {
+
+  @include respond-to('medium') {
+    width: 100%;
+    max-width: 550px;
+  }
+}
+
+.form__body {
+  padding: 25px 10px;
+  background: #fff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
+  @include respond-to('small') {
+    padding: 25px 20px;
+  }
+
+  @include respond-to('medium') {
+    padding: 25px 45px;
+  }
+}
+.form__title {
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: 400;
+
+  @include respond-to('small') {
     margin-bottom: 20px;
   }
-  &__item {
-    position: relative;
-    margin-bottom: 18px;
+
+  @include respond-to('medium') {
+    font-size: 30px;
   }
-  &__label {
-    @extend %label-auth;
-  }
-  &__input {
-    @extend %input-auth;
-    &:not(:placeholder-shown) {
-      & + .form__label {
-        transform: translateY(-13px);
-      }
+}
+.form__item {
+  position: relative;
+  margin-bottom: 18px;
+}
+.form__label {
+  @extend %label-auth;
+}
+.form__input {
+  @extend %input-auth;
+  &:not(:placeholder-shown) {
+    & + .form__label {
+      transform: translateY(-13px);
     }
-    &:focus {
-      & + .form__label {
-        transform: translateY(-13px);
-      }
+  }
+  &:focus {
+    & + .form__label {
+      transform: translateY(-13px);
     }
   }
-  &__icon {
-    width: 20px;
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  &__submit {
-    display: flex;
+}
+.form__icon {
+  width: 20px;
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.form__submit {
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 430px) {
+    flex-direction: row;
     align-items: center;
   }
-  &__button {
-    @extend %button-auth;
+}
+.form__button {
+  @extend %button-auth;
+  margin-bottom: 20px;
+  max-width: 100%;
+
+  @media (min-width: 430px) {
+    margin-bottom: 0;
+    max-width: 216px;
   }
-  &__or {
-    margin: 0 30px;
+}
+
+.form__wrap {
+  display: flex;
+  align-items: center;
+}
+
+.form__or {
+  margin: 0 30px;
+}
+.form__link {
+  display: flex;
+  margin-right: 17px;
+
+  &:last-child {
+    margin-right: 0;
   }
-  &__link {
-    margin-right: 17px;
+}
+.form__recovery {
+  @extend %link-auth;
+  margin-top: 20px;
+  display: inline-block;
+}
+.form__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f1f1f1;
+  padding: 15px 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  font-size: 16px;
+  color: rgba(#000000, 0.5);
+
+  @include respond-to('small') {
+    padding: 15px 20px;
   }
-  &__footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f1f1f1;
-    padding: 15px 45px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    font-size: 16px;
-    color: rgba(#000000, 0.5);
+
+  @include respond-to('medium') {
+    padding: 25px 45px;
   }
-  &__reg {
-    @extend %link-auth;
-  }
+}
+.form__reg {
+  @extend %link-auth;
 }
 </style>

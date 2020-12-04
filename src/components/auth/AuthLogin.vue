@@ -99,9 +99,12 @@ export default {
   border-top-right-radius: 10px;
 
   @include respond-to('small') {
-    padding: 25px 45px;
+    padding: 25px 20px;
   }
 
+  @include respond-to('medium') {
+    padding: 25px 45px;
+  }
 }
 .form__title {
   margin-bottom: 15px;
@@ -154,8 +157,12 @@ export default {
   margin: 0 30px;
 }
 .form__link {
-  margin-right: 17px;
   display: flex;
+  margin-right: 17px;
+
+  &:last-child {
+    margin-right: 0;
+  }
 }
 .form__recovery {
   @extend %link-auth;
@@ -174,11 +181,11 @@ export default {
   color: rgba(#000000, 0.5);
 
   @include respond-to('small') {
-    padding: 15px 45px;
+    padding: 15px 20px;
   }
 
   @include respond-to('medium') {
-    
+    padding: 25px 45px;
   }
 }
 .form__reg {

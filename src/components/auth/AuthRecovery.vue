@@ -43,71 +43,116 @@ export default {
 <style lang="scss" scoped>
 .form {
   width: 100%;
-  max-width: 550px;
   display: flex;
   flex-direction: column;
-  &__body {
-    padding: 25px 45px;
-    background: #fff;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+
+  @include respond-to('small') {
+    width: 50%;
   }
-  &__title {
+
+  @include respond-to('medium') {
+    width: 100%;
+    max-width: 550px;
+  }
+}
+
+.form__body {
+  padding: 25px 10px;
+  background: #fff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
+  @include respond-to('small') {
+    padding: 25px 20px;
+  }
+
+  @include respond-to('medium') {
+    padding: 25px 45px;
+  }
+}
+.form__title {
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: 400;
+
+  @include respond-to('small') {
     margin-bottom: 20px;
   }
-  &__item {
-    position: relative;
-    margin-bottom: 18px;
+
+  @include respond-to('medium') {
+    font-size: 30px;
   }
-  &__label {
-    @extend %label-auth;
-  }
-  &__input {
-    @extend %input-auth;
-    &:not(:placeholder-shown) {
-      & + .form__label {
-        transform: translateY(-13px);
-      }
+}
+.form__item {
+  position: relative;
+  margin-bottom: 18px;
+}
+.form__label {
+  @extend %label-auth;
+}
+.form__input {
+  @extend %input-auth;
+  &:not(:placeholder-shown) {
+    & + .form__label {
+      transform: translateY(-13px);
     }
-    &:focus {
-      & + .form__label {
-        transform: translateY(-13px);
-      }
+  }
+  &:focus {
+    & + .form__label {
+      transform: translateY(-13px);
     }
   }
-  &__icon {
-    width: 20px;
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
+}
+.form__icon {
+  width: 20px;
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.form__submit {
+  display: flex;
+  align-items: center;
+}
+.form__button {
+  @extend %button-auth;
+}
+.form__or {
+  margin: 0 30px;
+}
+.form__link {
+  display: flex;
+  margin-right: 17px;
+
+  &:last-child {
+    margin-right: 0;
   }
-  &__submit {
-    display: flex;
-    align-items: center;
+}
+.form__recovery {
+  @extend %link-auth;
+  margin-top: 20px;
+  display: inline-block;
+}
+.form__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f1f1f1;
+  padding: 15px 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  font-size: 16px;
+  color: rgba(#000000, 0.5);
+
+  @include respond-to('small') {
+    padding: 15px 20px;
   }
-  &__button {
-    @extend %button-auth;
+
+  @include respond-to('medium') {
+    padding: 25px 45px;
   }
-  &__or {
-    margin: 0 30px;
-  }
-  &__link {
-    margin-right: 17px;
-  }
-  &__footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f1f1f1;
-    padding: 15px 45px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    font-size: 16px;
-    color: rgba(#000000, 0.5);
-  }
-  &__reg {
-    @extend %link-auth;
-  }
+}
+.form__reg {
+  @extend %link-auth;
 }
 </style>
