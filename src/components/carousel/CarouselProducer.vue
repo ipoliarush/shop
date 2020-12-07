@@ -135,8 +135,15 @@ export default {
         width: 10px;
         height: 10px;
         background: rgba($blue, 0.2);
-        transition: background ease .5s;
+        transition: all ease .5s;
         border-radius: 2px;
+        cursor: pointer;
+      }
+
+      &:hover {
+        &::before {
+          background: $orange;
+        }
       }
     }
 
