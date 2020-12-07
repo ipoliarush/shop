@@ -6,9 +6,7 @@
       </h2>
       <slick :slidesToShow="slides" v-bind="settings" class="my-slick">
         <div v-for="item in img" class="producer__item" :key="item.alt">
-          <div class="producer__inner">
-            <img class="producer__img" :src="require(`@/assets/image/slide/producer/${item.src}`)" :alt="item.alt">
-          </div>
+          <div class="producer__inner" :style="{ backgroundColor: '#fff', backgroundImage: 'url(' + require(`@/assets/image/slide/producer/${item.src}`) + ')' }"></div>
         </div>
       </slick>
     </div>
@@ -28,6 +26,7 @@ export default {
   props: {},
   data() {
     return {
+      link: '@/assets/image/slide/producer/',
       img: [
         { src: "bosch.png", alt: "Bosch" },
         { src: "eletrolux.png", alt: "Electrolux" },
@@ -76,26 +75,19 @@ export default {
     outline: none;
   }
   .producer__inner {
-    background: #fff;
     border-radius: 10px;
     width: 100%;
-    height: 100%;
+    height: 120px;
     transition: box-shadow ease .7s;
     outline: none;
-    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    
 
     &:hover {
       box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
     }
-  }
-  .producer__img {
-    display: block;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    padding: 30px;
-    outline: none;
   }
 }
 </style>
