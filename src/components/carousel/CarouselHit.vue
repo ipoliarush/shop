@@ -2,23 +2,26 @@
   <div class="hit">
     <div class="hit__wrap">
       <div class="hit__head">
-        <icon-base viewBox="0 0 28 28" width="20" height="20" fill="#FF6A00">
-          <icon-like />
+        <icon-base class="svg" viewBox="0 0 26 26" width="24" height="24" fill="#FF6A00">
+          <icon-star />
         </icon-base>
         <h3 class="hit__title">
-          Рекомендовані
+          Хіти продажу
         </h3>
+        <div class="hit__wline"></div>
       </div>
       <slick :slidesToShow="slides" v-bind="settings" class="hit__slick">
         <div v-for="item in items" :key="item.n" class="hit__item">
           <div class="hit__inner">
-            <img  class="hit__img" src="@/assets/image/slide/goods/goods.png">
+            <img  class="hit__img" src="@/assets/image/slide/hit/hit.png">
           </div>
-          <div class="hit__desc">
-            Блендер "Blue"
-          </div>
-          <div class="hit__price">
-            220 грн
+          <div class="hit__detail">
+            <div class="hit__name">
+              Холодильник "Bosch"
+            </div>
+            <div class="hit__price">
+              220 грн
+            </div>
           </div>
         </div>
       </slick>
@@ -30,7 +33,7 @@
 import Slick from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 import IconBase from "@/components/icons/IconBase";
-import IconLike from "@/components/icons/IconLike";
+import IconStar from "@/components/icons/IconStar";
 
 
 export default {
@@ -38,7 +41,7 @@ export default {
   components: {
     Slick,
     IconBase,
-    IconLike,
+    IconStar,
   },
   props: {},
   data() {
@@ -80,10 +83,30 @@ export default {
 <style lang="scss" scoped>
 .hit {
 
+  .hit__wrap {
+    background: #fff;
+    position: relative;
+    border-radius: 10px;
+    padding-top: 15px;
+    padding-bottom: 20px;
+    height: 100%;
+  }
+  .hit__head {
+    display: flex;
+    padding: 0 15px 0 15px;
+    align-items: center;
+    margin-bottom: 20px;
+    
+    .svg {
+      flex-shrink: 0;
+    }
+  }
+
   .hit__title {
     font-size: 16px;
     font-weight: 400;
     margin-left: 10px;
+    white-space: nowrap;
 
     @include respond-to('small') {
       font-size: 20px;
@@ -91,26 +114,24 @@ export default {
 
     @include respond-to('medium') {
       font-size: 25px;
+      margin-right: 15px;
     }
   }
-  .hit__wrap {
-    background: #fff;
-    position: relative;
-    border-radius: 10px;
-    padding-bottom: 20px;
-    height: 100%;
+  .hit__wline {
+    @include respond-to('medium') {
+      width: 100%;
+      border-bottom: 2px solid rgba($blue, 0.2);
+      flex-shrink: 2;
+      margin-right: 45px;
+    }
   }
-  .hit__head {
-    display: flex;
-    padding: 15px 15px 0 15px;
-    align-items: center;
-  }
+
   .hit__item {
     height: 70px;
     position: relative;
     padding: 0 15px;
     outline: none;
-
+    
     @include respond-to('small') {
       height: 100%;
     }
@@ -123,9 +144,9 @@ export default {
     outline: none;
     padding: 5px 10px;
     height: 70px;
+    max-height: fill-available;
     position: relative;
     overflow: hidden;
-    margin-top: 20px;
 
     display: flex;
     justify-content: center;
@@ -145,8 +166,24 @@ export default {
     outline: none;
     height: 100%;
     width: auto;
+
+    @include respond-to('small') {
+      max-height: 280px;
+    }
+
+    @include respond-to('medium') {
+      max-height: 260px;
+    }
   }
-  .hit__desc {
+  .hit__detail {
+    @include respond-to('small') {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  .hit__name {
     font-size: 14px;
     font-weight: 300;
     text-align: center;
@@ -159,6 +196,13 @@ export default {
     @include respond-to('small') {
       visibility: visible;
       position: initial;
+      font-size: 16px;
+      margin-top: 0;
+      
+    }
+
+    @include respond-to('medium') {
+      font-size: 18px;
     }
   }
   .hit__price {
@@ -168,7 +212,13 @@ export default {
     margin-top: 12px;
 
     @include respond-to('small') {
-      margin-top: 6px;
+      margin-top: 0;
+      font-size: 27px;
+    }
+
+    @include respond-to('medium') {
+      font-size: 40px;
+      white-space: nowrap;
     }
   }
 }
@@ -186,7 +236,7 @@ export default {
     outline: none;
     background: transparent;
     position: absolute;
-    top: -25px;
+    top: -48px;
 
     &::before {
       content: "";

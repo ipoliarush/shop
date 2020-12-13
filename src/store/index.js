@@ -22,7 +22,7 @@ export default new Vuex.Store({
       
       if (width >= 992) {
         state.slidesProducer = 6;
-        state.slidesGoods = 5;
+        state.slidesGoods = 4;
         state.slidesGoodsRow = 2;
         state.slidesHit = 1;
       }

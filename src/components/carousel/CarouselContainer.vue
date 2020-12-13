@@ -53,6 +53,7 @@ export default {
     flex-direction: column;
     width: 100%;
     align-items: stretch;
+    max-height: 450px;
 
 
     @include respond-to('small') {

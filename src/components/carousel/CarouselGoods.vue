@@ -2,12 +2,13 @@
   <div class="goods">
     <div class="goods__wrap">
       <div class="goods__head">
-        <icon-base viewBox="0 0 28 28" width="20" height="20" fill="#FF6A00">
+        <icon-base class="svg" viewBox="0 0 28 28" width="20" height="20" fill="#FF6A00">
           <icon-like />
         </icon-base>
         <h3 class="goods__title">
           Рекомендовані
         </h3>
+        <div class="goods__wline"></div>
       </div>
       <slick :rows="row" :slidesToShow="slides" v-bind="settings" class="goods__slick">
         <div v-for="item in items" :key="item.n" class="goods__item">
@@ -84,6 +85,30 @@ export default {
 <style lang="scss" scoped>
 .goods {
 
+  .goods__wrap {
+    background: #fff;
+    position: relative;
+    border-radius: 10px;
+    padding-bottom: 20px;
+  }
+  .goods__head {
+    display: flex;
+    padding: 15px 15px 0 15px;
+    align-items: center;
+
+    .svg {
+      flex-shrink: 0;
+    }
+  }
+
+  .goods__wline {
+    @include respond-to('medium') {
+      width: 100%;
+      border-bottom: 2px solid rgba($blue, 0.2);
+      flex-shrink: 2;
+      margin-right: 45px;
+    }
+  }
   .goods__title {
     font-size: 16px;
     font-weight: 400;
@@ -95,19 +120,10 @@ export default {
 
     @include respond-to('medium') {
       font-size: 25px;
+      margin-right: 15px;
     }
   }
-  .goods__wrap {
-    background: #fff;
-    position: relative;
-    border-radius: 10px;
-    padding-bottom: 20px;
-  }
-  .goods__head {
-    display: flex;
-    padding: 15px 15px 0 15px;
-    align-items: center;
-  }
+
   .goods__item {
     height: 70px;
     position: relative;
@@ -189,7 +205,7 @@ export default {
     outline: none;
     background: transparent;
     position: absolute;
-    top: -25px;
+    top: -28px;
 
     &::before {
       content: "";
