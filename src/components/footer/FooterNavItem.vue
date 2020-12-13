@@ -13,7 +13,6 @@ export default {
   components: {},
   name: "FooterNavItem",
   props: {
-    title: String,
     navs: Array,
   },
   data: () => ({}),

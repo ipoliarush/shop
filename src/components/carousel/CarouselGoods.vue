@@ -104,7 +104,7 @@ export default {
   .goods__wline {
     @include respond-to('medium') {
       width: 100%;
-      border-bottom: 2px solid rgba($blue, 0.2);
+      border-bottom: 2px solid rgba($blue, 0.1);
       flex-shrink: 2;
       margin-right: 45px;
     }
@@ -113,6 +113,7 @@ export default {
     font-size: 16px;
     font-weight: 400;
     margin-left: 10px;
+    flex-shrink: 0;
 
     @include respond-to('small') {
       font-size: 20px;
@@ -152,10 +153,6 @@ export default {
 
     @include respond-to('small') {
       height: 100px;
-    }
-
-    &:hover {
-      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
     }
   }
 

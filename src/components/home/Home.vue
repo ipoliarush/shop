@@ -1,8 +1,11 @@
 <template>
   <div class="home">
-    <banner-main />
+    <banner-main  />
     <carousel-producer class="producer" />
-    <carousel-container class="cont" />
+    <carousel-container title="Велика побутова техніка" />
+    <carousel-container :rev="true" title="Техніка для кухні" />
+    <carousel-container title="Вбудованна техніка" />
+    <carousel-container :rev="true" title="Знижки" />
   </div>
 </template>
 
@@ -30,8 +33,7 @@ export default {
 
 <style lang="scss" scoped>
 .home {
-  .producer,
-  .goods {
+  .producer {
     margin-top: 30px;
   }
 }

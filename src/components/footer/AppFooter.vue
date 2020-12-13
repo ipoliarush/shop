@@ -6,7 +6,6 @@
         <div class="nav">
           <p class="nav__name">{{ catalog.title }}</p>
           <footer-nav-item
-            :title="catalog.title"
             :navs="catalog.navs"
             class="nav__list"
           />
@@ -14,7 +13,6 @@
         <div class="nav">
           <p class="nav__name">{{ actual.title }}</p>
           <footer-nav-item
-            :title="actual.title"
             :navs="actual.navs"
             class="nav__list"
           />
@@ -22,7 +20,6 @@
         <div class="nav">
           <p class="nav__name">{{ menu.title }}</p>
           <footer-nav-item
-            :title="menu.title"
             :navs="menu.navs"
             class="nav__list"
           />
