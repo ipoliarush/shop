@@ -1,23 +1,23 @@
 <template>
-  <div class="goods">
-    <div class="goods__wrap">
-      <div class="goods__head">
+  <div class="hit">
+    <div class="hit__wrap">
+      <div class="hit__head">
         <icon-base viewBox="0 0 28 28" width="20" height="20" fill="#FF6A00">
           <icon-like />
         </icon-base>
-        <h3 class="goods__title">
+        <h3 class="hit__title">
           Рекомендовані
         </h3>
       </div>
-      <slick :rows="row" :slidesToShow="slides" v-bind="settings" class="goods__slick">
-        <div v-for="item in items" :key="item.n" class="goods__item">
-          <div class="goods__inner">
-            <img  class="goods__img" src="@/assets/image/slide/goods/goods.png">
+      <slick :slidesToShow="slides" v-bind="settings" class="hit__slick">
+        <div v-for="item in items" :key="item.n" class="hit__item">
+          <div class="hit__inner">
+            <img  class="hit__img" src="@/assets/image/slide/goods/goods.png">
           </div>
-          <div class="goods__desc">
+          <div class="hit__desc">
             Блендер "Blue"
           </div>
-          <div class="goods__price">
+          <div class="hit__price">
             220 грн
           </div>
         </div>
@@ -34,7 +34,7 @@ import IconLike from "@/components/icons/IconLike";
 
 
 export default {
-  name: "CarouselGoods",
+  name: "CarouselHit",
   components: {
     Slick,
     IconBase,
@@ -65,26 +65,22 @@ export default {
         focusOnSelect: true,
         infinite: true,
         speed: 500,
-        slidesToScroll: 2,
         arrows: true,
       }
     };
   },
   computed: {
     slides() {
-      return this.$store.state.slidesGoods;
+      return this.$store.state.slidesHit;
     },
-    row() {
-      return this.$store.state.slidesGoodsRow;
-    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.goods {
+.hit {
 
-  .goods__title {
+  .hit__title {
     font-size: 16px;
     font-weight: 400;
     margin-left: 10px;
@@ -97,28 +93,29 @@ export default {
       font-size: 25px;
     }
   }
-  .goods__wrap {
+  .hit__wrap {
     background: #fff;
     position: relative;
     border-radius: 10px;
     padding-bottom: 20px;
+    height: 100%;
   }
-  .goods__head {
+  .hit__head {
     display: flex;
     padding: 15px 15px 0 15px;
     align-items: center;
   }
-  .goods__item {
+  .hit__item {
     height: 70px;
     position: relative;
     padding: 0 15px;
     outline: none;
 
     @include respond-to('small') {
-      height: 100px;
+      height: 100%;
     }
   }
-  .goods__inner {
+  .hit__inner {
     background: #F5F5F5;
     border-radius: 10px;
     width: 100%;
@@ -135,7 +132,7 @@ export default {
     align-items: center;
 
     @include respond-to('small') {
-      height: 100px;
+      height: 100%;
     }
 
     &:hover {
@@ -143,13 +140,13 @@ export default {
     }
   }
 
-  .goods__img {
+  .hit__img {
     display: block;
     outline: none;
     height: 100%;
     width: auto;
   }
-  .goods__desc {
+  .hit__desc {
     font-size: 14px;
     font-weight: 300;
     text-align: center;
@@ -164,7 +161,7 @@ export default {
       position: initial;
     }
   }
-  .goods__price {
+  .hit__price {
     font-size: 14px;
     font-weight: 700;
     text-align: center;
@@ -178,7 +175,7 @@ export default {
 </style>
 
 <style lang="scss">
-.goods__slick {
+.hit__slick {
 
   .slick-arrow {
     font-size: 0;

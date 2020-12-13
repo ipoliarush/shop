@@ -6,7 +6,9 @@
       </h2>
       <slick :slidesToShow="slides" v-bind="settings" class="my-slick">
         <div v-for="item in img" class="producer__item" :key="item.alt">
-          <div class="producer__inner" :style="{ backgroundColor: '#fff', backgroundImage: 'url(' + require(`@/assets/image/slide/producer/${item.src}`) + ')' }"></div>
+          <div class="producer__inner">
+            <img class="producer__img" :src="require(`@/assets/image/slide/producer/${item.src}`)" :alt="item.alt">
+          </div>
         </div>
       </slick>
     </div>
@@ -80,14 +82,22 @@ export default {
     height: 120px;
     transition: box-shadow ease .7s;
     outline: none;
-    background-position: center;
-    background-repeat: no-repeat;
-    
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    padding: 15px;
 
     &:hover {
       box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
     }
+  }
+  .producer__img {
+    display: block;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 }
 </style>
