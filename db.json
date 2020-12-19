@@ -5,6 +5,7 @@
     "data": [
       {
         "image": "1.png",
+        "image2": "1-1.jpg",
         "name": "Пилосос без мішка ROWENTA X-Trem Power Cyclonic Home&Car RO6963EA 4AAAA Ecomotor",
         "price": 2100.234234234,
         "discount": 3,
@@ -15,6 +16,7 @@
       },
       {
         "image": "2.png",
+        "image2": "2-1.jpg",
         "name": "Двокамерний холодильник TOSHIBA GR-RB308WE-DMJ(06)",
         "price": 12999,
         "discount": "",
@@ -25,6 +27,7 @@
       },
       {
         "image": "3.png",
+        "image2": "3-1.jpg",
         "name": "Збірник книжок Відьмак",
         "price": 1189,
         "discount": "",
@@ -35,6 +38,7 @@
       },
       {
         "image": "4.png",
+        "image2": "4-1.jpg",
         "name": "Кондиціонер COOPER&HUNTER PRIMA PLUS CH-S09XN7",
         "price": 7459,
         "discount": 2,
@@ -45,6 +49,7 @@
       },
       {
         "image": "5.png",
+        "image2": "5-1.jpg",
         "name": "Комп'ютер Artline Gaming X45 v17 (X45v17)",
         "price": 21899,
         "discount": 10,
@@ -55,6 +60,7 @@
       },
       {
         "image": "6.png",
+        "image2": "6-1.jpg",
         "name": "Пральна машина вузька SAMSUNG WW60J30J0LW/UA",
         "price": 7399,
         "discount": 12,
@@ -65,6 +71,7 @@
       },
       {
         "image": "7.png",
+        "image2": "7-1.jpg",
         "name": "Электродуховка LIBERTON LEO-380 Black (NVT-73-04036)",
         "price": 3599,
         "discount": "",
@@ -75,6 +82,7 @@
       },
       {
         "image": "8.png",
+        "image2": "8-1.jpg",
         "name": "Акумуляторний пилосос ROWENTA Air Force Flex Aqua 560 RH9490WO",
         "price": 4549.566578,
         "discount": "",
@@ -85,6 +93,7 @@
       },
       {
         "image": "9.png",
+        "image2": "9-1.jpg",
         "name": "Скутер SYM ALLO 125 куб Білий",
         "price": 15999,
         "discount": 5,
@@ -95,6 +104,7 @@
       },
       {
         "image": "10.png",
+        "image2": "10-1.jpg",
         "name": "Кухонна машина KENWOOD MultiOne KHH323WH",
         "price": 3899,
         "discount": "",

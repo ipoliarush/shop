@@ -1,32 +1,23 @@
 <template>
-  <div class="container">
+  <div class="medium">
     <div class="layout">
       <div class="head">
-        <router-link class="title" to="/catalog">
-          {{ title }}
-        </router-link>
-        <div class="wline"></div>
-        <router-link class="link" to="/catalog">
-          До каталогу
-        </router-link>
       </div>
-      <div class="wrapper" :class="{'wrapper-rev': rev}">
-        <carousel-hit :data="dataH" class="hit" />
-        <carousel-goods :data="dataG" class="recomm" />
+      <div class="wrapper">
+        <carousel-sale :data="data" class="sale" />
+        <carousel-sale :data="data" class="sale" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import CarouselGoods from '@/components/carousel/CarouselGoods';
-import CarouselHit from '@/components/carousel/CarouselHit';
+import CarouselSale from '@/components/carousel/CarouselSale';
 
 export default {
-  name: "CarouselContainer",
+  name: "CarouselMedium",
   components: {
-    CarouselGoods,
-    CarouselHit
+    CarouselSale
   },
   props: {
     title: String,
@@ -34,8 +25,7 @@ export default {
       type: Boolean,
       default: false
     },
-    dataG: [Object, Array],
-    dataH: [Object, Array],
+    data: [Object, Array],
   },
   data() {
     return {
@@ -47,16 +37,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
+.medium {
 
   .head {
     margin-top: 10px;
     display: flex;
     align-items: center;
-
-    @include respond-to('small') {
-      margin: 30px 0 20px 0;
-    }
   }
   .title {
     color: $blue;

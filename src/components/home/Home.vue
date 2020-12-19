@@ -2,27 +2,30 @@
   <div class="home">
     <banner-main  />
     <carousel-producer class="producer" />
-    <carousel-container
+    <carousel-big
       :dataH="ITEMSHIT"
       :dataG="ITEMSHIT"
       title="Велика побутова техніка"
     />
-    <carousel-container 
+    <carousel-big 
       :dataH="ITEMSHIT" 
       :dataG="ITEMSHIT" 
       :rev="true" 
       title="Техніка для кухні" 
     />
-    <carousel-container 
+    <carousel-big 
       :dataH="ITEMSHIT" 
       :dataG="ITEMSHIT" 
       title="Вбудованна техніка" 
     />
-    <carousel-container 
+    <carousel-big 
       :dataH="ITEMSHIT" 
       :dataG="ITEMSHIT" 
       :rev="true" 
       title="Знижки" 
+    />
+    <carousel-medium 
+      :data="ITEMSHIT" 
     />
   </div>
 </template>
@@ -30,7 +33,8 @@
 <script>
 import BannerMain from "@/components/banner/BannerMain";
 import CarouselProducer from "@/components/carousel/CarouselProducer";
-import CarouselContainer from '@/components/carousel/CarouselContainer';
+import CarouselBig from '@/components/carousel/CarouselBig';
+import CarouselSale from '@/components/carousel/CarouselSale';
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
@@ -38,7 +42,8 @@ export default {
   components: {
     BannerMain,
     CarouselProducer,
-    CarouselContainer
+    CarouselBig,
+    CarouselSale
   },
   props: {},
   data() {

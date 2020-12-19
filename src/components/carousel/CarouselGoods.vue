@@ -39,6 +39,11 @@
                 :src="require(`@/assets/image/goods/${item.image}`)"
                 :alt="item.name"
               >
+              <img
+                class="item__img img-hover" 
+                :src="require(`@/assets/image/goods/${item.image2}`)"
+                :alt="item.name"
+              >
             </div>
             <div class="item__detail">
               <div class="item__name">
@@ -166,6 +171,12 @@ export default {
       .price__now {
         color: $orange;
       }
+      .item__img {
+        display: none;
+      }
+      .img-hover {
+        display: block;
+      }
     }
   }
   .item__inner {
@@ -187,11 +198,13 @@ export default {
   .item__img {
     display: block;
     outline: none;
-    height: 100%;
     width: auto;
+    height: auto;
+    max-height: 100%;
+    max-width: 100%;
   }
-  .item__detail {
-
+  .img-hover {
+    display: none;
   }
   .item__name {
     font-size: 14px;
