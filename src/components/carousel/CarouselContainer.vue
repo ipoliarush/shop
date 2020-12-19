@@ -2,17 +2,17 @@
   <div class="container">
     <div class="layout">
       <div class="head">
-        <h2 class="title">
+        <router-link class="title" to="/catalog">
           {{ title }}
-        </h2>
+        </router-link>
         <div class="wline"></div>
         <router-link class="link" to="/catalog">
           До каталогу
         </router-link>
       </div>
       <div class="wrapper" :class="{'wrapper-rev': rev}">
-        <carousel-hit class="hit" />
-        <carousel-goods class="recomm" />
+        <carousel-hit :data="dataH" class="hit" />
+        <carousel-goods :data="dataG" class="recomm" />
       </div>
     </div>
   </div>
@@ -33,7 +33,9 @@ export default {
     rev: {
       type: Boolean,
       default: false
-    }
+    },
+    dataG: [Object, Array],
+    dataH: [Object, Array],
   },
   data() {
     return {
@@ -48,15 +50,22 @@ export default {
 .container {
 
   .head {
-    margin: 30px 0 20px 0;
+    margin-top: 10px;
     display: flex;
     align-items: center;
+
+    @include respond-to('small') {
+      margin: 30px 0 20px 0;
+    }
   }
   .title {
-    font-size: 18px;
+    color: $blue;
+    font-size: 20px;
     font-weight: 500;
     flex-shrink: 0;
     margin-right: 50px;
+    text-decoration: none;
+    transition: color ease .5s;
 
     @include respond-to('small') {
       font-size: 24px;
@@ -64,6 +73,10 @@ export default {
 
     @include respond-to('medium') {
       font-size: 35px;
+    }
+
+    &:hover {
+      color: $orange;
     }
   }
 
@@ -81,7 +94,7 @@ export default {
     font-size: 14px;
     font-weight: 400;
     text-decoration: none;
-    transition: all ease .5s;
+    transition: color ease .5s;
     flex-shrink: 0;
 
     visibility: hidden;
@@ -102,8 +115,6 @@ export default {
     flex-direction: column;
     width: 100%;
     align-items: stretch;
-    max-height: 450px;
-
 
     @include respond-to('small') {
       flex-direction: row;
@@ -125,12 +136,10 @@ export default {
 
   .hit {
     width: 100%;
-    margin-bottom: 30px;
 
     @include respond-to('small') {
       width: calc(50% - 15px);
       margin-right: 30px;
-      margin-bottom: 0;
     }
 
     @include respond-to('medium') {
@@ -145,11 +154,13 @@ export default {
       flex-direction: row-reverse;
     }
     .recomm {
+
       @include respond-to('small') {
         margin-right: 30px;
       }
     }
     .hit {
+
       @include respond-to('small') {
         margin-right: 0;
       }

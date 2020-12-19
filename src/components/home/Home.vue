@@ -2,10 +2,28 @@
   <div class="home">
     <banner-main  />
     <carousel-producer class="producer" />
-    <carousel-container title="Велика побутова техніка" />
-    <carousel-container :rev="true" title="Техніка для кухні" />
-    <carousel-container title="Вбудованна техніка" />
-    <carousel-container :rev="true" title="Знижки" />
+    <carousel-container
+      :dataH="ITEMSHIT"
+      :dataG="ITEMSHIT"
+      title="Велика побутова техніка"
+    />
+    <carousel-container 
+      :dataH="ITEMSHIT" 
+      :dataG="ITEMSHIT" 
+      :rev="true" 
+      title="Техніка для кухні" 
+    />
+    <carousel-container 
+      :dataH="ITEMSHIT" 
+      :dataG="ITEMSHIT" 
+      title="Вбудованна техніка" 
+    />
+    <carousel-container 
+      :dataH="ITEMSHIT" 
+      :dataG="ITEMSHIT" 
+      :rev="true" 
+      title="Знижки" 
+    />
   </div>
 </template>
 
@@ -13,6 +31,7 @@
 import BannerMain from "@/components/banner/BannerMain";
 import CarouselProducer from "@/components/carousel/CarouselProducer";
 import CarouselContainer from '@/components/carousel/CarouselContainer';
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: "Home",
@@ -27,7 +46,19 @@ export default {
       
     };
   },
-
+  computed: {
+    ...mapGetters([
+      'ITEMSHIT'
+    ]),
+  },
+  methods: {
+    ...mapActions([
+      'GET_ITEMSHIT_FROM_API',
+    ])
+  },
+  mounted() {
+    this.GET_ITEMSHIT_FROM_API();
+  }
 };
 </script>
 

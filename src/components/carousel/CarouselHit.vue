@@ -6,23 +6,43 @@
           <icon-star />
         </icon-base>
         <h3 class="hit__title">
-          Хіти продажу
+          {{ data.name_ua }}
         </h3>
         <div class="hit__wline"></div>
       </div>
-      <slick :slidesToShow="slides" v-bind="settings" class="hit__slick">
-        <div v-for="item in items" :key="item.n" class="hit__item">
-          <div class="hit__inner">
-            <img  class="hit__img" src="@/assets/image/slide/hit/hit.png">
-          </div>
-          <div class="hit__detail">
-            <div class="hit__name">
-              Холодильник "Bosch"
+      <slick
+        v-if="data.data"
+        :slidesToScroll="LHIT"
+        :slidesToShow="SHIT"
+        v-bind="settings"
+        class="hit__slick"
+      >
+        <div v-for="item in data.data" :key="item.article" class="item">
+          <router-link :title="item.name" to="/i" class="item__wrap">
+            <div class="item__inner">
+              <img 
+                class="item__img" 
+                :src="require(`@/assets/image/goods/${item.image}`)"
+                :alt="item.name"
+              >
             </div>
-            <div class="hit__price">
-              220 грн
+            <div class="item__detail">
+              <div class="item__name">
+                {{ item.name }}
+              </div>
+              <div class="item__price price">
+                <div v-if="item.discount" class="price__old">
+                  {{ Math.round(item.price) }} грн
+                </div>
+                <div v-if="!item.discount" class="price__now">
+                  {{ Math.round(item.price) }} грн
+                </div>
+                <div v-if="item.discount" class="price__new" >
+                  {{ Math.round(item.price - (item.price * item.discount / 100) ) }} грн
+                </div>
+              </div>
             </div>
-          </div>
+          </router-link>
         </div>
       </slick>
     </div>
@@ -34,7 +54,7 @@ import Slick from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 import IconBase from "@/components/icons/IconBase";
 import IconStar from "@/components/icons/IconStar";
-
+import {mapGetters} from 'vuex'
 
 export default {
   name: "CarouselHit",
@@ -43,40 +63,28 @@ export default {
     IconBase,
     IconStar,
   },
-  props: {},
+    props: {
+    data: [Object, Array],
+  },
   data() {
     return {
-      items: [
-        { n: 1 }, 
-        { n: 2 },
-        { n: 3 },
-        { n: 4 },
-        { n: 5 },
-        { n: 6 },
-        { n: 7 },
-        { n: 8 },
-        { n: 9 },
-        { n: 10 },
-        { n: 11 },
-        { n: 12 },
-      ],
-      img: [
-        { src: "goods.png", alt: "Bosch" },
-      ],
       settings: {
         dots: false,
-        focusOnSelect: true,
         infinite: true,
-        speed: 500,
+        speed: 2000,
         arrows: true,
+        draggable: false,
+        autoplay: false,
+        autoplaySpeed: 5000,
       }
     };
   },
   computed: {
-    slides() {
-      return this.$store.state.slidesHit;
-    },
-  }
+    ...mapGetters([
+      'SHIT',
+      'LHIT',
+    ]),
+  },
 };
 </script>
 
@@ -84,18 +92,13 @@ export default {
 .hit {
 
   .hit__wrap {
-    background: #fff;
     position: relative;
-    border-radius: 10px;
-    padding-top: 15px;
-    padding-bottom: 20px;
     height: 100%;
   }
   .hit__head {
     display: flex;
-    padding: 0 15px 0 15px;
+    padding-top: 15px;
     align-items: center;
-    margin-bottom: 20px;
     
     .svg {
       flex-shrink: 0;
@@ -103,7 +106,7 @@ export default {
   }
 
   .hit__title {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
     margin-left: 10px;
     flex-shrink: 0;
@@ -126,23 +129,34 @@ export default {
     }
   }
 
-  .hit__item {
-    height: 70px;
+  .item {
     position: relative;
-    padding: 0 15px;
+    padding: 15px;
     outline: none;
-    
-    @include respond-to('small') {
-      height: 100%;
+    height: 100%;
+
+  }
+  .item__wrap {
+    background: #FFF;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    padding: 15px;
+    text-decoration: none;
+    transition: box-shadow ease .9s;
+
+    &:hover {
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+
+      .price__now {
+        color: $orange;
+      }
     }
   }
-  .hit__inner {
-    background: #F5F5F5;
-    border-radius: 10px;
+  .item__inner {
     width: 100%;
-    transition: box-shadow ease .7s;
     outline: none;
-    padding: 5px 10px;
     height: 70px;
     max-height: fill-available;
     position: relative;
@@ -154,37 +168,59 @@ export default {
 
     @include respond-to('small') {
       height: 100%;
+      min-height: 347px;
+    }
+
+    @include respond-to('medium') {
+      height: 100%;
+      min-height: 297px;
     }
   }
 
-  .hit__img {
+  .item__img {
     display: block;
     outline: none;
     height: 100%;
     width: auto;
 
     @include respond-to('small') {
-      max-height: 280px;
+      max-height: 347px;
     }
 
     @include respond-to('medium') {
-      max-height: 260px;
+      max-height: 297px;
     }
   }
-  .hit__detail {
+  .item__detail {
     @include respond-to('small') {
-      margin-top: 10px;
+      margin-top: 6px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+    @include respond-to('medium') {
+      margin-top: 15px;
+      flex-direction: column;
+
+      .item__price {
+        font-size: 36px;
+      }
+      .item__name, 
+      .item__price {
+        width: 100%;
+      }
+    }
   }
-  .hit__name {
+  .item__name {
     font-size: 14px;
     font-weight: 300;
     text-align: center;
     margin-top: 12px;
     outline: none;
+    color: $blue;
+    line-height: 18px;
+    height: 36px;
+    overflow: hidden;
 
     visibility: hidden;
     position: absolute;
@@ -194,27 +230,69 @@ export default {
       position: initial;
       font-size: 16px;
       margin-top: 0;
-      
+      width: 45%;
+      margin-right: 5%;
     }
 
     @include respond-to('medium') {
       font-size: 18px;
     }
   }
-  .hit__price {
+  .item__price {
     font-size: 14px;
     font-weight: 700;
     text-align: center;
     margin-top: 12px;
+    height: 39px;
+    color: $blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
 
     @include respond-to('small') {
       margin-top: 0;
       font-size: 27px;
+      width: 50%;
+      height: 49px;
+      justify-content: center;
     }
 
     @include respond-to('medium') {
       font-size: 40px;
       white-space: nowrap;
+      flex-direction: row;
+      height: 44px;
+      margin-top: 10px;
+      align-items: flex-end;
+    }
+  }
+  .price__old {
+    font-size: 12px;
+    font-weight: 300;
+    text-decoration: line-through;
+
+    @include respond-to('small') {
+      margin-right: 5px;
+    }
+
+    @include respond-to('medium') {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+  }
+  .price__now {
+    transition: color ease .5s;
+
+    @include respond-to('small') {
+      line-height: 44px;
+    }
+  }
+  .price__new {
+    color: $orange;
+
+    @include respond-to('small') {
+      line-height: 44px;
     }
   }
 }
@@ -222,6 +300,7 @@ export default {
 
 <style lang="scss">
 .hit__slick {
+  margin: 0 -15px;
 
   .slick-arrow {
     font-size: 0;
@@ -232,7 +311,15 @@ export default {
     outline: none;
     background: transparent;
     position: absolute;
-    top: -48px;
+    top: -22px;
+
+    @include respond-to('small') {
+      top: -25px;
+    }
+
+    @include respond-to('medium') {
+      top: -28px;
+    }
 
     &::before {
       content: "";

@@ -2,13 +2,30 @@
   <div class="producer">
     <div class="layout">
       <h2 class="producer__title">
-        Виробники
+        {{ITEMSPRODUCER.name_ua}}
       </h2>
-      <slick :slidesToShow="slides" v-bind="settings" class="my-slick">
-        <div v-for="item in img" class="producer__item" :key="item.alt">
-          <div class="producer__inner">
-            <img class="producer__img" :src="require(`@/assets/image/slide/producer/${item.src}`)" :alt="item.alt">
-          </div>
+      <slick
+        v-if="ITEMSPRODUCER.data"
+        :slidesToShow="SPRODUCER"
+        v-bind="settings"
+        class="my-slick"
+      >
+        <div 
+          v-for="item in ITEMSPRODUCER.data"
+          class="producer__item"
+          :key="item.name"
+        >
+          <router-link
+            :title="item.name"
+            :to="`/${item.name.toLowerCase()}`"
+            class="producer__inner"
+          >
+            <img
+              :alt="item.name"
+              class="producer__img"
+              :src="require(`@/assets/image/slide/producer/${item.image}`)"
+            >
+          </router-link>
         </div>
       </slick>
     </div>
@@ -18,7 +35,7 @@
 <script>
 import Slick from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
-
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: "CarouselProducer",
@@ -28,31 +45,33 @@ export default {
   props: {},
   data() {
     return {
-      link: '@/assets/image/slide/producer/',
-      img: [
-        { src: "bosch.png", alt: "Bosch" },
-        { src: "eletrolux.png", alt: "Electrolux" },
-        { src: "hitachi.png", alt: "Hitahi" },
-        { src: "lg.png", alt: "LG" },
-        { src: "samsung.png", alt: "Samsung" },
-        { src: "toshiba.png", alt: "Toshiba" },
-      ],
       settings: {
-        "dots": true,
-        "dotsClass": 'my-dots',
-        "arrows": false,
-        "focusOnSelect": true,
-        "infinite": true,
-        "speed": 500,
-        "slidesToScroll": 2,
+        dots: true,
+        dotsClass: 'my-dots',
+        arrows: false,
+        infinite: true,
+        speed: 2200,
+        slidesToScroll: 2,
+        autoplay: false,
+        autoplaySpeed: 6000,
+        draggable: false
       }
     };
   },
   computed: {
-    slides() {
-      return this.$store.state.slidesProducer
-    }
-  }
+    ...mapGetters([
+      'SPRODUCER',
+      'ITEMSPRODUCER',
+    ]),
+  },
+  methods: {
+    ...mapActions([
+      'GET_ITEMSPRODUCER_FROM_API',
+    ]),
+  },
+  mounted() {
+    this.GET_ITEMSPRODUCER_FROM_API();
+  },
 };
 </script>
 

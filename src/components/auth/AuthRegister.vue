@@ -118,10 +118,12 @@ export default {
 
   @include respond-to('small') {
     padding: 25px 20px;
+    border-top-left-radius: 0;
   }
 
   @include respond-to('medium') {
     padding: 25px 45px;
+    border-top-left-radius: 10px;
   }
 }
 .form__title {
@@ -218,10 +220,12 @@ export default {
 
   @include respond-to('small') {
     padding: 15px 20px;
+    border-bottom-left-radius: 0;
   }
 
   @include respond-to('medium') {
     padding: 25px 45px;
+    border-bottom-left-radius: 10px;
   }
 }
 .form__reg {

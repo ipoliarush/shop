@@ -2,25 +2,61 @@
   <div class="goods">
     <div class="goods__wrap">
       <div class="goods__head">
-        <icon-base class="svg" viewBox="0 0 28 28" width="20" height="20" fill="#FF6A00">
+        <icon-base
+          class="svg"
+          viewBox="0 0 28 28"
+          width="20"
+          height="20"
+          fill="#FF6A00"
+        >
           <icon-like />
         </icon-base>
         <h3 class="goods__title">
-          Рекомендовані
+          {{ data.name_ua }}
         </h3>
         <div class="goods__wline"></div>
       </div>
-      <slick :rows="row" :slidesToShow="slides" v-bind="settings" class="goods__slick">
-        <div v-for="item in items" :key="item.n" class="goods__item">
-          <div class="goods__inner">
-            <img  class="goods__img" src="@/assets/image/slide/goods/goods.png">
-          </div>
-          <div class="goods__desc">
-            Блендер "Blue"
-          </div>
-          <div class="goods__price">
-            220 грн
-          </div>
+      <slick 
+        v-if="data.data"
+        :rows="RGOODS"
+        :slidesToShow="SGOODS"
+        v-bind="settings"
+        class="goods__slick"
+      >
+        <div
+          v-for="item in data.data"
+          :key="item.article"
+          class="item"
+        >
+          <router-link
+            :title="item.name"
+            to="/i"
+            class="item__wrap"
+          >
+            <div class="item__inner">
+              <img
+                class="item__img" 
+                :src="require(`@/assets/image/goods/${item.image}`)"
+                :alt="item.name"
+              >
+            </div>
+            <div class="item__detail">
+              <div class="item__name">
+                {{ item.name }}
+              </div>
+              <div class="item__price price">
+                <div v-if="item.discount" class="price__old">
+                  {{ Math.round(item.price) }} грн
+                </div>
+                <div v-if="!item.discount" class="price__now">
+                  {{ Math.round(item.price) }} грн
+                </div>
+                <div v-if="item.discount" class="price__new" >
+                  {{ Math.round(item.price - (item.price * item.discount / 100) ) }} грн
+                </div>
+              </div>
+            </div>
+          </router-link>
         </div>
       </slick>
     </div>
@@ -32,7 +68,7 @@ import Slick from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 import IconBase from "@/components/icons/IconBase";
 import IconLike from "@/components/icons/IconLike";
-
+import {mapGetters} from 'vuex'
 
 export default {
   name: "CarouselGoods",
@@ -41,44 +77,30 @@ export default {
     IconBase,
     IconLike,
   },
-  props: {},
+  methods: {},
   data() {
     return {
-      items: [
-        { n: 1 }, 
-        { n: 2 },
-        { n: 3 },
-        { n: 4 },
-        { n: 5 },
-        { n: 6 },
-        { n: 7 },
-        { n: 8 },
-        { n: 9 },
-        { n: 10 },
-        { n: 11 },
-        { n: 12 },
-      ],
-      img: [
-        { src: "goods.png", alt: "Bosch" },
-      ],
       settings: {
         dots: false,
-        focusOnSelect: true,
         infinite: true,
-        speed: 500,
+        speed: 2000,
         slidesToScroll: 2,
         arrows: true,
+        autoplay: false,
+        autoplaySpeed: 5000,
+        draggable: false
       }
     };
   },
+  props: {
+    data: [Object, Array],
+  },
   computed: {
-    slides() {
-      return this.$store.state.slidesGoods;
-    },
-    row() {
-      return this.$store.state.slidesGoodsRow;
-    }
-  }
+    ...mapGetters([
+      'SGOODS',
+      'RGOODS'
+    ]),
+  },
 };
 </script>
 
@@ -86,14 +108,11 @@ export default {
 .goods {
 
   .goods__wrap {
-    background: #fff;
     position: relative;
-    border-radius: 10px;
-    padding-bottom: 20px;
   }
   .goods__head {
     display: flex;
-    padding: 15px 15px 0 15px;
+    padding-top: 15px;
     align-items: center;
 
     .svg {
@@ -110,7 +129,7 @@ export default {
     }
   }
   .goods__title {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
     margin-left: 10px;
     flex-shrink: 0;
@@ -125,27 +144,36 @@ export default {
     }
   }
 
-  .goods__item {
-    height: 70px;
+  .item {
     position: relative;
-    padding: 0 15px;
+    padding: 15px;
     outline: none;
+    height: 100%;
+  }
+  .item__wrap {
+    background: #FFF;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    padding: 15px;
+    text-decoration: none;
+    transition: box-shadow ease .9s;
 
-    @include respond-to('small') {
-      height: 100px;
+    &:hover {
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+
+      .price__now {
+        color: $orange;
+      }
     }
   }
-  .goods__inner {
-    background: #F5F5F5;
-    border-radius: 10px;
+  .item__inner {
     width: 100%;
-    transition: box-shadow ease .7s;
     outline: none;
-    padding: 5px 10px;
     height: 70px;
     position: relative;
     overflow: hidden;
-    margin-top: 20px;
 
     display: flex;
     justify-content: center;
@@ -156,18 +184,25 @@ export default {
     }
   }
 
-  .goods__img {
+  .item__img {
     display: block;
     outline: none;
     height: 100%;
     width: auto;
   }
-  .goods__desc {
+  .item__detail {
+
+  }
+  .item__name {
     font-size: 14px;
     font-weight: 300;
     text-align: center;
     margin-top: 12px;
     outline: none;
+    color: $blue;
+    line-height: 16px;
+    height: 32px;
+    overflow: hidden;
 
     visibility: hidden;
     position: absolute;
@@ -177,22 +212,47 @@ export default {
       position: initial;
     }
   }
-  .goods__price {
+  .item__price {
     font-size: 14px;
     font-weight: 700;
     text-align: center;
     margin-top: 12px;
+    color: $blue;
+    height: 39px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
 
     @include respond-to('small') {
       margin-top: 6px;
+      flex-direction: row;
+      height: 21px;
+      justify-content: center;
     }
+  }
+  .price__old {
+    font-size: 12px;
+    font-weight: 300;
+    text-decoration: line-through;
+
+    @include respond-to('small') {
+      margin-right: 5px;
+    }
+  }
+  .price__now {
+    transition: color ease .5s;
+  }
+  .price__new {
+    color: $orange;
   }
 }
 </style>
 
 <style lang="scss">
 .goods__slick {
-
+  margin: 0 -15px;
+  
   .slick-arrow {
     font-size: 0;
     line-height: 0;
@@ -202,7 +262,15 @@ export default {
     outline: none;
     background: transparent;
     position: absolute;
-    top: -28px;
+    top: -22px;
+
+    @include respond-to('small') {
+      top: -25px;
+    }
+
+    @include respond-to('medium') {
+      top: -28px;
+    }
 
     &::before {
       content: "";
