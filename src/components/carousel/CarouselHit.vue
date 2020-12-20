@@ -1,15 +1,6 @@
 <template>
   <div class="hit">
     <div class="hit__wrap">
-      <div class="hit__head">
-        <icon-base class="svg" viewBox="0 0 26 26" width="24" height="24" fill="#FF6A00">
-          <icon-star />
-        </icon-base>
-        <h3 class="hit__title">
-          {{ data.name_ua }}
-        </h3>
-        <div class="hit__wline"></div>
-      </div>
       <slick
         v-if="data.data"
         :slidesToScroll="LHIT"
@@ -37,13 +28,13 @@
               </div>
               <div class="item__price price">
                 <div v-if="item.discount" class="price__old">
-                  {{ Math.round(item.price) }} грн
+                  {{ Math.round(item.price) }} &#8372;
                 </div>
                 <div v-if="!item.discount" class="price__now">
-                  {{ Math.round(item.price) }} грн
+                  {{ Math.round(item.price) }} &#8372;
                 </div>
                 <div v-if="item.discount" class="price__new" >
-                  {{ Math.round(item.price - (item.price * item.discount / 100) ) }} грн
+                  {{ Math.round(item.price - (item.price * item.discount / 100) ) }} &#8372;
                 </div>
               </div>
             </div>
@@ -57,16 +48,16 @@
 <script>
 import Slick from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
-import IconBase from "@/components/icons/IconBase";
-import IconStar from "@/components/icons/IconStar";
+// import IconBase from "@/components/icons/IconBase";
+// import IconStar from "@/components/icons/IconStar";
 import {mapGetters} from 'vuex'
 
 export default {
   name: "CarouselHit",
   components: {
     Slick,
-    IconBase,
-    IconStar,
+    // IconBase,
+    // IconStar,
   },
     props: {
     data: [Object, Array],
@@ -74,10 +65,11 @@ export default {
   data() {
     return {
       settings: {
-        dots: false,
+        dots: true,
+        dotsClass: 'my-dots',
         infinite: true,
         speed: 2000,
-        arrows: true,
+        arrows: false,
         draggable: false,
         autoplay: false,
         autoplaySpeed: 5000,
@@ -100,39 +92,7 @@ export default {
     position: relative;
     height: 100%;
   }
-  .hit__head {
-    display: flex;
-    padding-top: 15px;
-    align-items: center;
-    
-    .svg {
-      flex-shrink: 0;
-    }
-  }
 
-  .hit__title {
-    font-size: 18px;
-    font-weight: 400;
-    margin-left: 10px;
-    flex-shrink: 0;
-
-    @include respond-to('small') {
-      font-size: 20px;
-    }
-
-    @include respond-to('medium') {
-      font-size: 25px;
-      margin-right: 15px;
-    }
-  }
-  .hit__wline {
-    @include respond-to('medium') {
-      width: 100%;
-      border-bottom: 2px solid rgba($blue, 0.1);
-      flex-shrink: 2;
-      margin-right: 45px;
-    }
-  }
 
   .item {
     position: relative;
@@ -179,12 +139,12 @@ export default {
 
     @include respond-to('small') {
       height: 100%;
-      min-height: 347px;
+      min-height: 320px;
     }
 
     @include respond-to('medium') {
       height: 100%;
-      min-height: 297px;
+      min-height: 270px;
     }
   }
 
@@ -197,17 +157,19 @@ export default {
     max-width: 100%;
 
     @include respond-to('small') {
-      max-height: 347px;
+      max-height: 320px;
     }
 
     @include respond-to('medium') {
-      max-height: 297px;
+      max-height: 270px;
     }
   }
   .img-hover {
     display: none;
   }
   .item__detail {
+    margin-bottom: 27px;
+
     @include respond-to('small') {
       margin-top: 6px;
       display: flex;
@@ -322,54 +284,57 @@ export default {
 .hit__slick {
   margin: 0 -15px;
 
-  .slick-arrow {
-    font-size: 0;
-    line-height: 0;
-    display: block;
-    color: transparent;
-    border: 0;
-    outline: none;
-    background: transparent;
+  .my-dots {
+    display: none;
     position: absolute;
-    top: -22px;
+    transform: translate(-50%, -40px);
+    left: 50%;
+    display: flex !important;
+    justify-content: center;
 
     @include respond-to('small') {
-      top: -25px;
+      display: block;
     }
 
-    @include respond-to('medium') {
-      top: -28px;
+    & li {
+      margin: 0 6px;
+      position: relative;
     }
 
-    &::before {
-      content: "";
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      top: 0;
-      transition: all ease .5s;
-      background: url('~@/assets/image/icons/arrow.svg');
-      background-repeat: no-repeat;
-      background-position: center;
-      opacity: .5;
-      cursor: pointer;
-    }
+    & button {
+      font-size: 0;
+      line-height: 0;
+      display: block;
+      padding: 5px;
+      color: transparent;
+      border: 0;
+      outline: none;
+      background: transparent;
 
-    &:hover {
       &::before {
-        opacity: 1;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 10px;
+        height: 10px;
+        background: rgba($blue, 0.2);
+        transition: all ease .5s;
+        border-radius: 2px;
+        cursor: pointer;
+      }
+
+      &:hover {
+        &::before {
+          background: $orange;
+        }
       }
     }
-  }
-  .slick-prev {
-    right: 45px;
-  }
 
-  .slick-next {
-    right: 25px;
-
-    &::before {
-      transform: scale(-1, 1);
+    .slick-active button {
+      &::before {
+        background: $orange;
+      }
     }
   }
 }

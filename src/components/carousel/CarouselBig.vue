@@ -2,12 +2,8 @@
   <div class="big">
     <div class="layout">
       <div class="head">
-        <router-link class="title" to="/catalog">
-          {{ title }}
-        </router-link>
-        <div class="wline"></div>
         <router-link class="link" to="/catalog">
-          До каталогу
+          {{ title }}
         </router-link>
       </div>
       <div class="wrapper" :class="{'wrapper-rev': rev}">
@@ -48,13 +44,14 @@ export default {
 
 <style lang="scss" scoped>
 .big {
+  position: relative;
+  margin-top: 10px;
 
   .head {
-    margin-top: 10px;
     display: flex;
     align-items: center;
   }
-  .title {
+  .link {
     color: $blue;
     font-size: 20px;
     font-weight: 500;
@@ -73,36 +70,6 @@ export default {
 
     &:hover {
       color: $orange;
-    }
-  }
-
-  .wline {
-    @include respond-to('medium') {
-      width: 100%;
-      border-bottom: 2px solid rgba($blue, 0.1);
-      flex-shrink: 2;
-      margin-right: 50px;
-    }
-  }
-  
-  .link {
-    color: rgba($blue, 0.5);
-    font-size: 14px;
-    font-weight: 400;
-    text-decoration: none;
-    transition: color ease .5s;
-    flex-shrink: 0;
-
-    visibility: hidden;
-    position: absolute;
-
-    @include respond-to('medium') {
-      visibility: visible;
-      position: initial;
-    }
-
-    &:hover {
-      color: $blue;
     }
   }
   
@@ -131,11 +98,12 @@ export default {
   }
 
   .hit {
-    width: 100%;
+    display: none;
 
     @include respond-to('small') {
       width: calc(50% - 15px);
       margin-right: 30px;
+      display: block;
     }
 
     @include respond-to('medium') {

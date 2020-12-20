@@ -1,27 +1,12 @@
 <template>
   <div class="goods">
     <div class="goods__wrap">
-      <div class="goods__head">
-        <icon-base
-          class="svg"
-          viewBox="0 0 28 28"
-          width="20"
-          height="20"
-          fill="#FF6A00"
-        >
-          <icon-like />
-        </icon-base>
-        <h3 class="goods__title">
-          {{ data.name_ua }}
-        </h3>
-        <div class="goods__wline"></div>
-      </div>
       <slick 
         v-if="data.data"
         :rows="RGOODS"
         :slidesToShow="SGOODS"
         v-bind="settings"
-        class="goods__slick"
+        class="goods__slick slick-slider"
       >
         <div
           v-for="item in data.data"
@@ -51,13 +36,13 @@
               </div>
               <div class="item__price price">
                 <div v-if="item.discount" class="price__old">
-                  {{ Math.round(item.price) }} грн
+                  {{ Math.round(item.price) }} &#8372;
                 </div>
                 <div v-if="!item.discount" class="price__now">
-                  {{ Math.round(item.price) }} грн
+                  {{ Math.round(item.price) }} &#8372;
                 </div>
                 <div v-if="item.discount" class="price__new" >
-                  {{ Math.round(item.price - (item.price * item.discount / 100) ) }} грн
+                  {{ Math.round(item.price - (item.price * item.discount / 100) ) }} &#8372;
                 </div>
               </div>
             </div>
@@ -71,16 +56,16 @@
 <script>
 import Slick from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
-import IconBase from "@/components/icons/IconBase";
-import IconLike from "@/components/icons/IconLike";
+// import IconBase from "@/components/icons/IconBase";
+// import IconLike from "@/components/icons/IconLike";
 import {mapGetters} from 'vuex'
 
 export default {
   name: "CarouselGoods",
   components: {
     Slick,
-    IconBase,
-    IconLike,
+    // IconBase,
+    // IconLike,
   },
   methods: {},
   data() {
@@ -113,44 +98,14 @@ export default {
 .goods {
 
   .goods__wrap {
-    position: relative;
+    border-radius: 10px;
   }
-  .goods__head {
-    display: flex;
-    padding-top: 15px;
-    align-items: center;
-
-    .svg {
-      flex-shrink: 0;
-    }
-  }
-
-  .goods__wline {
-    @include respond-to('medium') {
-      width: 100%;
-      border-bottom: 2px solid rgba($blue, 0.1);
-      flex-shrink: 2;
-      margin-right: 45px;
-    }
-  }
-  .goods__title {
-    font-size: 18px;
-    font-weight: 400;
-    margin-left: 10px;
-    flex-shrink: 0;
-
-    @include respond-to('small') {
-      font-size: 20px;
-    }
-
-    @include respond-to('medium') {
-      font-size: 25px;
-      margin-right: 15px;
-    }
+  .goods__slick {
+    position: initial;
+    margin: 0 -15px;
   }
 
   .item {
-    position: relative;
     padding: 15px;
     outline: none;
     height: 100%;
@@ -183,7 +138,6 @@ export default {
     width: 100%;
     outline: none;
     height: 70px;
-    position: relative;
     overflow: hidden;
 
     display: flex;
@@ -242,6 +196,7 @@ export default {
       flex-direction: row;
       height: 21px;
       justify-content: center;
+      line-height: 10px;
     }
   }
   .price__old {
@@ -264,7 +219,6 @@ export default {
 
 <style lang="scss">
 .goods__slick {
-  margin: 0 -15px;
   
   .slick-arrow {
     font-size: 0;
@@ -275,42 +229,43 @@ export default {
     outline: none;
     background: transparent;
     position: absolute;
-    top: -22px;
+    top: 2px;
 
     @include respond-to('small') {
-      top: -25px;
+      top: 5px;
     }
 
     @include respond-to('medium') {
-      top: -28px;
+      top: 14px;
     }
 
     &::before {
       content: "";
       position: absolute;
-      width: 20px;
-      height: 20px;
+      width: 25px;
+      height: 25px;
       top: 0;
-      transition: all ease .5s;
-      background: url('~@/assets/image/icons/arrow.svg');
+      transition: background ease .5s;
+      background-color: rgba($orange, 0.7);
+      background-image: url('~@/assets/image/icons/arrow.svg');
       background-repeat: no-repeat;
       background-position: center;
-      opacity: .5;
+      border-radius: 4px;
       cursor: pointer;
     }
 
     &:hover {
       &::before {
-        opacity: 1;
+        background-color: $orange;
       }
     }
   }
   .slick-prev {
-    right: 45px;
+    right: 80px;
   }
 
   .slick-next {
-    right: 25px;
+    right: 50px;
 
     &::before {
       transform: scale(-1, 1);

@@ -26,6 +26,7 @@
     />
     <carousel-medium 
       :data="ITEMSHIT" 
+      title="Знижки"
     />
   </div>
 </template>
@@ -34,7 +35,7 @@
 import BannerMain from "@/components/banner/BannerMain";
 import CarouselProducer from "@/components/carousel/CarouselProducer";
 import CarouselBig from '@/components/carousel/CarouselBig';
-import CarouselSale from '@/components/carousel/CarouselSale';
+import CarouselMedium from '@/components/carousel/CarouselMedium';
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
@@ -43,7 +44,7 @@ export default {
     BannerMain,
     CarouselProducer,
     CarouselBig,
-    CarouselSale
+    CarouselMedium
   },
   props: {},
   data() {

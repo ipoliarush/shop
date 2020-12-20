@@ -11,8 +11,8 @@ export default new Vuex.Store({
     goodsShow: null,
     goodsRow: 2,
     goodsScroll: null,
-    slidesSale: 2,
-    slidesSaleRow: 2,
+    saleShow: 2,
+    saleRow: 2,
     hitShow: 2,
     itemsHit: [],
     itemsProducer: [],
@@ -26,24 +26,28 @@ export default new Vuex.Store({
       if (width < 992) state.isOpen = false;
       
       if (width >= 992) {
-        if (width >= 992 && width <= 1200) state.goodsShow = 3;
-        else state.goodsShow = 4
+        if (width >= 992 && width <= 1200) {
+          state.goodsShow = state.saleShow = 3;
+        }
+        else 
+        {
+          state.goodsShow = state.saleShow = 4;
+        }
 
         state.producerShow = 6;
-        state.slidesSale = 4;
         state.goodsRow = 2;
-        state.hitShow = state.slidesSaleRow = state.hitScroll = 1;
+        state.hitShow = state.saleRow = state.hitScroll = 1;
 
       }
       else if (width >= 768) {
         state.producerShow  = 4;
-        state.goodsShow = state.goodsRow = state.slidesSale = state.slidesSaleRow = 2;
+        state.goodsShow = state.goodsRow = state.saleShow = state.saleRow = 2;
         state.hitShow = state.hitScroll = 1;
       }
       else {
         state.producerShow = state.hitScroll = 2;
-        state.goodsShow = state.hitShow = state.slidesSale = 3;
-        state.goodsRow = state.slidesSaleRow = 1;
+        state.goodsShow = state.hitShow = state.saleShow = 3;
+        state.goodsRow = state.saleRow = 1;
       }
     },
     SET_ITEMSHIT_TO_STATE: (state, products) => {
@@ -74,6 +78,12 @@ export default new Vuex.Store({
     },
     SHIT(state) {
       return state.hitShow
+    },
+    SSALE(state) {
+      return state.saleShow
+    },
+    RSALE(state) {
+      return state.saleRow
     },
   },
   actions: {

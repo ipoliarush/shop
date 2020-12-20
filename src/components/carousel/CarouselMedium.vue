@@ -2,10 +2,13 @@
   <div class="medium">
     <div class="layout">
       <div class="head">
+        <router-link class="link" to="/catalog">
+          {{ title }}
+        </router-link>
       </div>
       <div class="wrapper">
         <carousel-sale :data="data" class="sale" />
-        <carousel-sale :data="data" class="sale" />
+        <banner-medium class="banner" />
       </div>
     </div>
   </div>
@@ -13,11 +16,13 @@
 
 <script>
 import CarouselSale from '@/components/carousel/CarouselSale';
+import BannerMedium from '@/components/banner/BannerMedium';
 
 export default {
   name: "CarouselMedium",
   components: {
-    CarouselSale
+    CarouselSale,
+    BannerMedium
   },
   props: {
     title: String,
@@ -38,13 +43,14 @@ export default {
 
 <style lang="scss" scoped>
 .medium {
+  position: relative;
+  margin-top: 10px;
 
   .head {
-    margin-top: 10px;
     display: flex;
     align-items: center;
   }
-  .title {
+  .link {
     color: $blue;
     font-size: 20px;
     font-weight: 500;
@@ -65,36 +71,6 @@ export default {
       color: $orange;
     }
   }
-
-  .wline {
-    @include respond-to('medium') {
-      width: 100%;
-      border-bottom: 2px solid rgba($blue, 0.1);
-      flex-shrink: 2;
-      margin-right: 50px;
-    }
-  }
-  
-  .link {
-    color: rgba($blue, 0.5);
-    font-size: 14px;
-    font-weight: 400;
-    text-decoration: none;
-    transition: color ease .5s;
-    flex-shrink: 0;
-
-    visibility: hidden;
-    position: absolute;
-
-    @include respond-to('medium') {
-      visibility: visible;
-      position: initial;
-    }
-
-    &:hover {
-      color: $blue;
-    }
-  }
   
   .wrapper {
     display: flex;
@@ -103,53 +79,26 @@ export default {
     align-items: stretch;
 
     @include respond-to('small') {
-      flex-direction: row;
+      flex-direction: row-reverse;
       justify-content: start;
     }
   }
 
-  .recomm {
+  .sale {
     width: 100%;
 
     @include respond-to('small') {
       width: calc(50% - 15px);
     }
-
-    @include respond-to('medium') {
-      width: calc(67% - 15px);
-    }
   }
 
-  .hit {
-    width: 100%;
+  .banner {
+    margin-top: 15px;
 
     @include respond-to('small') {
       width: calc(50% - 15px);
       margin-right: 30px;
-    }
-
-    @include respond-to('medium') {
-      width: calc(33% - 15px);
-    }
-  }
-
-  .wrapper-rev {
-    flex-direction: column-reverse;
-
-    @include respond-to('small') {
-      flex-direction: row-reverse;
-    }
-    .recomm {
-
-      @include respond-to('small') {
-        margin-right: 30px;
-      }
-    }
-    .hit {
-
-      @include respond-to('small') {
-        margin-right: 0;
-      }
+      margin-top: 0;
     }
   }
 }
