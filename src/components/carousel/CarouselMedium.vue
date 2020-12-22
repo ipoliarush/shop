@@ -98,7 +98,6 @@ export default {
     @include respond-to('small') {
       width: calc(50% - 15px);
       margin-right: 30px;
-      margin-top: 0;
     }
   }
 }

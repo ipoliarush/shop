@@ -36,13 +36,16 @@
               </div>
               <div class="item__price price">
                 <div v-if="item.discount" class="price__old">
-                  {{ Math.round(item.price) }} &#8372;
+                  {{ Math.round(item.price) }}
+                  <span class="price__ua"> &#8372;</span>
                 </div>
                 <div v-if="!item.discount" class="price__now">
-                  {{ Math.round(item.price) }} &#8372;
+                  {{ Math.round(item.price) }}
+                  <span class="price__ua"> &#8372;</span>
                 </div>
                 <div v-if="item.discount" class="price__new" >
-                  {{ Math.round(item.price - (item.price * item.discount / 100) ) }} &#8372;
+                  {{ Math.round(item.price - (item.price * item.discount / 100) ) }}
+                  <span class="price__ua"> &#8372;</span>
                 </div>
               </div>
             </div>
@@ -143,6 +146,10 @@ export default {
     @include respond-to('small') {
       height: 100px;
     }
+
+    @include respond-to('medium') {
+      height: 200px;
+    }
   }
 
   .item__img {
@@ -209,6 +216,9 @@ export default {
   }
   .price__new {
     color: $orange;
+  }
+  .price__ua {
+    font-size: 1em;
   }
 }
 </style>

@@ -22,21 +22,23 @@ export default new Vuex.Store({
       state.isOpen = !state.isOpen;
     },
     resize (state) {
-      let width = document.documentElement.clientWidth;
+      let width = window.innerWidth;
       if (width < 992) state.isOpen = false;
       
       if (width >= 992) {
         if (width >= 992 && width <= 1200) {
-          state.goodsShow = state.saleShow = 3;
+          state.goodsShow = 3;
+          state.saleShow = 2;
         }
         else 
         {
-          state.goodsShow = state.saleShow = 4;
+          state.goodsShow = 4;
+          state.saleShow = 3;
         }
 
         state.producerShow = 6;
         state.goodsRow = 2;
-        state.hitShow = state.saleRow = state.hitScroll = 1;
+        state.hitShow = state.hitScroll = state.saleRow = 1;
 
       }
       else if (width >= 768) {
