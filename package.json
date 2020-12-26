@@ -3,13 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "server": "node server",
+    "nodemon": "nodemon server",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "axios": "^0.20.0",
+    "bcrypt": "^5.0.0",
     "core-js": "^3.6.5",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.11.8",
     "vue": "^2.6.11",
     "vue-router": "^3.4.5",
     "vue-slick-carousel": "^1.0.6",
@@ -25,7 +31,8 @@
     "sass-loader": "^10.0.2",
     "postcss-loader": "^4.0.2",
     "eslint-plugin-vue": "^6.2.2",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "nodemon": "^2.0.6"
   },
   "eslintConfig": {
     "root": true,
