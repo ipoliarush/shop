@@ -1,6 +1,6 @@
 <template>
   <auth>
-    <form class="form" method="post">
+    <form class="form" method="post" action="/signup">
       <div class="form__body">
         <h3 class="form__title">Реєстрація</h3>
         <div class="form__item">
@@ -9,8 +9,8 @@
             placeholder=" "
             class="form__input"
             type="text"
-            id="name"
-            name="name"
+            id="firstName"
+            name="firstName"
           />
           <label class="form__label" for="name">Ім'я</label>
         </div>
@@ -20,8 +20,8 @@
             placeholder=" "
             class="form__input"
             type="text"
-            id="surname"
-            name="surname"
+            id="lastName"
+            name="lastName"
           />
           <label class="form__label" for="surname">Прізвище</label>
         </div>

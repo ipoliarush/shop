@@ -1,24 +1,30 @@
 const { Router } = require('express')
 const router = Router()
-const Users = require('../models/users')
+const User = require('../models/Users')
 const bcrypt = require('bcrypt')
 
-router.post('/register', async (req, res) => {
+router.post('/signup', async (req, res) => {
 
-  const user = new Users([
-    req.body.firstName,
-    req.body.lastName,
-    req.body.email,
-    bcrypt.hashSync(req.body.password, 8),
-    new Date(),
-  ],
+  const searchEmail = await User.findOne({ email: req.body.email }).exec();
 
-  function (err) {
-    if (err) return res.status(500).send("There was a problem registering the user.")
-    db.selectByEmail(req.body.email, (err,user) => {
-      if (err) return res.status(500).send("There was a problem getting user")
-      let token = jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 });
-      res.status(200).send({ auth: true, token: token, user: user });
-    }); 
-  }); 
-});
+  const user = new User({
+
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    password: bcrypt.hashSync(req.body.password, 8),
+    dateReg: new Date(),
+
+  })
+
+  if (searchEmail) res.json({ success: false, code: '2', message: 'Такой пользователь уже зарегестрирован' })
+  else 
+
+    await user.save(err => {
+      if (err) return res.status(400).json({ success: false, code: '4', message:  'Во время регистрации возникли проблемы' })
+      res.redirect('/')
+    })
+  
+})
+
+module.exports = router
