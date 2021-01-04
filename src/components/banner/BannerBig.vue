@@ -35,7 +35,7 @@ export default {
 .banner-big {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
   background-image: url('~@/assets/image/slide/big-slide1.jpg');
   padding: 45px 10% 80px 10%;
   justify-content: space-between;

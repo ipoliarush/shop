@@ -29,7 +29,7 @@ export default {
 .banner-mini {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
   background-image: url('~@/assets/image/banner/banner-mini1.jpg');
   padding: 17px 15px;
   justify-content: space-between;

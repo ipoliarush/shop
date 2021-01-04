@@ -59,16 +59,12 @@
 <script>
 import Slick from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
-// import IconBase from "@/components/icons/IconBase";
-// import IconLike from "@/components/icons/IconLike";
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: "CarouselGoods",
   components: {
     Slick,
-    // IconBase,
-    // IconLike,
   },
   methods: {},
   data() {
@@ -89,7 +85,7 @@ export default {
     data: [Object, Array],
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('slider', [
       'SGOODS',
       'RGOODS'
     ]),

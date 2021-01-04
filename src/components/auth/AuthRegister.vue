@@ -5,47 +5,85 @@
         <h3 class="form__title">Реєстрація</h3>
         <div class="form__item">
           <input
-            required
             placeholder=" "
             class="form__input"
+            :class="{ 'form__input--error': $v.firstName.$error }"
             type="text"
             id="firstName"
             name="firstName"
+            v-model.trim="firstName"
+            @input="$v.firstName.$touch"
+            @blur="$v.firstName.$touch"
           />
-          <label class="form__label" for="name">Ім'я</label>
+          <label class="form__label" for="firstName">Ім'я</label>
+          <div
+            class="form__prompt form__prompt--error"
+            v-if="$v.firstName.$error"
+          >
+            Введіть своє ім'я на кирилиці
+          </div>
         </div>
         <div class="form__item">
           <input
-            required
             placeholder=" "
             class="form__input"
-            type="text"
-            id="lastName"
-            name="lastName"
+            :class="{ 'form__input--error': $v.phone.$error }"
+            type="tel"
+            id="phone"
+            name="phone"
+            v-model.trim="phone"
+            @input="$v.phone.$touch"
+            @blur="$v.phone.$touch"
           />
-          <label class="form__label" for="surname">Прізвище</label>
+          <label class="form__label" for="phone">Телефон</label>
+          <div
+            class="form__prompt form__prompt--error"
+            v-if="$v.phone.$error"
+          >
+            Введіть свій телефон у форматі +380 XX XXX XX XX 
+          </div>
         </div>
         <div class="form__item">
           <input
-            required
             placeholder=" "
             class="form__input"
+            :class="{ 'form__input--error': $v.email.$error }"
             type="email"
             id="email"
             name="email"
+            v-model.trim="email"
+            @input="$v.email.$touch"
+            @blur="$v.email.$touch"
           />
-          <label class="form__label" for="email">E-mail</label>
+          <label class="form__label" for="email">Ел. пошта</label>
+          <div
+            class="form__prompt form__prompt--error"
+            v-if="$v.email.$error"
+          >
+            Введіть свою ел. пошту  
+          </div>
         </div>
         <div class="form__item">
           <input
-            required
             placeholder=" "
-            class="form__input"
-            type="password"
+            class="form__input form__password"
+            :class="{ 'form__input--error': $v.password.$error }"
+            :type="type"
             id="password"
             name="password"
+            v-model.trim="password"
+            @input="$v.password.$touch"
+            @blur="$v.password.$touch"
           />
           <label class="form__label" for="password">Пароль</label>
+          <div @click="passwordHide" class="form__password-hide">
+            <icon-base width="20" height="20">
+              <icon-hide />
+            </icon-base>
+          </div>
+          <div class="form__prompt">
+            Пароль має бути не менше 6 символів, має складатися з цифр і латинських літер, у тому числі заголовних
+          </div>
         </div>
         <div class="form__submit">
           <button type="submit" class="form__button">Зареєструватися</button>
@@ -73,11 +111,16 @@
 </template>
 
 <script>
-import Auth from "./Auth";
-import IconBase from "@/components/icons/IconBase";
-import IconFacebookAuth from "@/components/icons/IconFacebookAuth";
-import IconGoogleAuth from "@/components/icons/IconGoogleAuth";
-import { required, minLength, maxLength } from "vuelidate/lib/validators";
+import Auth from "./Auth"
+import IconBase from "@/components/icons/IconBase"
+import IconFacebookAuth from "@/components/icons/IconFacebookAuth"
+import IconGoogleAuth from "@/components/icons/IconGoogleAuth"
+import IconHide from "@/components/icons/IconHide"
+import { required, minLength, maxLength, helpers } from "vuelidate/lib/validators"
+const alphaHelp = helpers.regex('alphaHelp', /^[а-яА-ЯіІїЇєЄ]*$/)
+const phoneHelp = helpers.regex('phoneHelp', /^[\+]{0,1}380([0-9]{9})$/)
+const emailHelp = helpers.regex('emailHelp', /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/)
+const passwordHelp = helpers.regex('passwordHelp', /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9]{6,}$/)
 
 export default {
   components: {
@@ -85,13 +128,15 @@ export default {
     IconBase,
     IconFacebookAuth,
     IconGoogleAuth,
+    IconHide,
   },
   name: "AuthRegister",
   props: {},
   data: () => ({
+    type: 'password',
     submitStatus: null,
     firstName: "",
-    lastName: "",
+    phone: "",
     email: "",
     password: "",
     formData: new FormData(),
@@ -99,7 +144,26 @@ export default {
   computed: {},
   methods: {
     signup() {
+      this.$v.$touch()
 
+      if(!this.$v.$invalid) {
+
+        const data = {
+          firstName: this.firstName,
+          phone: this.phone, 
+          email: this.email, 
+          password: this.password
+        }
+
+        this.$store.dispatch('signup', { data })
+          .then(() => this.$router.push('/'))
+          .catch(err => console.log(err))
+
+      }
+    },
+    passwordHide() {
+      if(this.type == 'password') this.type = 'text'
+      else this.type ='password'
     }
   },
   validations: {
@@ -107,28 +171,22 @@ export default {
       required,
       minLength: minLength(2),
       maxLength: maxLength(60),
+      alphaHelp
     },
-    lastName: {
+    phone: {
       required,
-      minLength: minLength(2),
-      maxLength: maxLength(60),
+      phoneHelp
     },
     email: {
       required,
-      email(email) {
-        return /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/.test(
-          email
-        );
-      },
+      emailHelp,
       minLength: minLength(2),
       maxLength: maxLength(100),
     },
     password: {
       required,
       minLength: minLength(6),
-      password(password) {
-        return /[a-zA-Z0-9]/.test(password);
-      },
+      passwordHelp
     },
   },
 };
@@ -188,14 +246,59 @@ export default {
 }
 .form__input {
   @extend %input-auth;
+
   &:not(:placeholder-shown) {
     & + .form__label {
       transform: translateY(-13px);
+      font-size: 14px;
     }
   }
   &:focus {
+    border-color: #80bdff;
+
     & + .form__label {
       transform: translateY(-13px);
+      font-size: 14px;
+      color: #80bdff;
+    }
+  }
+  &--error {
+    border-color: #db3445 !important;
+
+    & + .form__label {
+      color: #db3445 !important;
+    }
+  }
+}
+.form__prompt {
+  color:  $blue;
+  margin-top: 5px;
+
+  &--error {
+    color:  #db3445;
+  }
+}
+.form__password {
+  padding-right: 55px;
+}
+.form__password-hide {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+
+  .svg {
+    fill: rgba($blue, 0.8);
+
+    &:hover {
+      fill: $orange;
     }
   }
 }

@@ -1,9 +1,9 @@
 <template>
   <div class="catalog">
-    <div @click="reverse" class="wrap">
+    <div @click="REVERSE" class="wrap">
       Каталог товарів
       <div class="burger">
-        <icon-base v-if="!open" view-box="0 0 27 20" width="27" height="20">
+        <icon-base v-if="!IS_OPEN" view-box="0 0 27 20" width="27" height="20">
           <icon-burger />
         </icon-base>
         <icon-base v-else view-box="0 0 23 20" width="23" height="20">
@@ -12,7 +12,7 @@
       </div>
     </div>
     <transition name="fade-in">
-      <div v-if="open" class="list">
+      <div v-if="IS_OPEN" class="list">
         <a
           v-for="(item, index) in items"
           class="list__item"
@@ -34,6 +34,7 @@ import IconBase from "@/components/icons/IconBase";
 import IconBurger from "@/components/icons/IconBurger";
 import IconClose from "@/components/icons/IconClose";
 import IconRight from "@/components/icons/IconRight";
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: "HeaderCatalog",
@@ -57,24 +58,28 @@ export default {
     ],
   }),
   computed: {
-    open() {
-      return this.$store.state.isOpen
-    }
+    ...mapGetters([
+      'IS_OPEN',
+    ])
   },
   methods: {
-    reverse(){
-      this.$store.commit('reverse')
-    },
-    resize() {
-      this.$store.commit('resize')
-    }
+    ...mapActions([
+      'REVERSE',
+      'RESIZE',
+    ]),
   },
   created() {
-    window.addEventListener("resize", this.resize);
-    this.resize();
+    window.addEventListener("resize", this.RESIZE);
+    this.RESIZE();
   },
   beforeDestroy() {
-    window.removeEventListener("resize", this.resize);
+    window.removeEventListener("resize", this.RESIZE);
+  },
+  mounted() {
+    this.$nextTick(function () {
+      window.addEventListener('resize', this.RESIZE);
+      this.RESIZE();
+    })
   },
 };
 </script>

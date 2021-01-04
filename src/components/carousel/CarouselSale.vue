@@ -59,7 +59,7 @@
 <script>
 import Slick from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: "CarouselSale",
@@ -85,7 +85,7 @@ export default {
     data: [Object, Array],
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('slider', [
       'SSALE',
       'RSALE'
     ]),

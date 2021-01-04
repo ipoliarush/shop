@@ -1,18 +1,27 @@
 <template>
   <auth>
-    <form class="form" method="post">
+    <form class="form" method="post" action="/recovery" @submit.prevent="recovery">
       <div class="form__body">
         <h3 class="form__title">Відновлення паролю</h3>
         <div class="form__item">
           <input
-            required
             placeholder=" "
             class="form__input"
+            :class="{ 'form__input--error': $v.email.$error }"
             type="email"
             id="email"
             name="email"
+            v-model.trim="email"
+            @input="$v.email.$touch"
+            @blur="$v.email.$touch"
           />
-          <label class="form__label" for="email">E-mail</label>
+          <label class="form__label" for="email">Ел. пошта</label>
+          <div
+            class="form__prompt form__prompt--error"
+            v-if="$v.email.$error"
+          >
+            Введено неправильну адресу ел. пошти 
+          </div>
         </div>
         <div class="form__item"></div>
         <div class="form__submit">
@@ -29,14 +38,36 @@
 
 <script>
 import Auth from "./Auth";
+import { required, minLength, maxLength, helpers } from "vuelidate/lib/validators"
+const email = helpers.regex('email', /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/)
+
+
 export default {
   components: {
     Auth,
   },
   name: "AuthRecovery",
   props: {},
-  data: () => ({}),
+  data: () => ({
+    type: 'password',
+    submitStatus: null,
+    email: "",
+    formData: new FormData(),
+  }),
   computed: {},
+  methods: {
+    recovery() {
+      this.$v.$touch()
+    },
+  },
+  validations: {
+    email: {
+      required,
+      email,
+      minLength: minLength(2),
+      maxLength: maxLength(100),
+    },
+  },
 };
 </script>
 
@@ -94,15 +125,36 @@ export default {
 }
 .form__input {
   @extend %input-auth;
+
   &:not(:placeholder-shown) {
     & + .form__label {
       transform: translateY(-13px);
+      font-size: 14px;
     }
   }
   &:focus {
+    border-color: #80bdff;
+
     & + .form__label {
       transform: translateY(-13px);
+      font-size: 14px;
+      color: #80bdff;
     }
+  }
+  &--error {
+    border-color: #db3445 !important;
+
+    & + .form__label {
+      color: #db3445 !important;
+    }
+  }
+}
+.form__prompt {
+  color:  $blue;
+  margin-top: 5px;
+
+  &--error {
+    color:  #db3445;
   }
 }
 .form__icon {

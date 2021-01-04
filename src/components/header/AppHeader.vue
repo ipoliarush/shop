@@ -67,7 +67,7 @@ export default {
   
   .wrap {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
   }
 
   .header-catalog {

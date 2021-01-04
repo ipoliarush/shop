@@ -118,7 +118,7 @@ export default {
   color: #fff;
   display: flex;
   width: 100%;
-  align-items: start;
+  align-items: flex-start;
 
   @include respond-to('medium') {
     display: block;

@@ -10,7 +10,7 @@
 import AppHeader from "./components/header/AppHeader";
 import AppMain from "./components/AppMain";
 import AppFooter from "./components/footer/AppFooter";
-import {mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: "App",
@@ -20,19 +20,23 @@ export default {
     AppFooter,
   },
   methods: {
-    ...mapActions([
-      'SETTINGS_RESIZE'
+    ...mapActions('slider', [
+      'RESIZE',
     ])
   },
+  created() {
+    window.addEventListener("resize", this.RESIZE);
+    this.RESIZE();
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.RESIZE);
+  },
   mounted() {
-    this.$nextTick(function (){
-      window.addEventListener('resize', this.SETTINGS_RESIZE());
-      this.SETTINGS_RESIZE();
+    this.$nextTick(function () {
+      window.addEventListener('resize', this.RESIZE);
+      this.RESIZE();
     })
   },
-  // beforeDestroy() {
-  //   window.removeEventListener('resize', this.SETTINGS_RESIZE());
-  // }
 };
 </script>
 

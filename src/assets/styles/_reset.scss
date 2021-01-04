@@ -77,12 +77,20 @@ textarea {
 	outline: none;
 }
 
-/* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
-@media (prefers-reduced-motion: reduce) {
-	* {
-		animation-duration: 0.01ms !important;
-		animation-iteration-count: 1 !important;
-		transition-duration: 0.01ms !important;
-		scroll-behavior: auto !important;
-	}
+// /* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
+// @media (prefers-reduced-motion: reduce) {
+// 	* {
+// 		animation-duration: 0.01ms !important;
+// 		animation-iteration-count: 1 !important;
+// 		transition-duration: 0.01ms !important;
+// 		scroll-behavior: auto !important;
+// 	}
+// }
+
+// Удаляем заливку фона полей браузерами при автозаполнении
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
 }

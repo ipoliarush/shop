@@ -35,7 +35,7 @@
 <script>
 import Slick from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
-import {mapActions, mapGetters} from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: "CarouselProducer",
@@ -59,13 +59,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('slider', [
       'SPRODUCER',
       'ITEMSPRODUCER',
     ]),
   },
   methods: {
-    ...mapActions([
+    ...mapActions('slider', [
       'GET_ITEMSPRODUCER_FROM_API',
     ]),
   },

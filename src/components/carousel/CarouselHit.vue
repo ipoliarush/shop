@@ -51,16 +51,12 @@
 <script>
 import Slick from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
-// import IconBase from "@/components/icons/IconBase";
-// import IconStar from "@/components/icons/IconStar";
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: "CarouselHit",
   components: {
     Slick,
-    // IconBase,
-    // IconStar,
   },
     props: {
     data: [Object, Array],
@@ -80,7 +76,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('slider', [
       'SHIT',
       'LHIT',
     ]),
@@ -132,7 +128,7 @@ export default {
     width: 100%;
     outline: none;
     height: 70px;
-    max-height: fill-available;
+    max-height: stretch;
     position: relative;
     overflow: hidden;
 

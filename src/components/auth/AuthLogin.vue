@@ -1,29 +1,52 @@
 <template>
   <auth>
-    <form class="form" method="post">
+    <form class="form" method="post" action="/signin" @submit.prevent="signin">
       <div class="form__body">
         <h3 class="form__title">Вхід</h3>
         <div class="form__item">
           <input
-            required
             placeholder=" "
             class="form__input"
+            :class="{ 'form__input--error': $v.email.$error }"
             type="email"
             id="email"
             name="email"
+            v-model.trim="email"
+            @input="$v.email.$touch"
+            @blur="$v.email.$touch"
           />
-          <label class="form__label" for="email">E-mail</label>
+          <label class="form__label" for="email">Ел. пошта</label>
+          <div
+            class="form__prompt form__prompt--error"
+            v-if="$v.email.$error"
+          >
+            Введено неправильну адресу ел. пошти 
+          </div>
         </div>
         <div class="form__item">
           <input
-            required
             placeholder=" "
-            class="form__input"
-            type="password"
+            class="form__input form__password"
+            :class="{ 'form__input--error': $v.password.$error }"
+            :type="type"
             id="password"
             name="password"
+            v-model.trim="password"
+            @input="$v.password.$touch"
+            @blur="$v.password.$touch"
           />
           <label class="form__label" for="password">Пароль</label>
+          <div @click="passwordHide" class="form__password-hide">
+            <icon-base width="20" height="20">
+              <icon-hide />
+            </icon-base>
+          </div>
+          <div 
+            class="form__prompt form__prompt--error"
+            v-if="$v.password.$error"
+          >
+            Введіть свій пароль
+          </div>
         </div>
         <div class="form__submit">
           <button type="submit" class="form__button">Увійти</button>
@@ -39,14 +62,14 @@
             </icon-base>
           </a>
         </div>
-        <router-link class="form__recovery" to="/recovery"
-          >Нагадати пароль
+        <router-link class="form__recovery" to="/recovery">
+          Нагадати пароль
         </router-link>
       </div>
       <div class="form__footer">
         <p class="form__text">У вас ще немає акаунту?</p>
-        <router-link class="form__reg" to="/register"
-          >Зареєструватися
+        <router-link class="form__reg" to="/register">
+          Зареєструватися
         </router-link>
       </div>
     </form>
@@ -59,6 +82,9 @@ import Auth from "./Auth";
 import IconBase from "@/components/icons/IconBase";
 import IconFacebookAuth from "@/components/icons/IconFacebookAuth";
 import IconGoogleAuth from "@/components/icons/IconGoogleAuth";
+import IconHide from "@/components/icons/IconHide"
+import { required, minLength, maxLength, helpers } from "vuelidate/lib/validators"
+const email = helpers.regex('email', /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/)
 
 export default {
   components: {
@@ -66,13 +92,38 @@ export default {
     IconBase,
     IconFacebookAuth,
     IconGoogleAuth,
+    IconHide,
   },
   name: "AuthLogin",
   props: {},
-  data() {
-    return {};
-  },
+  data: () => ({
+    type: 'password',
+    submitStatus: null,
+    email: "",
+    password: "",
+    formData: new FormData(),
+  }),
   computed: {},
+  methods: {
+    signin() {
+      this.$v.$touch()
+    },
+    passwordHide() {
+      if(this.type == 'password') this.type = 'text'
+      else this.type ='password'
+    }
+  },
+  validations: {
+    email: {
+      required,
+      email,
+      minLength: minLength(2),
+      maxLength: maxLength(100),
+    },
+    password: {
+      required,
+    },
+  },
 };
 </script>
 
@@ -130,14 +181,59 @@ export default {
 }
 .form__input {
   @extend %input-auth;
+
   &:not(:placeholder-shown) {
     & + .form__label {
       transform: translateY(-13px);
+      font-size: 14px;
     }
   }
   &:focus {
+    border-color: #80bdff;
+
     & + .form__label {
       transform: translateY(-13px);
+      font-size: 14px;
+      color: #80bdff;
+    }
+  }
+  &--error {
+    border-color: #db3445 !important;
+
+    & + .form__label {
+      color: #db3445 !important;
+    }
+  }
+}
+.form__prompt {
+  color:  $blue;
+  margin-top: 5px;
+
+  &--error {
+    color:  #db3445;
+  }
+}
+.form__password {
+  padding-right: 55px;
+}
+.form__password-hide {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+
+  .svg {
+    fill: rgba($blue, 0.8);
+
+    &:hover {
+      fill: $orange;
     }
   }
 }

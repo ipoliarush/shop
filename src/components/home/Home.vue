@@ -36,7 +36,7 @@ import BannerMain from "@/components/banner/BannerMain";
 import CarouselProducer from "@/components/carousel/CarouselProducer";
 import CarouselBig from '@/components/carousel/CarouselBig';
 import CarouselMedium from '@/components/carousel/CarouselMedium';
-import {mapActions, mapGetters} from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: "Home",
@@ -53,12 +53,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('slider', [
       'ITEMSHIT'
     ]),
   },
   methods: {
-    ...mapActions([
+    ...mapActions('slider', [
       'GET_ITEMSHIT_FROM_API',
     ])
   },
