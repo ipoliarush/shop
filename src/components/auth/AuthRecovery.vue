@@ -15,7 +15,7 @@
             @input="$v.email.$touch"
             @blur="$v.email.$touch"
           />
-          <label class="form__label" for="email">Ел. пошта</label>
+          <label unselectable="on" class="form__label" for="email">Ел. пошта</label>
           <div
             class="form__prompt form__prompt--error"
             v-if="$v.email.$error"
@@ -52,7 +52,6 @@ export default {
     type: 'password',
     submitStatus: null,
     email: "",
-    formData: new FormData(),
   }),
   computed: {},
   methods: {
@@ -122,6 +121,12 @@ export default {
 }
 .form__label {
   @extend %label-auth;
+
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .form__input {
   @extend %input-auth;

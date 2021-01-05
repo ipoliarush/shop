@@ -15,7 +15,7 @@
             @input="$v.firstName.$touch"
             @blur="$v.firstName.$touch"
           />
-          <label class="form__label" for="firstName">Ім'я</label>
+          <label unselectable="on" class="form__label" for="firstName">Ім'я</label>
           <div
             class="form__prompt form__prompt--error"
             v-if="$v.firstName.$error"
@@ -35,7 +35,7 @@
             @input="$v.phone.$touch"
             @blur="$v.phone.$touch"
           />
-          <label class="form__label" for="phone">Телефон</label>
+          <label unselectable="on" class="form__label" for="phone">Телефон</label>
           <div
             class="form__prompt form__prompt--error"
             v-if="$v.phone.$error"
@@ -55,7 +55,7 @@
             @input="$v.email.$touch"
             @blur="$v.email.$touch"
           />
-          <label class="form__label" for="email">Ел. пошта</label>
+          <label unselectable="on" class="form__label" for="email">Ел. пошта</label>
           <div
             class="form__prompt form__prompt--error"
             v-if="$v.email.$error"
@@ -75,7 +75,7 @@
             @input="$v.password.$touch"
             @blur="$v.password.$touch"
           />
-          <label class="form__label" for="password">Пароль</label>
+          <label unselectable="on" class="form__label" for="password">Пароль</label>
           <div @click="passwordHide" class="form__password-hide">
             <icon-base width="20" height="20">
               <icon-hide />
@@ -117,6 +117,7 @@ import IconFacebookAuth from "@/components/icons/IconFacebookAuth"
 import IconGoogleAuth from "@/components/icons/IconGoogleAuth"
 import IconHide from "@/components/icons/IconHide"
 import { required, minLength, maxLength, helpers } from "vuelidate/lib/validators"
+import { mapActions } from 'vuex'
 const alphaHelp = helpers.regex('alphaHelp', /^[а-яА-ЯіІїЇєЄ]*$/)
 const phoneHelp = helpers.regex('phoneHelp', /^[\+]{0,1}380([0-9]{9})$/)
 const emailHelp = helpers.regex('emailHelp', /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/)
@@ -139,9 +140,12 @@ export default {
     phone: "",
     email: "",
     password: "",
-    formData: new FormData(),
   }),
-  computed: {},
+  computed: {
+    ...mapActions('auth', [
+      'SIGNUP',
+    ]),
+  },
   methods: {
     signup() {
       this.$v.$touch()
@@ -155,9 +159,11 @@ export default {
           password: this.password
         }
 
-        this.$store.dispatch('signup', { data })
-          .then(() => this.$router.push('/'))
-          .catch(err => console.log(err))
+        // this.$store.dispatch('signup', { data })
+        //   .then(() => this.$router.push('/'))
+        //   .catch(err => console.log(err))
+
+        console.log(this.$store)
 
       }
     },
@@ -243,6 +249,12 @@ export default {
 }
 .form__label {
   @extend %label-auth;
+
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .form__input {
   @extend %input-auth;

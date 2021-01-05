@@ -22,7 +22,10 @@ router.post('/signup', async (req, res) => {
 
     await user.save(err => {
       if (err) return res.status(400).json({ success: false, code: '4', message:  'Во время регистрации возникли проблемы' })
-      res.redirect('/')
+      else {
+        console.log(searchEmail)
+        res.redirect('/')
+      }
     })
   
 })

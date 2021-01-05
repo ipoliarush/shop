@@ -15,7 +15,7 @@
             @input="$v.email.$touch"
             @blur="$v.email.$touch"
           />
-          <label class="form__label" for="email">Ел. пошта</label>
+          <label unselectable="on" class="form__label" for="email">Ел. пошта</label>
           <div
             class="form__prompt form__prompt--error"
             v-if="$v.email.$error"
@@ -35,7 +35,7 @@
             @input="$v.password.$touch"
             @blur="$v.password.$touch"
           />
-          <label class="form__label" for="password">Пароль</label>
+          <label unselectable="on" class="form__label" for="password">Пароль</label>
           <div @click="passwordHide" class="form__password-hide">
             <icon-base width="20" height="20">
               <icon-hide />
@@ -101,7 +101,6 @@ export default {
     submitStatus: null,
     email: "",
     password: "",
-    formData: new FormData(),
   }),
   computed: {},
   methods: {
@@ -178,6 +177,12 @@ export default {
 }
 .form__label {
   @extend %label-auth;
+
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .form__input {
   @extend %input-auth;

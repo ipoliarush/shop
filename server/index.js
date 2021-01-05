@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const usersRoutes = require('./router/users')
 const path = require('path')
 // import cors from 'cors';
-// import config from './config';
+const config = require('./config');
 // import bcrypt from 'bcrypt';
 // import jwt from 'jsonwebtoken';
 // import { urlencoded, json } from 'body-parser';
@@ -12,15 +12,14 @@ const url = "mongodb+srv://ipol:1q2w3e4r5t@cluster0.xv0xz.mongodb.net/usersdb"
 const PORT = process.env.PORT || 3030
 const app = express()
 
-// CORS middleware
-// const allowCrossDomain = function(req, res, next) {
-//   res.header('Access-Control-Allow-Origin', '*')
-//   res.header('Access-Control-Allow-Methods', '*')
-//   res.header('Access-Control-Allow-Headers', '*')
-//   next()
-// } 
+const allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Methods', '*')
+  res.header('Access-Control-Allow-Headers', '*')
+  next()
+} 
 
-// app.use(allowCrossDomain)
+app.use(allowCrossDomain)
 
 
 app.use(express.urlencoded({ extended: true }))
