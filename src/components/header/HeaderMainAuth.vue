@@ -5,7 +5,10 @@
         <icon-user />
       </icon-base>
     </div>
-    <div class="auth__inner">
+    <div v-if="USER.name" class="auth__inner">
+      <router-link to="/cabinet" class="auth__name">{{ USER.name }}</router-link>
+    </div>
+    <div v-else class="auth__inner">
       <router-link to="/login" class="auth__login">Вхід</router-link>
       <div class="auth__wline"></div>
       <router-link to="/register" class="auth__logout">Реєстрація</router-link>
@@ -16,6 +19,7 @@
 <script>
 import IconBase from "@/components/icons/IconBase";
 import IconUser from "@/components/icons/IconUser";
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -27,7 +31,11 @@ export default {
   data() {
     return {};
   },
-  computed: {},
+  computed: {
+    ...mapGetters('auth', [
+      'USER',
+    ])
+  },
 };
 </script>
 
@@ -36,7 +44,7 @@ export default {
   display: flex;
   align-items: center;
 
-  &__user {
+  .auth__user {
     width: 39px;
     height: 39px;
     border-radius: 50px;
@@ -48,14 +56,15 @@ export default {
     color: #000;
   }
 
-  &__inner {
+  .auth__inner {
     display: flex;
     flex-direction: column;
     margin-left: 9px;
   }
 
-  &__login,
-  &__logout {
+  .auth__login,
+  .auth__logout,
+  .auth__name {
     text-decoration: none;
     color: rgba(#000000, 0.5);
     transition: color ease 0.5s;
@@ -65,7 +74,7 @@ export default {
     }
   }
 
-  &__wline {
+  .auth__wline {
     width: 100%;
     height: 1px;
     background: rgba(#3f4145, 0.2);

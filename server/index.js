@@ -1,12 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const usersRoutes = require('./router/users')
+const router = require('./router')
 const path = require('path')
-// import cors from 'cors';
-const config = require('./config');
-// import bcrypt from 'bcrypt';
-// import jwt from 'jsonwebtoken';
-// import { urlencoded, json } from 'body-parser';
 
 const url = "mongodb+srv://ipol:1q2w3e4r5t@cluster0.xv0xz.mongodb.net/usersdb"
 const PORT = process.env.PORT || 3030
@@ -23,11 +18,12 @@ app.use(allowCrossDomain)
 
 
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 app.use(express.static(path.resolve(__dirname, '../dist')))
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../dist', 'index.html'))
 })
-app.use(usersRoutes)
+app.use(router)
 
 
 async function start() {

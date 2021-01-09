@@ -30,7 +30,13 @@
           </div>
           <div class="wline"></div>
           <div class="tech">
-            <header-tech text="Особистий кабінет" :counter="1" link="/mycabinet">
+            <header-tech v-if="USER.name" :text="USER.name" :counter="1" link="/cabinet">
+              <icon-base width="17" height="17" icon-color="#2A2C30">
+                <icon-user />
+              </icon-base>
+            </header-tech>
+
+            <header-tech v-else text="Увійти" link="/login">
               <icon-base width="17" height="17" icon-color="#2A2C30">
                 <icon-user />
               </icon-base>
@@ -101,6 +107,7 @@ import IconWish from "@/components/icons/IconWish";
 import IconMessage from "@/components/icons/IconMessage";
 import IconFacebook from "@/components/icons/IconFacebook";
 import IconInstagram from "@/components/icons/IconInstagram";
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: "HeaderMobileMenu",
@@ -129,9 +136,17 @@ export default {
       { name: "Повернення товару", link: "/g" },
     ],
   }),
-  computed: {},
+  computed: {
+    ...mapGetters('auth', [
+      'USER',
+    ]),
+    ...mapState('auth', [
+      'status',
+    ])
+  },
   methods: {
     closeMenu() {
+      console.log(this.status)
       this.$refs.mobileMenu.hidden = true;
       document.body.style = "";
       for (let item of this.$refs.mobileMenu.childNodes) {

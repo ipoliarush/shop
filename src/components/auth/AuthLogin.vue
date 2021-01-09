@@ -1,18 +1,18 @@
 <template>
   <auth>
-    <form class="form" method="post" action="/signin" @submit.prevent="signin">
+    <form class="form" method="post" action="/login" @submit.prevent="login">
       <div class="form__body">
         <h3 class="form__title">Вхід</h3>
         <div class="form__item">
           <input
             placeholder=" "
             class="form__input"
-            :class="{ 'form__input--error': $v.email.$error }"
+            :class="{ 'form__input--error': $v.email.$error || existEmail }"
             type="email"
             id="email"
             name="email"
             v-model.trim="email"
-            @input="$v.email.$touch"
+            @input="$v.email.$touch; existEmail = null"
             @blur="$v.email.$touch"
           />
           <label unselectable="on" class="form__label" for="email">Ел. пошта</label>
@@ -22,17 +22,23 @@
           >
             Введено неправильну адресу ел. пошти 
           </div>
+          <div
+            class="form__prompt form__prompt--error"
+            v-if="existEmail"
+          >
+            {{ messageEmail }}  
+          </div>
         </div>
         <div class="form__item">
           <input
             placeholder=" "
             class="form__input form__password"
-            :class="{ 'form__input--error': $v.password.$error }"
+            :class="{ 'form__input--error': $v.password.$error || existPass }"
             :type="type"
             id="password"
             name="password"
             v-model.trim="password"
-            @input="$v.password.$touch"
+            @input="$v.password.$touch; existPass = null"
             @blur="$v.password.$touch"
           />
           <label unselectable="on" class="form__label" for="password">Пароль</label>
@@ -46,6 +52,12 @@
             v-if="$v.password.$error"
           >
             Введіть свій пароль
+          </div>
+          <div
+            class="form__prompt form__prompt--error"
+            v-if="existPass"
+          >
+            {{ messagePass }}  
           </div>
         </div>
         <div class="form__submit">
@@ -84,6 +96,7 @@ import IconFacebookAuth from "@/components/icons/IconFacebookAuth";
 import IconGoogleAuth from "@/components/icons/IconGoogleAuth";
 import IconHide from "@/components/icons/IconHide"
 import { required, minLength, maxLength, helpers } from "vuelidate/lib/validators"
+import { mapActions } from 'vuex'
 const email = helpers.regex('email', /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/)
 
 export default {
@@ -101,11 +114,50 @@ export default {
     submitStatus: null,
     email: "",
     password: "",
+    existEmail: false,
+    existPass: false,
+    messageEmail: null,
+    messagePass: null
   }),
-  computed: {},
   methods: {
-    signin() {
+    ...mapActions('auth', [
+      'LOGIN',
+    ]),
+    
+    login() {
+      this.messageClear()
       this.$v.$touch()
+
+      if(!this.$v.$invalid) {
+
+        const data = {
+          email: this.email, 
+          password: this.password
+        }
+
+        this.LOGIN(data)
+          .then((resp) => {
+            if(!resp.data.success) {
+              if(resp.data.code === '6') {
+                this.existEmail = true
+                this.messageEmail = `Користувач з ел. поштою ${this.email} не зареєстрований`
+              }
+              else if(resp.data.code === '7') {
+                this.existPass = true
+                this.messagePass = `Введено невірний пароль! Перевірте розкладку клавіатури і Caps Lock`
+              }
+            }
+            else {
+              this.messageClear()
+              this.$router.push('/')
+            }
+          })
+          .catch(err => console.log(err))
+      }
+    },
+    messageClear() {
+      this.existEmail = this.existPass = false
+      this.messageEmail = this.messagePass = null
     },
     passwordHide() {
       if(this.type == 'password') this.type = 'text'

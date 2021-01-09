@@ -1,6 +1,6 @@
 <template>
   <auth>
-    <form class="form" method="post" action="/signup" @submit.prevent="signup">
+    <form class="form" method="post" action="/register" @submit.prevent="register">
       <div class="form__body">
         <h3 class="form__title">Реєстрація</h3>
         <div class="form__item">
@@ -27,12 +27,12 @@
           <input
             placeholder=" "
             class="form__input"
-            :class="{ 'form__input--error': $v.phone.$error }"
+            :class="{ 'form__input--error': $v.phone.$error || existPhone }"
             type="tel"
             id="phone"
             name="phone"
             v-model.trim="phone"
-            @input="$v.phone.$touch"
+            @input="$v.phone.$touch; existPhone = null"
             @blur="$v.phone.$touch"
           />
           <label unselectable="on" class="form__label" for="phone">Телефон</label>
@@ -42,17 +42,23 @@
           >
             Введіть свій телефон у форматі +380 XX XXX XX XX 
           </div>
+          <div
+            class="form__prompt form__prompt--error"
+            v-if="existPhone"
+          >
+            {{ messagePhone }}  
+          </div>
         </div>
         <div class="form__item">
           <input
             placeholder=" "
             class="form__input"
-            :class="{ 'form__input--error': $v.email.$error }"
+            :class="{ 'form__input--error': $v.email.$error || existEmail }"
             type="email"
             id="email"
             name="email"
             v-model.trim="email"
-            @input="$v.email.$touch"
+            @input="$v.email.$touch; existEmail = null"
             @blur="$v.email.$touch"
           />
           <label unselectable="on" class="form__label" for="email">Ел. пошта</label>
@@ -61,6 +67,12 @@
             v-if="$v.email.$error"
           >
             Введіть свою ел. пошту  
+          </div>
+          <div
+            class="form__prompt form__prompt--error"
+            v-if="existEmail"
+          >
+            {{ messageEmail }}  
           </div>
         </div>
         <div class="form__item">
@@ -140,14 +152,19 @@ export default {
     phone: "",
     email: "",
     password: "",
+    existEmail: false,
+    existPhone: false,
+    messageEmail: null,
+    messagePhone: null
   }),
-  computed: {
-    ...mapActions('auth', [
-      'SIGNUP',
-    ]),
-  },
+  computed: {},
   methods: {
-    signup() {
+    ...mapActions('auth', [
+      'REGISTER',
+    ]),
+
+    register() {
+      this.messageClear()
       this.$v.$touch()
 
       if(!this.$v.$invalid) {
@@ -159,14 +176,32 @@ export default {
           password: this.password
         }
 
-        // this.$store.dispatch('signup', { data })
-        //   .then(() => this.$router.push('/'))
-        //   .catch(err => console.log(err))
-
-        console.log(this.$store)
-
+        this.REGISTER(data)
+          .then((resp) => {
+            if(!resp.data.success) {
+              if(resp.data.code === '2') {
+                this.existEmail = true
+                this.messageEmail = `Користувач з ел. поштою ${this.email} вже існує, введіть іншу`
+              }
+              else if(resp.data.code === '3') {
+                this.existPhone = true
+                this.messagePhone = `Користувач з телефоном ${this.phone} вже існує, введіть інший`
+              }
+            }
+            else {
+              this.messageClear()
+              this.$router.push('/')
+            }
+          })
+          .catch(err => console.log(err))
       }
     },
+
+    messageClear() {
+      this.existEmail = this.existPhone = false
+      this.messageEmail = this.messagePhone = null
+    },
+
     passwordHide() {
       if(this.type == 'password') this.type = 'text'
       else this.type ='password'

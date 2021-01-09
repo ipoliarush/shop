@@ -1,3 +1,3 @@
 export default {
-  IS_OPEN: (state) => state.isOpen,
+  IS_OPEN: state => state.isOpen,
 }
