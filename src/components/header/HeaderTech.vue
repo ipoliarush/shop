@@ -1,5 +1,5 @@
 <template>
-  <a :href="link" class="header-tech">
+  <router-link :to="link" class="header-tech">
     <div class="circle">
       <slot />
     </div>
@@ -7,7 +7,7 @@
     <div v-if="counter" class="counter">
       <p class="number">{{ counter }}</p>
     </div>
-  </a>
+  </router-link>
 </template>
 
 <script>

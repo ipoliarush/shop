@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -57,19 +58,19 @@ let router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if(to.matched.some(record => record.meta.auth)) {
-    if(localStorage.getItem('token') == null) {
+    if(store.getters['auth/IS_LOGGED_IN']) {
+      next()
+    } else {
       next({
         name: 'login',
         params: { nextUrl: to.fullPath }
       })
-    } else {
-      next()
     }
   } else if(to.matched.some(record => record.meta.guest)) {
-    if(localStorage.getItem('token') == null) {
-      next()
-    } else {
+    if(store.getters['auth/IS_LOGGED_IN']) {
       next({ path: '/'})
+    } else {
+      next()
     }
   } else {
     next()

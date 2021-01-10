@@ -3,7 +3,9 @@
     <div class="content">
       <div class="side">
         <div class="header">
-          <a href="#" class="logo">Logo</a>
+          <router-link class="logo" to="/">
+            Logo
+          </router-link>
           <div class="lang">
             <p class="lang__item">RU</p>
             <div class="hline"></div>
