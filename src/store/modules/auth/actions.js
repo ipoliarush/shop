@@ -11,24 +11,31 @@ export default {
       })
       .then(resp => {
         if(resp.data.success) {
-          const token = resp.data.token
-          const user = resp.data.user
-          localStorage.setItem('token', token)
-          axios.defaults.headers.common['Authorization'] = token
-          commit('AUTH_SUCCES', token, user)
+
+          const data = {
+            token: resp.data.token,
+            user: resp.data.user
+          }
+
+          localStorage.setItem('token', JSON.stringify(data.token))
+          localStorage.setItem('user', JSON.stringify(data.user))
+
+          axios.defaults.headers.common['Authorization'] = data.token
+          commit('AUTH_SUCCESS', data)
           resolve(resp)
         }
         else resolve(resp)
       })
       .catch(err => {
-        commit('AUTH_ERROR')
+        commit('AUTH_ERROR', err)
         localStorage.removeItem('token')
+        localStorage.removeItem('user')
         reject(err)
       })
     })
   },
 
-  REGISTER({commit}, user){
+  REGISTER({commit}, user) {
     return new Promise((resolve, reject) => {
       commit('AUTH_REQUEST')
       axios({
@@ -38,28 +45,35 @@ export default {
       })
       .then(resp => {
         if(resp.data.success) {
-          const token = resp.data.token
-          const user = resp.data.user
-          localStorage.setItem('token', token)
-          axios.defaults.headers.common['Authorization'] = token
-          commit('AUTH_SUCCES', token, user)
+
+          const data = {
+            token: resp.data.token,
+            user: resp.data.user
+          }
+
+          localStorage.setItem('token', JSON.stringify(data.token))
+          localStorage.setItem('user', JSON.stringify(data.user))
+
+          axios.defaults.headers.common['Authorization'] = data.token
+          commit('AUTH_SUCCESS', data)
           resolve(resp)
-        }
-        else resolve(resp)
+        } else resolve(resp)
       })
       .catch(err => {
         commit('AUTH_ERROR', err)
         localStorage.removeItem('token')
+        localStorage.removeItem('user')
         reject(err)
       })
     })
   },
 
-  LOGOUT({commit}){
-    return new Promise((resolve, reject) => {
+  LOGOUT({commit}) {
+    return new Promise((resolve) => {
       commit('LOGOUT')
       localStorage.removeItem('token')
-      delete Axios.defaults.headers.common['Authorization']
+      localStorage.removeItem('user')
+      delete axios.defaults.headers.common['Authorization']
       resolve()
     })
   }

@@ -177,23 +177,30 @@ export default {
         }
 
         this.REGISTER(data)
-          .then((resp) => {
-            if(!resp.data.success) {
-              if(resp.data.code === '2') {
-                this.existEmail = true
-                this.messageEmail = `Користувач з ел. поштою ${this.email} вже існує, введіть іншу`
-              }
-              else if(resp.data.code === '3') {
-                this.existPhone = true
-                this.messagePhone = `Користувач з телефоном ${this.phone} вже існує, введіть інший`
+        .then((resp) => {
+          if(!resp.data.success) {
+            if(resp.data.code === '2') {
+              this.existEmail = true
+              this.messageEmail = `Користувач з ел. поштою ${this.email} вже існує, введіть іншу`
+            }
+            else if(resp.data.code === '3') {
+              this.existPhone = true
+              this.messagePhone = `Користувач з телефоном ${this.phone} вже існує, введіть інший`
+            }
+          }
+          else {
+            this.messageClear()
+            
+            if (localStorage.getItem('token') != null) {
+              if(this.$route.params.nextUrl != null) {
+                this.$router.push(this.$route.params.nextUrl)
+              } else {
+                this.$router.push('/')
               }
             }
-            else {
-              this.messageClear()
-              this.$router.push('/')
-            }
-          })
-          .catch(err => console.log(err))
+          }
+        })
+        .catch(err => console.log(err))
       }
     },
 

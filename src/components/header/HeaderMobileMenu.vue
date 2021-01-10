@@ -30,7 +30,7 @@
           </div>
           <div class="wline"></div>
           <div class="tech">
-            <header-tech v-if="USER.name" :text="USER.name" :counter="1" link="/cabinet">
+            <header-tech v-if="USER.name" :text="USER.name" :counter="1" link="/profile">
               <icon-base width="17" height="17" icon-color="#2A2C30">
                 <icon-user />
               </icon-base>
@@ -146,7 +146,6 @@ export default {
   },
   methods: {
     closeMenu() {
-      console.log(this.status)
       this.$refs.mobileMenu.hidden = true;
       document.body.style = "";
       for (let item of this.$refs.mobileMenu.childNodes) {

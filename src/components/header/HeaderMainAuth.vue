@@ -6,7 +6,7 @@
       </icon-base>
     </div>
     <div v-if="USER.name" class="auth__inner">
-      <router-link to="/cabinet" class="auth__name">{{ USER.name }}</router-link>
+      <router-link to="/profile" class="auth__name">{{ USER.name }}</router-link>
     </div>
     <div v-else class="auth__inner">
       <router-link to="/login" class="auth__login">Вхід</router-link>
@@ -36,6 +36,8 @@ export default {
       'USER',
     ])
   },
+  methods: {
+  }
 };
 </script>
 
@@ -43,6 +45,7 @@ export default {
 .auth {
   display: flex;
   align-items: center;
+  min-width: 125px;
 
   .auth__user {
     width: 39px;

@@ -42,7 +42,7 @@ router.post('/register', async (req, res) => {
           .status(200)
           .json({ 
             success: true, 
-            token: jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 }),
+            token: jwt.sign({ id: user.id }, config.secret, { expiresIn: 60 }),
             user: {
               id: user.id,
               firstName: user.firstName,
@@ -58,8 +58,6 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
 
-  const password = bcrypt.hashSync(req.body.password, salt)
-
   await User.findOne({ email: req.body.email }).exec((err, user) => {
     if(err) 
       return res
@@ -70,7 +68,7 @@ router.post('/login', async (req, res) => {
       return res
       .json({ success: false, code: '6', message: 'Пользователь с таким ел. адресом не найден' })
     
-    else if(user.password !== password) {
+    else if(!bcrypt.compareSync(req.body.password, user.password)) {
       return res
       .json({ success: false, code: '7', message: 'Введен неверный пароль' })
     }
@@ -80,7 +78,7 @@ router.post('/login', async (req, res) => {
         .status(200)
         .json({ 
           success: true, 
-          token: jwt.sign({ id: user.id }, config.secret, { expiresIn: 86400 }),
+          token: jwt.sign({ id: user.id }, config.secret, { expiresIn: 60 }),
           user: {
             id: user.id,
             firstName: user.firstName,

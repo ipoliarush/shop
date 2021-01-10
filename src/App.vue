@@ -20,26 +20,33 @@ export default {
     AppFooter,
   },
   methods: {
-    ...mapActions('slider', [
-      'RESIZE',
-    ])
+    ...mapActions(
+      'slider', [
+        'RESIZE',
+      ],
+      'auth', [
+        'LOGOUT',
+    ]),
   },
   created() {
     window.addEventListener("resize", this.RESIZE)
     this.RESIZE()
 
+    //Обработка просроченных токенов 
     this.$http.interceptors.response.use(undefined, function (err) {
       return new Promise(function (resolve, reject) {
         if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
-          this.$store.dispatch("logout")
+          this.LOGOUT()
         }
         throw err
       })
     })
   },
+
   beforeDestroy() {
     window.removeEventListener("resize", this.RESIZE);
   },
+
   mounted() {
     this.$nextTick(function () {
       window.addEventListener('resize', this.RESIZE);

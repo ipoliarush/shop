@@ -136,23 +136,28 @@ export default {
         }
 
         this.LOGIN(data)
-          .then((resp) => {
-            if(!resp.data.success) {
-              if(resp.data.code === '6') {
-                this.existEmail = true
-                this.messageEmail = `Користувач з ел. поштою ${this.email} не зареєстрований`
-              }
-              else if(resp.data.code === '7') {
-                this.existPass = true
-                this.messagePass = `Введено невірний пароль! Перевірте розкладку клавіатури і Caps Lock`
+        .then((resp) => {
+          if(!resp.data.success) {
+            if(resp.data.code === '6') {
+              this.existEmail = true
+              this.messageEmail = `Користувач з ел. поштою ${this.email} не зареєстрований`
+            } else if(resp.data.code === '7') {
+              this.existPass = true
+              this.messagePass = `Введено невірний пароль! Перевірте розкладку клавіатури і Caps Lock`
+            }
+          } else {
+            this.messageClear()
+            
+            if (localStorage.getItem('token') != null) {
+              if(this.$route.params.nextUrl != null) {
+                this.$router.push(this.$route.params.nextUrl)
+              } else {
+                this.$router.push('/')
               }
             }
-            else {
-              this.messageClear()
-              this.$router.push('/')
-            }
-          })
-          .catch(err => console.log(err))
+          }
+        })
+        .catch(err => console.log(err))
       }
     },
     messageClear() {
@@ -168,11 +173,11 @@ export default {
     email: {
       required,
       email,
-      minLength: minLength(2),
       maxLength: maxLength(100),
     },
     password: {
       required,
+      minLength: minLength(2),
     },
   },
 };
