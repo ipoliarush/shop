@@ -6,4 +6,10 @@ export default {
   REVERSE (state) {
     state.isOpen = !state.isOpen
   },
+  MOBILE_MENU_OPEN (state) {
+		state.isMobileMenu = true
+  },
+  MOBILE_MENU_CLOSE (state) {
+  	state.isMobileMenu = false
+  }
 }
