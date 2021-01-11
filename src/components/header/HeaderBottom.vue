@@ -26,7 +26,7 @@
         <icon-cart />
       </icon-base>
     </a>
-    <mobile-menu v-if="isMenu" ref="mobileMenu" />
+    <mobile-menu v-if="IS_MOBILE_MENU" ref="mobileMenu" />
   </div>
 </template>
 
@@ -36,6 +36,8 @@ import IconSearch from "@/components/icons/IconSearch";
 import IconCart from "@/components/icons/IconCart";
 import IconBurger from "@/components/icons/IconBurger";
 import MobileMenu from "@/components/header/HeaderMobileMenu";
+
+import { mapGetters } from "vuex"
 
 export default {
   name: "HeaderBottom",
@@ -52,27 +54,19 @@ export default {
     white: "#fff",
     counter: 12
   }),
-  computed: {},
+  computed: {
+    ...mapGetters([
+      'IS_MOBILE_MENU',
+    ])
+  },
   methods: {
-    onResize() {
-      this.isMenu = document.documentElement.clientWidth > 992 ? false : true;
-    },
     openMenu() {
-      if (this.isMenu) {
-        this.$refs.mobileMenu.hidden = false;
-        document.body.style = "overflow: hidden";
-        for (let item of this.$refs.mobileMenu.$el.childNodes) {
-          item.style.transform = "translateX(0)";
-        }
+      this.$refs.mobileMenu.hidden = false;
+      document.body.style = "overflow: hidden";
+      for (let item of this.$refs.mobileMenu.$el.childNodes) {
+        item.style.transform = "translateX(0)";
       }
     },
-  },
-  created() {
-    window.addEventListener("resize", this.onResize);
-    this.onResize();
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.onResize);
   },
 };
 </script>
