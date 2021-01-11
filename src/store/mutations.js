@@ -10,6 +10,6 @@ export default {
 		state.isMobileMenu = true
   },
   MOBILE_MENU_CLOSE (state) {
-  	state.isMobileMenu = false
+		state.isMobileMenu = false
   }
 }
