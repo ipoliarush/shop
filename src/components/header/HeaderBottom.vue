@@ -62,7 +62,6 @@ export default {
     ...mapActions([
       'MOBILE_MENU_OPEN',
     ]),
-    // document.body.style = "overflow: hidden";
   },
 };
 </script>
