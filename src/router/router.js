@@ -77,4 +77,8 @@ router.beforeEach((to, from, next) => {
   }
 })
 
+router.afterEach((to, from) => {
+  store.dispatch('MOBILE_MENU_CLOSE');
+})
+
 export default router

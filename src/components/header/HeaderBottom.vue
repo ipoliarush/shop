@@ -1,6 +1,6 @@
 <template>
   <div class="header-bottom">
-    <div class="mobile-open" @click.prevent="openMenu">
+    <div class="mobile-open" @click="MOBILE_MENU_OPEN">
       <icon-base width="27" height="20">
         <icon-burger />
       </icon-base>
@@ -26,7 +26,7 @@
         <icon-cart />
       </icon-base>
     </a>
-    <mobile-menu v-if="IS_MOBILE_MENU" ref="mobileMenu" />
+    <mobile-menu ref="mobileMenu" />
   </div>
 </template>
 
@@ -37,7 +37,7 @@ import IconCart from "@/components/icons/IconCart";
 import IconBurger from "@/components/icons/IconBurger";
 import MobileMenu from "@/components/header/HeaderMobileMenu";
 
-import { mapGetters } from "vuex"
+import { mapGetters, mapActions } from "vuex"
 
 export default {
   name: "HeaderBottom",
@@ -50,7 +50,6 @@ export default {
   },
   props: {},
   data: () => ({
-    isMenu: false,
     white: "#fff",
     counter: 12
   }),
@@ -60,13 +59,10 @@ export default {
     ])
   },
   methods: {
-    openMenu() {
-      this.$refs.mobileMenu.hidden = false;
-      document.body.style = "overflow: hidden";
-      for (let item of this.$refs.mobileMenu.$el.childNodes) {
-        item.style.transform = "translateX(0)";
-      }
-    },
+    ...mapActions([
+      'MOBILE_MENU_OPEN',
+    ]),
+    // document.body.style = "overflow: hidden";
   },
 };
 </script>

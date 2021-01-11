@@ -1,6 +1,6 @@
 <template>
-  <div class="mobile-menu" ref="mobileMenu">
-    <div class="content">
+  <div class="mobile-menu" :class="IS_MOBILE_MENU ? 'mobile-menu--visible' : 'mobile-menu--hidden'">
+    <div class="content" :class="IS_MOBILE_MENU ? 'content--visible' : 'content--hidden'">
       <div class="side">
         <div class="header">
           <router-link class="logo" to="/">
@@ -11,7 +11,7 @@
             <div class="hline"></div>
             <p class="lang__item lang__item-active">UA</p>
           </div>
-          <div class="mobile-close" @click.prevent="closeMenu">
+          <div class="mobile-close" @click="MOBILE_MENU_CLOSE">
             <icon-base :icon-color="white" width="20" height="20">
               <icon-close />
             </icon-base>
@@ -93,7 +93,7 @@
         </div>
       </div>
     </div>
-    <div class="overlay" @click.prevent="closeMenu"></div>
+    <div class="overlay" @click="MOBILE_MENU_CLOSE" :class="IS_MOBILE_MENU ? 'overlay--visible' : 'overlay--hidden'"></div>
   </div>
 </template>
 
@@ -109,7 +109,7 @@ import IconWish from "@/components/icons/IconWish";
 import IconMessage from "@/components/icons/IconMessage";
 import IconFacebook from "@/components/icons/IconFacebook";
 import IconInstagram from "@/components/icons/IconInstagram";
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState, mapActions } from 'vuex'
 
 export default {
   name: "HeaderMobileMenu",
@@ -142,18 +142,17 @@ export default {
     ...mapGetters('auth', [
       'USER',
     ]),
+    ...mapGetters([
+      'IS_MOBILE_MENU',
+    ]),
     ...mapState('auth', [
       'status',
     ])
   },
   methods: {
-    closeMenu() {
-      this.$refs.mobileMenu.hidden = true;
-      document.body.style = "";
-      for (let item of this.$refs.mobileMenu.childNodes) {
-        item.style.transform = "translateX(-110%)";
-      }
-    },
+    ...mapActions([
+      'MOBILE_MENU_CLOSE',
+    ]),
   },
 };
 </script>
@@ -161,6 +160,14 @@ export default {
 <style lang="scss" scoped>
 .mobile-menu {
   display: block;
+
+  &--visible {
+    visibility: visible;
+  }
+
+  &--hidden {
+    visibility: hidden;
+  }
 
   .side {
     display: flex;
@@ -179,6 +186,14 @@ export default {
     transform: translateX(-110%);
     transition: all 0.5s;
     overflow-y: auto;
+
+    &--visible {
+      transform : translateX(0);
+    }
+
+    &--hidden {
+      transform : translateX(-110%);
+    }
   }
 
   .header {
@@ -264,6 +279,14 @@ export default {
     opacity: 1;
     transform: translateX(-110%);
     z-index: 19;
+
+    &--visible {
+      transform : translateX(0);
+    }
+
+    &--hidden {
+      transform : translateX(-110%);
+    }
   }
 
   .communication {
