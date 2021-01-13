@@ -1,7 +1,7 @@
 body {
 	font-family: 'Rubik', sans-serif;
 	font-size: 14px;
-	color: $blue;
+	color: $second;
 }
 
 .layout {
@@ -42,7 +42,7 @@ h4 {
 }
 
 %input-auth {
-	border: 1px solid rgba($blue, 0.2);
+	border: 1px solid rgba($second, 0.2);
 	border-radius: 4px;
 	padding: 14px 15px 13px 15px;
 	font-size: 18px;
@@ -56,7 +56,7 @@ h4 {
 	left: 14px;
 	font-size: 18px;
 	background: #fff;
-	color: rgba($blue, 0.5);
+	color: rgba($second, 0.5);
 	padding-left: 5px;
 	padding-right: 5px;
 	transition: all ease .5s;
@@ -65,10 +65,9 @@ h4 {
 
 %button-auth {
 	width: 100%;
-	max-width: 216px;
 	border: none;
 	border-radius: 4px;
-	background: $orange;
+	background: $primary;
 	font-size: 18px;
 	color: #fff;
 	cursor: pointer;
@@ -76,13 +75,13 @@ h4 {
 	transition: box-shadow ease .8s;
 
 	&:hover {
-		box-shadow: 0 0 15px $orange;
+		box-shadow: 0 0 15px $primary;
 	}
 }
 
 %link-auth {
 	font-weight: 300;
-	color: rgba($blue, 0.8);
+	color: rgba($second, 0.8);
 	text-decoration: none;
 	border-bottom: 1px solid transparent;
 	line-height: 1em;
@@ -90,8 +89,8 @@ h4 {
 	transition: ease 0.5s;
 
 	&:hover {
-		border-bottom-color: $orange;
-		color: $orange;
+		border-bottom-color: $primary;
+		color: $primary;
 	}
 }
 
@@ -105,12 +104,12 @@ h4 {
 
 %link-menu {
 	text-decoration: none;
-	color: $blue;
+	color: $second;
 	font-size: 18px;
 	font-weight: 300;
 
 	&:hover {
-		color: $orange;
+		color: $primary;
 	}
 }
 
@@ -121,7 +120,7 @@ h4 {
 	}
 
 	&:hover .path {
-		fill: $orange;
+		fill: $primary;
 	}
 }
 

@@ -61,8 +61,8 @@ router.post('/login', async (req, res) => {
   await User.findOne({ email: req.body.email }).exec((err, user) => {
     if(err) 
       return res
-        .status(400)
-        .json({ success: false, code: '5', message:  'Во время проверки ел. адреса возникли проблемы' })
+      .status(400)
+      .json({ success: false, code: '5', message:  'Во время проверки ел. адреса возникли проблемы' })
     
     else if (!user)
       return res
@@ -75,18 +75,47 @@ router.post('/login', async (req, res) => {
     
     else 
       return res
-        .status(200)
-        .json({ 
-          success: true, 
-          token: jwt.sign({ id: user.id }, config.secret, { expiresIn: 60 }),
-          user: {
-            id: user.id,
-            firstName: user.firstName,
-            name: user.firstName,
-            email: user.email,
-            phone: user.phone,
-          }  
-        })
+      .status(200)
+      .json({ 
+        success: true, 
+        token: jwt.sign({ id: user.id }, config.secret, { expiresIn: 60 }),
+        user: {
+          id: user.id,
+          firstName: user.firstName,
+          name: user.firstName,
+          email: user.email,
+          phone: user.phone,
+        }  
+      })
+  });
+})
+
+router.post('/confirm', async (req, res) => {
+
+  await User.findOne({ email: req.body.email }).exec((err, user) => {
+    if(err) 
+      return res
+      .status(400)
+      .json({ success: false, code: '5', message:  'Во время проверки ел. адреса возникли проблемы' })
+    
+    else if (!user)
+      return res
+      .json({ success: false, code: '6', message: 'Пользователь с таким ел. адресом не найден' })
+    
+    else 
+      return res
+      .status(200)
+      .json({ 
+        success: true, 
+        token: jwt.sign({ id: user.id }, config.secret, { expiresIn: 60 }),
+        user: {
+          id: user.id,
+          firstName: user.firstName,
+          name: user.firstName,
+          email: user.email,
+          phone: user.phone,
+        }  
+      })
   });
 })
 

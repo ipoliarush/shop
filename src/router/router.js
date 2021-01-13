@@ -47,6 +47,14 @@ let router = new VueRouter({
       }
     },
     {
+      path: '/confirm',
+      name: 'confirm',
+      component: () => import('@/components/auth/AuthConfirm'),
+      meta: {
+        guest: true
+      }
+    },
+    {
       path: '/profile',
       name: 'profile',
       component: () => import('@/components/auth/AuthProfile'),

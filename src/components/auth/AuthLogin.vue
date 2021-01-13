@@ -1,13 +1,13 @@
 <template>
   <auth>
     <form class="form" method="post" action="/login" @submit.prevent="login">
-      <div class="form__body">
+      <div class="form__body auth">
         <h3 class="form__title">Вхід</h3>
-        <div class="form__item">
+        <div class="auth__col">
           <input
             placeholder=" "
-            class="form__input"
-            :class="{ 'form__input--error': $v.email.$error || existEmail }"
+            class="auth__input"
+            :class="{ 'auth__input--error': $v.email.$error || existEmail }"
             type="email"
             id="email"
             name="email"
@@ -15,25 +15,25 @@
             @input="$v.email.$touch; existEmail = null"
             @blur="$v.email.$touch"
           />
-          <label unselectable="on" class="form__label" for="email">Ел. пошта</label>
+          <label unselectable="on" class="auth__label" for="email">Ел. пошта</label>
           <div
-            class="form__prompt form__prompt--error"
+            class="auth__prompt auth__prompt--error"
             v-if="$v.email.$error"
           >
             Введено неправильну адресу ел. пошти 
           </div>
           <div
-            class="form__prompt form__prompt--error"
+            class="auth__prompt auth__prompt--error"
             v-if="existEmail"
           >
             {{ messageEmail }}  
           </div>
         </div>
-        <div class="form__item">
+        <div class="auth__col password">
           <input
             placeholder=" "
-            class="form__input form__password"
-            :class="{ 'form__input--error': $v.password.$error || existPass }"
+            class="auth__input password__input"
+            :class="{ 'auth__input--error': $v.password.$error || existPass }"
             :type="type"
             id="password"
             name="password"
@@ -41,48 +41,56 @@
             @input="$v.password.$touch; existPass = null"
             @blur="$v.password.$touch"
           />
-          <label unselectable="on" class="form__label" for="password">Пароль</label>
-          <div @click="passwordHide" class="form__password-hide">
+          <label unselectable="on" class="auth__label" for="password">Пароль</label>
+          <div @click="passwordHide" class="password__hide">
             <icon-base width="20" height="20">
               <icon-hide />
             </icon-base>
           </div>
           <div 
-            class="form__prompt form__prompt--error"
+            class="auth__prompt auth__prompt--error"
             v-if="$v.password.$error"
           >
             Введіть свій пароль
           </div>
           <div
-            class="form__prompt form__prompt--error"
+            class="auth__prompt auth__prompt--error"
             v-if="existPass"
           >
             {{ messagePass }}  
           </div>
         </div>
-        <div class="form__submit">
-          <button type="submit" class="form__button">Увійти</button>
-          <span class="form__or">або</span>
-          <a href="#" class="form__link">
-            <icon-base viewBox="0 0 30 30" width="33" height="33">
-              <icon-google-auth />
-            </icon-base>
-          </a>
-          <a href="#" class="form__link">
-            <icon-base viewBox="0 0 33 33" width="33" height="33">
-              <icon-facebook-auth />
-            </icon-base>
-          </a>
+        <div class="auth__col">
+          <button type="submit" class="auth__button">Увійти</button>
         </div>
-        <router-link class="form__recovery" to="/recovery">
-          Нагадати пароль
-        </router-link>
+        <div class="auth__col">
+          <div class="divided">
+            <p class="divided__text">або за допомогою</p>
+          </div>
+        </div>
+        <div class="auth__col">
+          <div class="social">
+            <a href="#" class="social__item">
+              <icon-base viewBox="0 0 30 30" width="33" height="33">
+                <icon-google-auth />
+              </icon-base>
+            </a>
+            <a href="#" class="social__item">
+              <icon-base viewBox="0 0 33 33" width="33" height="33">
+                <icon-facebook-auth />
+              </icon-base>
+            </a>
+          </div>
+        </div>
+        <div class="auth__col auth__col--last">
+          <router-link class="auth__link" to="/recovery">
+            Нагадати пароль
+          </router-link>
+        </div>
       </div>
-      <div class="form__footer">
-        <p class="form__text">У вас ще немає акаунту?</p>
-        <router-link class="form__reg" to="/register">
-          Зареєструватися
-        </router-link>
+      <div class="form__footer footer">
+        <p class="footer__text">У вас ще немає акаунту?</p>
+        <router-link class="footer__link" to="/register">Зареєструватися</router-link>
       </div>
     </form>
   </auth>
@@ -199,6 +207,7 @@ export default {
   }
 }
 
+//Тело формы
 .form__body {
   padding: 25px 10px;
   background: #fff;
@@ -215,6 +224,8 @@ export default {
     border-top-left-radius: 10px;
   }
 }
+
+//Заглавие формы
 .form__title {
   margin-bottom: 15px;
   font-size: 24px;
@@ -228,11 +239,19 @@ export default {
     font-size: 30px;
   }
 }
-.form__item {
+
+//Обертка строк
+.auth__col {
   position: relative;
   margin-bottom: 18px;
+
+  &--last {
+    margin-bottom: 0;
+  }
 }
-.form__label {
+
+//Метки для полей
+.auth__label {
   @extend %label-auth;
 
   -moz-user-select: -moz-none;
@@ -241,11 +260,13 @@ export default {
   -webkit-user-select: none;
   user-select: none;
 }
-.form__input {
+
+//Поля
+.auth__input {
   @extend %input-auth;
 
   &:not(:placeholder-shown) {
-    & + .form__label {
+    & + .auth__label {
       transform: translateY(-13px);
       font-size: 14px;
     }
@@ -253,7 +274,7 @@ export default {
   &:focus {
     border-color: #80bdff;
 
-    & + .form__label {
+    & + .auth__label {
       transform: translateY(-13px);
       font-size: 14px;
       color: #80bdff;
@@ -262,12 +283,14 @@ export default {
   &--error {
     border-color: #db3445 !important;
 
-    & + .form__label {
+    & + .auth__label {
       color: #db3445 !important;
     }
   }
 }
-.form__prompt {
+
+//Подсказки и ошибки полей для ввода
+.auth__prompt {
   color:  $blue;
   margin-top: 5px;
 
@@ -275,10 +298,12 @@ export default {
     color:  #db3445;
   }
 }
-.form__password {
+
+//Поле с паролем
+.password__input {
   padding-right: 55px;
 }
-.form__password-hide {
+.password__hide {
   position: absolute;
   width: 56px;
   height: 56px;
@@ -299,36 +324,74 @@ export default {
     }
   }
 }
-.form__icon {
-  width: 20px;
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.form__submit {
+
+//Разделитель
+.divided {
+  position: relative;
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
+
+  &::after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: rgba($second, 0.2);
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+  }
 }
-.form__button {
-  @extend %button-auth;
+.divided__text {
+  background: #fff;
+  text-align: center;
+  z-index: 20;
+  padding: 1px 15px;
+  width: auto;
 }
-.form__or {
-  margin: 0 30px;
-}
-.form__link {
+
+// Авторизация с помощью соц сетей
+.social {
   display: flex;
+}
+.social__item {
+  background: rgba($second, 0.1);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-right: 17px;
+  padding: 10px 0;
+  border-radius: 4px;
 
   &:last-child {
     margin-right: 0;
   }
 }
-.form__recovery {
-  @extend %link-auth;
-  margin-top: 20px;
-  display: inline-block;
+
+//Ссылки формы
+.auth__link {
+  font-weight: 300;
+	color: rgba($blue, 0.8);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba($blue, 0.8);
+  display: inline;
+  font-size: 16px;
+  line-height: 1em;
+  transition: all .3s ease;
+  
+  &:hover {
+    border-color: transparent;
+  }
 }
+
+// Кнопка авторизации
+.auth__button {
+  @extend %button-auth;
+}
+// Подвал формы
 .form__footer {
   display: flex;
   justify-content: space-between;
@@ -350,7 +413,33 @@ export default {
     border-bottom-left-radius: 10px;
   }
 }
-.form__reg {
-  @extend %link-auth;
+.footer {
+  @media screen and (max-width: 400px) {
+    flex-direction: column;
+  }
+}
+.footer__text {
+  font-weight: 300;
+  color: rgba($blue, 0.8);
+  font-size: 16px;
+  line-height: 1em;
+
+  @media screen and (max-width: 400px) {
+    margin-bottom: 10px;
+  }
+}
+.footer__link {
+  font-weight: 300;
+	color: rgba($blue, 0.8);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba($blue, 0.8);
+  display: inline;
+  font-size: 16px;
+  line-height: 1em;
+  transition: all .3s ease;
+  
+  &:hover {
+    border-color: transparent;
+  }
 }
 </style>

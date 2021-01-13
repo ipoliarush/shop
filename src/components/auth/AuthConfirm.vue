@@ -1,35 +1,51 @@
 <template>
   <auth>
-    <form class="form" method="post" action="/recovery" @submit.prevent="recovery">
+    <form class="form" method="post" action="/confirm" @submit.prevent="confirm">
       <div class="form__body auth">
-        <h3 class="form__title">Відновлення паролю</h3>
+        <h3 class="form__title">Підтвердження ел. пошти</h3>
+        <div class="auth__col">
+          <input
+            placeholder=" "
+            class="auth__input auth__input--disabled"
+            type="text"
+            id="email"
+            name="email"
+            value="asds"
+            disabled
+          />
+          <label unselectable="on" class="auth__label" for="email">Ел. пошта</label>
+        </div>
         <div class="auth__col">
           <input
             placeholder=" "
             class="auth__input"
-            :class="{ 'auth__input--error': $v.email.$error }"
-            type="email"
-            id="email"
-            name="email"
-            v-model.trim="email"
-            @input="$v.email.$touch"
-            @blur="$v.email.$touch"
+            :class="{ 'auth__input--error': $v.code.$error }"
+            type="text"
+            id="code"
+            name="code"
+            v-model.trim="code"
+            @input="$v.code.$touch"
+            @blur="$v.code.$touch"
           />
-          <label unselectable="on" class="auth__label" for="email">Ел. пошта</label>
+          <label unselectable="on" class="auth__label" for="code">Код підтвердження</label>
           <div
             class="auth__prompt auth__prompt--error"
-            v-if="$v.email.$error"
+            v-if="$v.code.$error"
           >
-            Введено неправильну адресу ел. пошти 
+            Невірний код підтвердження 
           </div>
         </div>
+        <div class="auth__col">
+          <button type="submit" class="auth__button auth__button--disabled" :disabled="disabled == 1">Відновити</button>
+        </div>
         <div class="auth__col auth__col--last">
-          <button type="submit" class="auth__button">Відновити</button>
+          <p class="auth__hint">Код підтвердження відправлено. Отримати новий код можна через: 00:59</p>
         </div>
       </div>
       <div class="form__footer footer">
-        <p class="forfooter__textm__text">Згадали свій пароль?</p>
-        <router-link class="footer__link" to="/login">Увійти</router-link>
+        <p class="footer__text">Не отримали код?</p>
+        <p v-if="1" class="footer__text">Відправити код ще раз</p>
+        <router-link v-else class="footer__link" to="/login">Відправити код ще раз</router-link>
       </div>
     </form>
   </auth>
@@ -37,34 +53,35 @@
 
 <script>
 import Auth from "./Auth";
-import { required, minLength, maxLength, helpers } from "vuelidate/lib/validators"
-const email = helpers.regex('email', /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/)
+import { required, minLength } from "vuelidate/lib/validators"
 
 
 export default {
   components: {
     Auth,
   },
-  name: "AuthRecovery",
+  name: "AuthConfirm",
   props: {},
   data: () => ({
-    type: 'password',
     submitStatus: null,
-    email: "",
+    code: '',
+    disabled: 0
   }),
   computed: {},
   methods: {
-    recovery() {
+    confirm() {
       this.$v.$touch()
+
+      if(this.$v.$invalid) {}
+
+
     },
   },
   validations: {
-    email: {
+    code: {
       required,
-      email,
       minLength: minLength(2),
-      maxLength: maxLength(100),
-    },
+    }
   },
 };
 </script>
@@ -158,12 +175,18 @@ export default {
       color: #80bdff;
     }
   }
+
   &--error {
     border-color: #db3445 !important;
 
     & + .auth__label {
       color: #db3445 !important;
     }
+  }
+
+  &--disabled {
+    background: #fff;
+    color: #545454;
   }
 }
 
@@ -177,36 +200,40 @@ export default {
   }
 }
 
-//Разделитель
-.divided {
-  position: relative;
+//Подсказки для ввостановления
+.auth__hint {
+  border: 1px solid $primary;
+  border-radius: 4px;
+  padding: 6px 10px;
+  background: rgba($primary, 0.1);
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &::after {
-    position: absolute;
-    content: '';
-    width: 100%;
-    height: 1px;
-    background: rgba($second, 0.2);
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-  }
-}
-.divided__text {
-  background: #fff;
   text-align: center;
-  z-index: 20;
-  padding: 1px 15px;
-  width: auto;
 }
 
 // Кнопка авторизации
 .auth__button {
-  @extend %button-auth;
+  width: 100%;
+	border: none;
+	border-radius: 4px;
+	background: $primary;
+	font-size: 18px;
+	color: #fff;
+	cursor: pointer;
+	padding: 15px 0;
+	transition: box-shadow ease .8s;
+
+	&:hover {
+    box-shadow: 0 0 15px $primary;
+	}
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: initial;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
 }
 
 // Подвал формы
@@ -231,11 +258,20 @@ export default {
     border-bottom-left-radius: 10px;
   }
 }
+.footer {
+  @media screen and (max-width: 400px) {
+    flex-direction: column;
+  }
+}
 .footer__text {
   font-weight: 300;
   color: rgba($blue, 0.8);
   font-size: 16px;
   line-height: 1em;
+
+  @media screen and (max-width: 400px) {
+    margin-bottom: 10px;
+  }
 }
 .footer__link {
   font-weight: 300;
