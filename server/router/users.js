@@ -127,6 +127,10 @@ router.post('/recovery', async (req, res) => {
         success: true, 
         code: '1',
         message: 'Проверочный код отправлен',
+        user: {
+          id: '805362',
+          email: req.body.email,
+        } 
       })
     
     //Если пользователь с данным ел. адресом найден

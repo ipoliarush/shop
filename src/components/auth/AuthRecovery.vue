@@ -58,7 +58,6 @@ export default {
   name: "AuthRecovery",
   props: {},
   data: () => ({
-    type: 'password',
     email: "",
   }),
   computed: {},
