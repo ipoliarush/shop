@@ -68,6 +68,33 @@ export default {
     })
   },
 
+  RECOVERY({commit}, user) {
+    return new Promise((resolve, reject) => {
+      commit('RECOVERY_REQUEST')
+      axios({
+        url: '/recovery', 
+        data: user, 
+        method: 'POST' 
+      })
+      .then(resp => {
+        if(resp.data.success) {
+
+          const data = {
+            user: resp.data.user
+          }
+
+          commit('RECOVERY_SUCCESS', data)
+          resolve(resp)
+        }
+        else resolve(resp)
+      })
+      .catch(err => {
+        commit('RECOVERY_ERROR', err)
+        reject(err)
+      })
+    })
+  },
+
   LOGOUT({commit}) {
     return new Promise((resolve) => {
       commit('LOGOUT')

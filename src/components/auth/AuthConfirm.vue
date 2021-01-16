@@ -10,7 +10,7 @@
             type="text"
             id="email"
             name="email"
-            value="asds"
+            :value="emailMask()"
             disabled
           />
           <label unselectable="on" class="auth__label" for="email">Ел. пошта</label>
@@ -19,24 +19,31 @@
           <input
             placeholder=" "
             class="auth__input"
-            :class="{ 'auth__input--error': $v.code.$error }"
+            :class="{ 'auth__input--error': $v.code.$error || error}"
             type="text"
             id="code"
             name="code"
             v-model.trim="code"
-            @input="$v.code.$touch"
+            @input="$v.code.$touch; error = false"
             @blur="$v.code.$touch"
           />
           <label unselectable="on" class="auth__label" for="code">Код підтвердження</label>
           <div
             class="auth__prompt auth__prompt--error"
-            v-if="$v.code.$error"
+            v-if="$v.code.$error || error"
           >
             Невірний код підтвердження 
           </div>
         </div>
         <div class="auth__col">
-          <button type="submit" class="auth__button auth__button--disabled" :disabled="disabled == 1">Відновити</button>
+          <button 
+            type="submit"
+            class="auth__button"
+            :class="{ 'auth__button--disabled': !code.length || error }"
+            :disabled="!code.length || error"
+            >
+              Відновити
+          </button>
         </div>
         <div class="auth__col auth__col--last">
           <p class="auth__hint">Код підтвердження відправлено. Отримати новий код можна через: 00:59</p>
@@ -53,8 +60,7 @@
 
 <script>
 import Auth from "./Auth";
-import { required, minLength } from "vuelidate/lib/validators"
-
+import { required } from "vuelidate/lib/validators"
 
 export default {
   components: {
@@ -65,22 +71,31 @@ export default {
   data: () => ({
     submitStatus: null,
     code: '',
-    disabled: 0
+    error: false,
+    email: 'ip.ua97@gmail.com',
   }),
   computed: {},
   methods: {
     confirm() {
       this.$v.$touch()
 
-      if(this.$v.$invalid) {}
-
+      if(this.code.match(/^[0-9]{6,6}$/)) {
+        this.error = false
+      }
+      else {
+        this.error = true
+      }
 
     },
+
+    emailMask() {
+      return this.email.replaceAll(/(?<=^[A-Za-z0-9]{2}).*?(?=@)/g, `***`).replaceAll(/(?<=\@).*?(?=\.)/g, `***`)
+    }
+
   },
   validations: {
     code: {
       required,
-      minLength: minLength(2),
     }
   },
 };

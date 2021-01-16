@@ -24,7 +24,14 @@
           </div>
         </div>
         <div class="auth__col auth__col--last">
-          <button type="submit" class="auth__button">Відновити</button>
+          <button 
+            type="submit" 
+            class="auth__button"
+            :class="{ 'auth__button--disabled': $v.$error }"
+            :disabled="$v.$error"
+            >
+              Відновити
+          </button>
         </div>
       </div>
       <div class="form__footer footer">
@@ -37,6 +44,9 @@
 
 <script>
 import Auth from "./Auth";
+
+import { mapActions } from 'vuex'
+
 import { required, minLength, maxLength, helpers } from "vuelidate/lib/validators"
 const email = helpers.regex('email', /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/)
 
@@ -49,14 +59,35 @@ export default {
   props: {},
   data: () => ({
     type: 'password',
-    submitStatus: null,
     email: "",
   }),
   computed: {},
   methods: {
+    ...mapActions('auth', [
+      'RECOVERY',
+    ]),
+
     recovery() {
       this.$v.$touch()
+
+      if(!this.$v.$invalid) {
+
+        const data = {
+          email: this.email, 
+        }
+
+        this.RECOVERY(data)
+        .then((resp) => {
+          if(resp.data.success) {
+            this.$router.push('/confirm')
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
     },
+
   },
   validations: {
     email: {
@@ -70,6 +101,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .form {
   width: 100%;
   display: flex;
@@ -206,7 +238,28 @@ export default {
 
 // Кнопка авторизации
 .auth__button {
-  @extend %button-auth;
+  width: 100%;
+	border: none;
+	border-radius: 4px;
+	background: $primary;
+	font-size: 18px;
+	color: #fff;
+	cursor: pointer;
+	padding: 15px 0;
+	transition: box-shadow ease .8s;
+
+	&:hover {
+    box-shadow: 0 0 15px $primary;
+	}
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: initial;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
 }
 
 // Подвал формы

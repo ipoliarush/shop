@@ -1,11 +1,11 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const router = require('./router')
-const path = require('path')
+const express = require('express'),
+  mongoose = require('mongoose'),
+  { users, profile } = require('./router'),
+  path = require('path'),
+  { uri } = require('./config')
 
-const url = "mongodb+srv://ipol:1q2w3e4r5t@cluster0.xv0xz.mongodb.net/usersdb"
-const PORT = process.env.PORT || 3030
-const app = express()
+const PORT = process.env.PORT || 3030,
+  app = express()
 
 const allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
@@ -23,12 +23,13 @@ app.use(express.static(path.resolve(__dirname, '../dist')))
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../dist', 'index.html'))
 })
-app.use(router)
+app.use(users)
+app.use(profile)
 
 
 async function start() {
   try {
-    await mongoose.connect(url, {
+    await mongoose.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     })

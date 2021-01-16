@@ -98,7 +98,14 @@
           </div>
         </div>
         <div class="auth__col">
-          <button type="submit" class="auth__button">Зареєструватися</button>
+          <button 
+            type="submit" 
+            class="auth__button"
+            :class="{ 'auth__button--disabled': $v.$error|| existEmail || existPhone}"
+            :disabled="$v.$error || existEmail || existPhone"
+          >
+            Зареєструватися
+          </button>
         </div>
         <div class="auth__col">
           <div class="divided">
@@ -349,7 +356,7 @@ export default {
 
 //Подсказки и ошибки полей для ввода
 .auth__prompt {
-  color:  $blue;
+  color:  $second;
   margin-top: 5px;
 
   &--error {
@@ -375,7 +382,7 @@ export default {
   border-bottom-right-radius: 4px;
 
   .svg {
-    fill: rgba($blue, 0.8);
+    fill: rgba($second, 0.8);
 
     &:hover {
       fill: $orange;
@@ -408,6 +415,7 @@ export default {
   z-index: 20;
   padding: 1px 15px;
   width: auto;
+  color: rgba($second, 0.6);
 }
 
 // Авторизация с помощью соц сетей
@@ -431,7 +439,28 @@ export default {
 
 // Кнопка авторизации
 .auth__button {
-  @extend %button-auth;
+  width: 100%;
+	border: none;
+	border-radius: 4px;
+	background: $primary;
+	font-size: 18px;
+	color: #fff;
+	cursor: pointer;
+	padding: 15px 0;
+	transition: box-shadow ease .8s;
+
+	&:hover {
+    box-shadow: 0 0 15px $primary;
+	}
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: initial;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
 }
 
 // Подвал формы
@@ -463,7 +492,7 @@ export default {
 }
 .footer__text {
   font-weight: 300;
-  color: rgba($blue, 0.8);
+  color: rgba($second, 0.8);
   font-size: 16px;
   line-height: 1em;
 
@@ -473,9 +502,9 @@ export default {
 }
 .footer__link {
   font-weight: 300;
-	color: rgba($blue, 0.8);
+	color: rgba($second, 0.8);
   text-decoration: none;
-  border-bottom: 1px dashed rgba($blue, 0.8);
+  border-bottom: 1px dashed rgba($second, 0.8);
   
   font-size: 16px;
   line-height: 1em;

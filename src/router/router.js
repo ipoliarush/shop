@@ -51,7 +51,7 @@ let router = new VueRouter({
       name: 'confirm',
       component: () => import('@/components/auth/AuthConfirm'),
       meta: {
-        guest: true
+        confirm: true
       }
     },
     {
@@ -76,9 +76,15 @@ router.beforeEach((to, from, next) => {
     }
   } else if(to.matched.some(record => record.meta.guest)) {
     if(store.getters['auth/IS_LOGGED_IN']) {
-      next({ path: '/'})
+      next({ path: '/' })
     } else {
       next()
+    }
+  } else if(to.matched.some(record => record.meta.confirm)) {
+    if(store.getters['auth/RECOVERY_STATUS'] == 'success') {
+      next()
+    } else {
+      next({ path: '/' })
     }
   } else {
     next()

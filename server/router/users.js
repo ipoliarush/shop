@@ -1,22 +1,25 @@
-const { Router } = require('express')
-const router = Router()
-const User = require('../models/Users')
-const bcrypt = require('bcrypt')
-const config = require('../config')
-const jwt = require('jsonwebtoken');
+const { Router } = require('express'),
+  router = Router(),
+  User = require('../models/Users'),
+  bcrypt = require('bcrypt'),
+  { secret } = require('../config'),
+  jwt = require('jsonwebtoken'),
+  recovery = require('../mailer/recovery')
 
 const salt = bcrypt.genSaltSync(10)
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
 
 router.post('/register', async (req, res) => {
 
   const newUser = new User({
-
     firstName: req.body.firstName,
     phone: req.body.phone.replace(/[^\d]/g, ''),
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, salt),
     dateReg: new Date(),
-
   })
 
   const searchEmail = await User.findOne({ email: req.body.email }).exec();
@@ -42,7 +45,7 @@ router.post('/register', async (req, res) => {
           .status(200)
           .json({ 
             success: true, 
-            token: jwt.sign({ id: user.id }, config.secret, { expiresIn: 60 }),
+            token: jwt.sign({ id: user.id }, secret, { expiresIn: 60 }),
             user: {
               id: user.id,
               firstName: user.firstName,
@@ -74,20 +77,75 @@ router.post('/login', async (req, res) => {
     }
     
     else 
-      return res
+      // return res
+      // .status(200)
+      // .json({ 
+      //   success: true, 
+      //   token: jwt.sign({ id: user.id }, secret, { expiresIn: 60 }),
+      //   user: {
+      //     id: user.id,
+      //     firstName: user.firstName,
+      //     name: user.firstName,
+      //     email: user.email,
+      //     phone: user.phone,
+      //   }  
+      // })
+
+      jwt.sign({ id: user.id }, secret, (err, token) => {
+        res
+        .status(200)
+        .json({ 
+          success: true, 
+          token: token,
+          user: {
+            id: user.id,
+            firstName: user.firstName,
+            name: user.firstName,
+            email: user.email,
+            phone: user.phone,
+          }  
+        })
+      })
+  });
+})
+
+router.post('/recovery', async (req, res) => {
+
+  await User.findOne({ email: req.body.email }).exec((err, user) => {
+
+    //Если возникла ошибка во время проверки ел. адреса
+    if(err) 
+      res
+      .status(400)
+      .json({ success: false, code: '5', message:  'Во время востановления пароля возникли проблемы' })
+    
+    //Если пользователь с данным ел. адресом не найден
+    else if (!user)
+      res
       .status(200)
       .json({ 
         success: true, 
-        token: jwt.sign({ id: user.id }, config.secret, { expiresIn: 60 }),
+        code: '1',
+        message: 'Проверочный код отправлен',
+      })
+    
+    //Если пользователь с данным ел. адресом найден
+    else {
+      recovery(user.email, getRandomInt(100000, 999999))
+
+      res
+      .status(200)
+      .json({ 
+        success: true, 
+        code: '1',
+        message: 'Проверочный код отправлен',
         user: {
           id: user.id,
-          firstName: user.firstName,
-          name: user.firstName,
           email: user.email,
-          phone: user.phone,
         }  
       })
-  });
+    }
+  })
 })
 
 router.post('/confirm', async (req, res) => {
@@ -107,7 +165,7 @@ router.post('/confirm', async (req, res) => {
       .status(200)
       .json({ 
         success: true, 
-        token: jwt.sign({ id: user.id }, config.secret, { expiresIn: 60 }),
+        token: jwt.sign({ id: user.id }, secret),
         user: {
           id: user.id,
           firstName: user.firstName,
@@ -116,7 +174,7 @@ router.post('/confirm', async (req, res) => {
           phone: user.phone,
         }  
       })
-  });
+  })
 })
 
 module.exports = router

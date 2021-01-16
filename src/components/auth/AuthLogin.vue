@@ -61,7 +61,14 @@
           </div>
         </div>
         <div class="auth__col">
-          <button type="submit" class="auth__button">Увійти</button>
+          <button 
+            type="submit" 
+            class="auth__button"
+            :class="{ 'auth__button--disabled': $v.$error|| existEmail || existPass}"
+            :disabled="$v.$error || existEmail || existPass"
+            >
+              Увійти
+          </button>
         </div>
         <div class="auth__col">
           <div class="divided">
@@ -125,7 +132,7 @@ export default {
     existEmail: false,
     existPass: false,
     messageEmail: null,
-    messagePass: null
+    messagePass: null,
   }),
   methods: {
     ...mapActions('auth', [
@@ -350,6 +357,7 @@ export default {
   z-index: 20;
   padding: 1px 15px;
   width: auto;
+  color: rgba($second, 0.6);
 }
 
 // Авторизация с помощью соц сетей
@@ -389,7 +397,28 @@ export default {
 
 // Кнопка авторизации
 .auth__button {
-  @extend %button-auth;
+  width: 100%;
+	border: none;
+	border-radius: 4px;
+	background: $primary;
+	font-size: 18px;
+	color: #fff;
+	cursor: pointer;
+	padding: 15px 0;
+	transition: box-shadow ease .8s;
+
+	&:hover {
+    box-shadow: 0 0 15px $primary;
+	}
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: initial;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
 }
 // Подвал формы
 .form__footer {
