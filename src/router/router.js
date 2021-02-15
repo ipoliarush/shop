@@ -81,7 +81,7 @@ router.beforeEach((to, from, next) => {
       next()
     }
   } else if(to.matched.some(record => record.meta.confirm)) {
-    if(store.getters['auth/RECOVERY_STATUS'] == 'success') {
+    if(store.getters['auth/REGISTER_STATUS'] == 'success') {
       next()
     } else {
       next({ path: '/' })

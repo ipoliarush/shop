@@ -10,6 +10,17 @@ export default {
   AUTH_ERROR(state) {
     state.status = 'error'
   },
+
+  REGISTER_REQUEST(state) {
+    state.register = 'loading'
+  },
+  REGISTER_SUCCESS(state) {
+    state.register = 'success'
+  },
+  REGISTER_ERROR(state) {
+    state.register = 'error'
+  },
+  
   RECOVERY_REQUEST(state) {
     state.recovery = 'loading'
   },

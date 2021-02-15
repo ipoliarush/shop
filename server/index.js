@@ -1,10 +1,12 @@
-const express = require('express'),
+const 
+  express = require('express'),
   mongoose = require('mongoose'),
   { users, profile } = require('./router'),
   path = require('path'),
   { uri } = require('./config')
 
-const PORT = process.env.PORT || 3030,
+const 
+  PORT = process.env.PORT || 3030,
   app = express()
 
 const allowCrossDomain = function(req, res, next) {
@@ -15,7 +17,6 @@ const allowCrossDomain = function(req, res, next) {
 } 
 
 app.use(allowCrossDomain)
-
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -31,7 +32,9 @@ async function start() {
   try {
     await mongoose.connect(uri, {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false
     })
     app.listen(PORT, () => {
       console.log('Server has been started...')

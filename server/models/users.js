@@ -7,19 +7,26 @@ const UserSchema = new Schema({
   },
   phone: {
     type: Number,
-    required: true
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    lowercase: true
   },
   password: {
     type: String,
     required: true
   },
-  dateReg: {
-    type: Date
+  isActivated: {
+    type: Boolean,
+    default: false
   }
+}, {
+  timestamps: {
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  }
+}, { 
+  collection: 'users' 
 })
-
 module.exports = model('Users', UserSchema)

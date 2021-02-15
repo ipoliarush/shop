@@ -27,38 +27,12 @@
           <input
             placeholder=" "
             class="auth__input"
-            :class="{ 'auth__input--error': $v.phone.$error || existPhone }"
-            type="tel"
-            id="phone"
-            name="phone"
-            v-model.trim="phone"
-            @input="$v.phone.$touch; existPhone = null"
-            @blur="$v.phone.$touch"
-          />
-          <label unselectable="on" class="auth__label" for="phone">Телефон</label>
-          <div
-            class="auth__prompt auth__prompt--error"
-            v-if="$v.phone.$error"
-          >
-            Введіть свій телефон у форматі +380 XX XXX XX XX 
-          </div>
-          <div
-            class="auth__prompt auth__prompt--error"
-            v-if="existPhone"
-          >
-            {{ messagePhone }}  
-          </div>
-        </div>
-        <div class="auth__col">
-          <input
-            placeholder=" "
-            class="auth__input"
-            :class="{ 'auth__input--error': $v.email.$error || existEmail }"
+            :class="{ 'auth__input--error': $v.email.$error || messageEmail }"
             type="email"
             id="email"
             name="email"
             v-model.trim="email"
-            @input="$v.email.$touch; existEmail = null"
+            @input="$v.email.$touch; messageEmail = null"
             @blur="$v.email.$touch"
           />
           <label unselectable="on" class="auth__label" for="email">Ел. пошта</label>
@@ -70,7 +44,7 @@
           </div>
           <div
             class="auth__prompt auth__prompt--error"
-            v-if="existEmail"
+            v-if="messageEmail"
           >
             {{ messageEmail }}  
           </div>
@@ -94,15 +68,15 @@
             </icon-base>
           </div>
           <div class="auth__prompt">
-            Пароль має бути не менше 6 символів, має складатися з цифр і латинських літер, у тому числі заголовних
+            Пароль має бути не менше 8 символів, має складатися з цифр і латинських літер, у тому числі заголовних
           </div>
         </div>
         <div class="auth__col">
           <button 
             type="submit" 
             class="auth__button"
-            :class="{ 'auth__button--disabled': $v.$error|| existEmail || existPhone}"
-            :disabled="$v.$error || existEmail || existPhone"
+            :class="{ 'auth__button--disabled': $v.$error|| messageEmail }"
+            :disabled="$v.$error || messageEmail"
           >
             Зареєструватися
           </button>
@@ -146,7 +120,6 @@ import IconHide from "@/components/icons/IconHide"
 import { required, minLength, maxLength, helpers } from "vuelidate/lib/validators"
 import { mapActions } from 'vuex'
 const alphaHelp = helpers.regex('alphaHelp', /^[а-яА-ЯіІїЇєЄ]*$/)
-const phoneHelp = helpers.regex('phoneHelp', /^[\+]{0,1}380([0-9]{9})$/)
 const emailHelp = helpers.regex('emailHelp', /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/)
 const passwordHelp = helpers.regex('passwordHelp', /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9]{6,}$/)
 
@@ -164,13 +137,9 @@ export default {
     type: 'password',
     submitStatus: null,
     firstName: "",
-    phone: "",
     email: "",
     password: "",
-    existEmail: false,
-    existPhone: false,
     messageEmail: null,
-    messagePhone: null
   }),
   computed: {},
   methods: {
@@ -186,33 +155,18 @@ export default {
 
         const data = {
           firstName: this.firstName,
-          phone: this.phone, 
           email: this.email, 
           password: this.password
         }
-
+        
         this.REGISTER(data)
         .then((resp) => {
           if(!resp.data.success) {
-            if(resp.data.code === '2') {
-              this.existEmail = true
+            if(resp.data.code == 2) {
               this.messageEmail = `Користувач з ел. поштою ${this.email} вже існує, введіть іншу`
             }
-            else if(resp.data.code === '3') {
-              this.existPhone = true
-              this.messagePhone = `Користувач з телефоном ${this.phone} вже існує, введіть інший`
-            }
-          }
-          else {
-            this.messageClear()
-            
-            if (localStorage.getItem('token') != null) {
-              if(this.$route.params.nextUrl != null) {
-                this.$router.push(this.$route.params.nextUrl)
-              } else {
-                this.$router.push('/')
-              }
-            }
+          } else {
+            this.$router.push('/confirm')
           }
         })
         .catch(err => console.log(err))
@@ -220,8 +174,7 @@ export default {
     },
 
     messageClear() {
-      this.existEmail = this.existPhone = false
-      this.messageEmail = this.messagePhone = null
+      this.messageEmail = null
     },
 
     passwordHide() {
@@ -236,19 +189,16 @@ export default {
       maxLength: maxLength(60),
       alphaHelp
     },
-    phone: {
-      required,
-      phoneHelp
-    },
     email: {
       required,
       emailHelp,
-      minLength: minLength(2),
-      maxLength: maxLength(100),
+      minLength: minLength(4),
+      maxLength: maxLength(254),
     },
     password: {
       required,
-      minLength: minLength(6),
+      minLength: minLength(8),
+      maxLength: maxLength(64),
       passwordHelp
     },
   },

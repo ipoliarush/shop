@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer")
 
-async function recovery(mail, code) {
+async function confirm(mail, code) {
   const transporter = nodemailer.createTransport({
     host: "smtp.ethereal.email",
     port: 587,
@@ -22,4 +22,4 @@ async function recovery(mail, code) {
   console.log("Message sent: %s", info.messageId);
 }
 
-module.exports = recovery
+module.exports = confirm
