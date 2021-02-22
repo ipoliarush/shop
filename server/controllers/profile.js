@@ -1,4 +1,5 @@
-const { Router } = require('express'),
+const 
+  { Router } = require('express'),
   router = Router(),
   { secret } = require('../config'),
   jwt = require('jsonwebtoken')

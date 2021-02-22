@@ -1,6 +1,8 @@
 const 
-  register = require('./register')
+  verify = require('./verify'),
+  users = require('./users')
 
 module.exports = {
-  register
+  verify,
+  UsersController: users
 }

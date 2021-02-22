@@ -1,7 +1,10 @@
-const jwtsecret = require('./jwtsecret'),
+const 
+  secret = require('./jwtsecret'),
+  email = require('./jwtsecretemail'),
   uri = require('./mongodb')
 
 module.exports = {
-  secret: jwtsecret,
+  secret: secret,
+  emailsecret: email,
   uri: uri
 }

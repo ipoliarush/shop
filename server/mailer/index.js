@@ -1,8 +1,8 @@
 const 
   recovery = require('./recovery'),
-  confirm = require('./confirm')
+  mailer_verify = require('./verify')
 
 module.exports = {
   recovery,
-  confirm
+  mailer_verify
 }

@@ -1,9 +1,8 @@
 const { Router } = require('express'),
   router = Router(),
   User = require('../models/users'),
-  bcrypt = require('bcrypt'),
   { secret } = require('../config'),
-  { register } = require('../controllers'),
+  { UsersController, verify } = require('../controllers'),
   jwt = require('jsonwebtoken'),
   recovery = require('../mailer/recovery')
 
@@ -11,57 +10,11 @@ const { Router } = require('express'),
 //   return Math.floor(Math.random() * (max - min + 1)) + min
 // }
 
-router.post('/register', register)
+router.post('/register', UsersController.users_register)
 
-router.post('/login', async (req, res) => {
+router.post('/login',  UsersController.users_login)
 
-  await User.findOne({ email: req.body.email }).exec((err, user) => {
-    if(err) 
-      return res
-      .status(400)
-      .json({ success: false, code: '5', message:  'Во время проверки ел. адреса возникли проблемы' })
-    
-    else if (!user)
-      return res
-      .json({ success: false, code: '6', message: 'Пользователь с таким ел. адресом не найден' })
-    
-    else if(!bcrypt.compareSync(req.body.password, user.password)) {
-      return res
-      .json({ success: false, code: '7', message: 'Введен неверный пароль' })
-    }
-    
-    else 
-      // return res
-      // .status(200)
-      // .json({ 
-      //   success: true, 
-      //   token: jwt.sign({ id: user.id }, secret, { expiresIn: 60 }),
-      //   user: {
-      //     id: user.id,
-      //     firstName: user.firstName,
-      //     name: user.firstName,
-      //     email: user.email,
-      //     phone: user.phone,
-      //   }  
-      // })
-
-      jwt.sign({ id: user.id }, secret, (err, token) => {
-        res
-        .status(200)
-        .json({ 
-          success: true, 
-          token: token,
-          user: {
-            id: user.id,
-            firstName: user.firstName,
-            name: user.firstName,
-            email: user.email,
-            phone: user.phone,
-          }  
-        })
-      })
-  });
-})
+router.get('/:token', UsersController.users_register_confirm)
 
 router.post('/recovery', async (req, res) => {
 

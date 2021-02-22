@@ -47,6 +47,11 @@ let router = new VueRouter({
       }
     },
     {
+      path: '/verify',
+      name: 'verify',
+      component: () => import('@/components/auth/AuthVerify'),
+    },
+    {
       path: '/confirm',
       name: 'confirm',
       component: () => import('@/components/auth/AuthConfirm'),
