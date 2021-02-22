@@ -80,7 +80,7 @@ exports.users_register = async (req, res) => {
     }
 
     else if (data) {
-      return res.status(401).json({ 
+      return res.status(409).json({ 
         success: false,   
         message: 'Пользователь с таким эл. адресом уже существует',
         code: 2, 
@@ -92,24 +92,33 @@ exports.users_register = async (req, res) => {
         return res.status(500).json({ 
           success: false, 
           message: 'Во время регистрации возникли проблемы',
-          error: err
         })
       }
     
       else {
-        jwt.sign({ id: newUser._id, email: newUser.email, name: newUser.firstName }, emailsecret, { expiresIn: '2h' }, (err, token) => {
+        jwt.sign({ userId: newUser._id, email: newUser.email, name: newUser.firstName }, emailsecret, { expiresIn: '2h' }, (err, token) => {
 
-          mailer_verify(newUser.email, token)
+          if (token) {
+            mailer_verify(newUser.email, token)
 
-          return res.status(200).json({ 
-            success: true, 
-            message: 'Ссылка для подтверждения отправлена на ел. адрес'
-          })
+            return res.status(200).json({ 
+              success: true, 
+              message: 'Ссылка для подтверждения отправлена на ел. адрес',
+              token: token
+            })
+          }
+          else {
+            return res.status(500).json({ 
+              success: false, 
+              message: 'Во время регистрации возникли проблемы',
+            })
+          }
         })
       }
     })
   })
 }
+
 
 exports.users_register_confirm = (req, res) => {
 
@@ -117,7 +126,7 @@ exports.users_register_confirm = (req, res) => {
 
     if (key) {
 
-      User.findOneAndUpdate({ $and: [{ _id: key.id }, { isVerified: false }] }, { isVerified: true }, { new: true }, (err, user) => {
+      User.findOneAndUpdate({ $and: [{ _id: key.userId }, { isVerified: false }] }, { isVerified: true }, { new: true }, (err, user) => {
         if (user) {
           return res.status(200).json({ 
             success: true, 
