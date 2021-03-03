@@ -20,7 +20,7 @@ const UserSchema = new Schema({
   isVerified: {
     type: Boolean,
     default: false
-  }
+  },
 }, {
   timestamps: {
     createdAt: 'createdAt',
@@ -29,4 +29,5 @@ const UserSchema = new Schema({
 }, { 
   collection: 'users' 
 })
+
 module.exports = model('Users', UserSchema)

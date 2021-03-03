@@ -1,6 +1,7 @@
-const nodemailer = require("nodemailer")
+const 
+  nodemailer = require("nodemailer")
 
-async function recovery(mail, code) {
+async function recovery(email, code) {
   const transporter = nodemailer.createTransport({
     host: "smtp.ethereal.email",
     port: 587,
@@ -11,15 +12,13 @@ async function recovery(mail, code) {
     },
   })
 
-  const info = await transporter.sendMail({
+  await transporter.sendMail({
       from: '"Fred Foo 👻" <robin.olson20@ethereal.email>', 
-      to: mail, 
+      to: email, 
       subject: "KRYSTAL", 
       text: "Код підтвердження: ", 
-      html: "<b>" + code + "</b>", 
+      html: "Код підтвердження: <b>" + code + "</b>", 
   })
-
-  console.log("Message sent: %s", info.messageId);
 }
 
 module.exports = recovery

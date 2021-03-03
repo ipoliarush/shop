@@ -2,62 +2,25 @@ const { Router } = require('express'),
   router = Router(),
   User = require('../models/users'),
   { secret } = require('../config'),
-  { UsersController, verify } = require('../controllers'),
+  { UsersController } = require('../controllers'),
   jwt = require('jsonwebtoken'),
-  recovery = require('../mailer/recovery')
+  checkAuth = require('../middleware/check-auth')
 
-// function getRandomInt(min, max) {
-//   return Math.floor(Math.random() * (max - min + 1)) + min
-// }
-
+// метод POST регистрация пользователя
 router.post('/register', UsersController.users_register)
 
-router.post('/login',  UsersController.users_login)
-
+// метод GET подтверждение регистрации пользователя
 router.get('/:token', UsersController.users_register_confirm)
 
-router.post('/recovery', async (req, res) => {
+// метод POST авторизация пользователя
+router.post('/login', UsersController.users_login)
 
-  await User.findOne({ email: req.body.email }).exec((err, user) => {
+// метод DELETE удаление пользователя
+router.delete('/:userId', checkAuth, UsersController.users_delete)
 
-    //Если возникла ошибка во время проверки ел. адреса
-    if(err) 
-      res
-      .status(400)
-      .json({ success: false, code: '5', message:  'Во время востановления пароля возникли проблемы' })
-    
-    //Если пользователь с данным ел. адресом не найден
-    else if (!user)
-      res
-      .status(200)
-      .json({ 
-        success: true, 
-        code: '1',
-        message: 'Проверочный код отправлен',
-        user: {
-          id: '805362',
-          email: req.body.email,
-        } 
-      })
-    
-    //Если пользователь с данным ел. адресом найден
-    else {
-      recovery(user.email, getRandomInt(100000, 999999))
+// метод POST ввостановление пароля
+router.post('/recovery', UsersController.users_recovery)
 
-      res
-      .status(200)
-      .json({ 
-        success: true, 
-        code: '1',
-        message: 'Проверочный код отправлен',
-        user: {
-          id: user.id,
-          email: user.email,
-        }  
-      })
-    }
-  })
-})
 
 router.post('/confirm', async (req, res) => {
 
