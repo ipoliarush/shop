@@ -13,9 +13,9 @@ async function recovery(email, code) {
   })
 
   await transporter.sendMail({
-      from: '"Fred Foo 👻" <robin.olson20@ethereal.email>', 
+      from: '<ipol@ipol.ua>', 
       to: email, 
-      subject: "KRYSTAL", 
+      subject: "IPOL", 
       text: "Код підтвердження: ", 
       html: "Код підтвердження: <b>" + code + "</b>", 
   })

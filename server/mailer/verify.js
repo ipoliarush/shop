@@ -13,9 +13,9 @@ async function verify(email, token) {
   })
 
   await transporter.sendMail({
-      from: '"Fred Foo 👻" <robin.olson20@ethereal.email>', 
+      from: '<ipol@ipol.ua>', 
       to: email, 
-      subject: "KRYSTAL", 
+      subject: "IPOL",
       text: "Підтвердження реєстрації", 
       html: `Підтвердження реєстрації: <a href='http://localhost:3030/users/${token}'>Підтвердити ел. пошту</a>`, 
   })

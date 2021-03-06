@@ -20,14 +20,12 @@ const UserSchema = new Schema({
   isVerified: {
     type: Boolean,
     default: false
-  },
+  }
 }, {
   timestamps: {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   }
-}, { 
-  collection: 'users' 
 })
 
 module.exports = model('Users', UserSchema)
