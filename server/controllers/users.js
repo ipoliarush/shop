@@ -55,6 +55,7 @@ exports.users_login = (req, res) => {
               return res.status(200).json({ 
                 success: true, 
                 message: 'Пользователь успешно авторизирован',
+                JWT: token,
                 user: {
                   id: user.id,
                   firstName: user.firstName,
@@ -172,9 +173,15 @@ exports.users_delete = (req, res) => {
       if (!deleted.deletedCount || err) {
         return error()
       } else {
-        return res.status(201).json({
-          success: true,
-          message: 'Пользователь успешно удален',
+        Recovery.deleteOne({ userId: req.params.userId }, (err, deleted) => {
+          if (!deleted.deletedCount || err) {
+            return error()
+          } else {
+            return res.status(201).json({
+              success: true,
+              message: 'Пользователь успешно удален',
+            })
+          }
         })
       }
     })
