@@ -1,26 +1,33 @@
 const { Schema, model } = require('mongoose')
 
-const UserSchema = new Schema({
-  firstName: {
-    type: String,
-    required: true
-  },
-  phone: {
-    type: Number,
-  },
-  email: {
+const ProductSchema = new Schema({
+  name: {
     type: String,
     required: true,
-    lowercase: true
+    trim: true
   },
-  password: {
-    type: String,
-    required: true
+  vendor_code: {
+    type: Number,
+    required: true,
+    trim: true
   },
-  isVerified: {
-    type: Boolean,
-    default: false
-  }
+  stock: {
+    type: Number,
+    default: 0
+  },
+  delivered: {
+    type: Number,
+    default: 0
+  },
+  reserved: {
+    type: Number,
+    default: 0
+  },
+  price: {
+    type: Number,
+    get: getPrice, 
+    set: setPrice
+  },
 }, {
   timestamps: {
     createdAt: 'createdAt',
@@ -28,4 +35,13 @@ const UserSchema = new Schema({
   }
 })
 
-module.exports = model('Users', UserSchema)
+getPrice(num => {
+  (num / 100).toFixed(2)
+})
+
+setPrice(num => {
+  num * 100
+})
+
+
+module.exports = model('Product', ProductSchema)
